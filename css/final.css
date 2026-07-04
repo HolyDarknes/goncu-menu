@@ -1,0 +1,60 @@
+/* ============================================================
+   GÖNCÜ MENU PRO - Sprint 10 Final polish
+   ------------------------------------------------------------
+   Küçük erişilebilirlik, SEO/yayın ve baskı hazırlığı düzeltmeleri.
+   Bu dosya mevcut gold premium temayı değiştirmez.
+   ============================================================ */
+
+.gmp-skip-link {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 99999;
+  transform: translateY(-140%);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--accent-color, #c3a148);
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  transition: transform 180ms ease;
+}
+
+.gmp-skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid rgba(255, 255, 255, 0.95);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+.menu-item:focus-within {
+  outline: 2px solid var(--accent-color, #c3a148);
+  outline-offset: 4px;
+}
+
+.logo-img,
+.item-image {
+  max-width: 100%;
+}
+
+@media print {
+  .nav-wrapper,
+  .gmp-search,
+  .gmp-favorites,
+  .gmp-theme-toggle,
+  .gmp-modal,
+  .gmp-skip-link {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  .menu-item {
+    break-inside: avoid;
+  }
+}

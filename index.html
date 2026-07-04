@@ -5,6 +5,31 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Wens Viento - Dijital Menü</title>
+<meta name="description" content="Wens Viento dijital menüsü: kahvaltılar, başlangıçlar, salatalar, makarnalar, burgerler, pizzalar, ana yemekler, kahveler, kokteyller, içecekler ve şaraplar."/>
+<meta name="keywords" content="Wens Viento, dijital menü, QR menü, restoran menüsü, cafe menüsü, bar menüsü, Havsa, Edirne"/>
+<meta name="author" content="GÖNCÜ MENU PRO"/>
+<meta name="robots" content="index, follow"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"/>
+<link rel="canonical" href="https://holydarknes.github.io/goncu-menu/"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
+<link rel="apple-touch-icon" href="icons/icon-192.png"/>
+<link rel="preload" as="image" href="images/viento GOLD (1).jpg"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Wens Viento"/>
+<meta property="og:title" content="Wens Viento - Dijital Menü"/>
+<meta property="og:description" content="Premium QR menü deneyimi: ürün detayları, besin değerleri, alerjen bilgileri, favoriler, arama ve çift dil desteği."/>
+<meta property="og:url" content="https://holydarknes.github.io/goncu-menu/"/>
+<meta property="og:image" content="https://holydarknes.github.io/goncu-menu/icons/icon-512.png"/>
+<meta property="og:locale" content="tr_TR"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Wens Viento - Dijital Menü"/>
+<meta name="twitter:description" content="Premium restoran QR menü sistemi."/>
+<meta name="twitter:image" content="https://holydarknes.github.io/goncu-menu/icons/icon-512.png"/>
+
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -259,14 +284,42 @@
 <link href="css/animations.css" rel="stylesheet"/>
 <link href="css/favorites.css" rel="stylesheet"/>
 <link href="css/dark-mode.css" rel="stylesheet"/>
+<link href="css/final.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Wens Viento",
+  "url": "https://holydarknes.github.io/goncu-menu/",
+  "image": "https://holydarknes.github.io/goncu-menu/icons/icon-512.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Havsa",
+    "addressRegion": "Edirne",
+    "addressCountry": "TR"
+  },
+  "servesCuisine": [
+    "Turkish",
+    "International",
+    "Cafe",
+    "Bar"
+  ],
+  "inLanguage": [
+    "tr",
+    "en"
+  ],
+  "hasMenu": "https://holydarknes.github.io/goncu-menu/"
+}
+</script>
 </head>
 <body>
+<a class="gmp-skip-link" href="#main-menu">Menüye geç</a>
 <div class="nav-wrapper">
 <div class="lang-switcher">
-<button class="lang-btn active" data-lang-trigger="tr" onclick="switchLanguage('tr')">TR</button>
-<button class="lang-btn" data-lang-trigger="en" onclick="switchLanguage('en')">EN</button>
+<button class="lang-btn active" type="button" data-lang-trigger="tr" onclick="switchLanguage('tr')" aria-label="Türkçe menü">TR</button>
+<button class="lang-btn" type="button" data-lang-trigger="en" onclick="switchLanguage('en')" aria-label="English menu">EN</button>
 </div>
-<nav class="nav-bar">
+<nav class="nav-bar" aria-label="Menü kategorileri">
 <a class="nav-link active" href="#kahvalti"><span data-lang="tr">Kahvaltılar</span><span data-lang="en">Breakfast</span></a>
 <a class="nav-link" href="#baslangic"><span data-lang="tr">Başlangıçlar</span><span data-lang="en">Starters</span></a>
 <a class="nav-link" href="#bowls"><span data-lang="tr">Bowl's</span><span data-lang="en">Bowls</span></a>
@@ -300,7 +353,7 @@
 <a class="nav-link" href="#dondurma"><span data-lang="tr">Dondurmalar</span><span data-lang="en">Ice Creams</span></a>
 </nav>
 </div>
-<div class="container">
+<main id="main-menu" class="container" role="main">
 <header>
 <img alt="Wens Viento Logo" class="logo-img" decoding="async" loading="eager" src="images/viento GOLD (1).jpg"/>
 </header>
@@ -1056,24 +1109,48 @@
 <div class="menu-item"><img alt="Magnum" class="item-image" decoding="async" loading="lazy" src="images/magnum.jpg"/><div class="item-header"><span class="item-name">Magnum</span><span class="item-price">150 ₺</span></div></div>
 </div>
 </section>
-</div>
+</main>
 <script>
 function switchLanguage(lang) {
+    const safeLang = lang === 'en' ? 'en' : 'tr';
+    document.documentElement.lang = safeLang;
+
+    try {
+        localStorage.setItem('gmp-language', safeLang);
+        localStorage.setItem('goncu-menu-language', safeLang);
+    } catch (error) {
+        // localStorage erişilemezse dil seçimi mevcut oturumda çalışmaya devam eder.
+    }
+
     const translations = document.querySelectorAll('[data-lang]');
     translations.forEach(el => el.style.display = 'none');
 
-    const activeTranslations = document.querySelectorAll('[data-lang="' + lang + '"]');
+    const activeTranslations = document.querySelectorAll('[data-lang="' + safeLang + '"]');
     activeTranslations.forEach(el => el.style.display = 'inline');
 
     const buttons = document.querySelectorAll('.lang-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+    });
     
-    const clickedBtn = document.querySelector('[data-lang-trigger="' + lang + '"]');
-    if(clickedBtn) clickedBtn.classList.add('active');
+    const clickedBtn = document.querySelector('[data-lang-trigger="' + safeLang + '"]');
+    if (clickedBtn) {
+        clickedBtn.classList.add('active');
+        clickedBtn.setAttribute('aria-pressed', 'true');
+    }
+
+    window.dispatchEvent(new CustomEvent('goncu:language-change', { detail: { language: safeLang } }));
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    switchLanguage('tr');
+    let preferredLanguage = 'tr';
+    try {
+        preferredLanguage = localStorage.getItem('gmp-language') || localStorage.getItem('goncu-menu-language') || 'tr';
+    } catch (error) {
+        preferredLanguage = 'tr';
+    }
+    switchLanguage(preferredLanguage === 'en' ? 'en' : 'tr');
 
     const sections = document.querySelectorAll(".menu-section");
     const navLinks = document.querySelectorAll(".nav-link");
@@ -1094,7 +1171,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         });
-    });
+    }, { passive: true });
 });
 </script>
 <script defer="" src="js/nutrition.js"></script>
