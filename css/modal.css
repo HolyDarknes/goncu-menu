@@ -1,312 +1,481 @@
-/* ===========================
-   GÖNCÜ MENU MODAL v1.0
-=========================== */
+/* ============================================================
+   GÖNCÜ MENU PRO - Sprint 1 Premium Modal Styles
+   ------------------------------------------------------------
+   Mevcut menü tasarımını bozmadan .menu-item kartlarına premium
+   glassmorphism popup deneyimi ekler.
+   ============================================================ */
 
-:root{
-    --modal-bg:#ffffff;
-    --modal-radius:20px;
-    --modal-shadow:0 20px 60px rgba(0,0,0,.25);
-    --primary:#C79A5B;
-    --text:#222;
-    --gray:#777;
+:root {
+  --gmp-gold: #c3a148;
+  --gmp-gold-strong: #d9b86c;
+  --gmp-bg: rgba(9, 10, 14, 0.72);
+  --gmp-card: rgba(20, 22, 29, 0.78);
+  --gmp-card-light: rgba(255, 255, 255, 0.08);
+  --gmp-card-border: rgba(255, 255, 255, 0.14);
+  --gmp-text: #f6f1e7;
+  --gmp-muted: rgba(246, 241, 231, 0.68);
+  --gmp-soft: rgba(195, 161, 72, 0.12);
+  --gmp-danger: #ff6b6b;
+  --gmp-radius-lg: 30px;
+  --gmp-radius-md: 20px;
+  --gmp-radius-sm: 14px;
+  --gmp-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+  --gmp-transition: 220ms ease;
 }
 
-.product-modal{
-
-    position:fixed;
-
-    inset:0;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:99999;
-
+body.gmp-modal-open {
+  overflow: hidden;
+  touch-action: none;
 }
 
-.product-modal.active{
-
-    display:flex;
-
+.menu-item.gmp-ready {
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
 }
 
-.modal-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    backdrop-filter:blur(8px);
-
+.menu-item.gmp-ready::after {
+  content: 'Detay';
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  padding: 6px 10px;
+  border: 1px solid rgba(195, 161, 72, 0.35);
+  border-radius: 999px;
+  background: rgba(11, 12, 16, 0.72);
+  color: var(--gmp-gold-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--gmp-transition), transform var(--gmp-transition);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-.modal-box{
-
-    width:min(950px,92vw);
-
-    max-height:92vh;
-
-    overflow:auto;
-
-    background:var(--modal-bg);
-
-    border-radius:var(--modal-radius);
-
-    box-shadow:var(--modal-shadow);
-
-    display:grid;
-
-    grid-template-columns:420px 1fr;
-
-    position:relative;
-
-    animation:popup .35s ease;
-
+.menu-item.gmp-ready:hover::after,
+.menu-item.gmp-ready:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@keyframes popup{
-
-    from{
-
-        opacity:0;
-
-        transform:scale(.9);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:scale(1);
-
-    }
-
+.menu-item.gmp-ready:focus-visible {
+  outline: 2px solid rgba(195, 161, 72, 0.72);
+  outline-offset: 3px;
 }
 
-.modal-left{
-
-    background:#f7f7f7;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:25px;
-
+.gmp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--gmp-transition);
 }
 
-.modal-left img{
-
-    width:100%;
-
-    border-radius:15px;
-
-    object-fit:cover;
-
+.gmp-modal.is-open,
+.gmp-modal.is-closing {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.modal-right{
-
-    padding:35px;
-
+.gmp-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(195, 161, 72, 0.18), transparent 34%),
+    radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.08), transparent 34%),
+    var(--gmp-bg);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
 }
 
-.modal-category{
-
-    color:var(--primary);
-
-    font-size:13px;
-
-    text-transform:uppercase;
-
-    letter-spacing:2px;
-
+.gmp-modal__card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(340px, 1fr);
+  width: min(1080px, 94vw);
+  max-height: min(760px, 92vh);
+  overflow: hidden;
+  border: 1px solid var(--gmp-card-border);
+  border-radius: var(--gmp-radius-lg);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+    var(--gmp-card);
+  color: var(--gmp-text);
+  box-shadow: var(--gmp-shadow);
+  transform: translateY(16px) scale(0.98);
+  transition: transform var(--gmp-transition), opacity var(--gmp-transition);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  outline: none;
 }
 
-.modal-right h2{
-
-    font-size:34px;
-
-    margin:10px 0;
-
-    color:var(--text);
-
+.gmp-modal.is-open .gmp-modal__card {
+  transform: translateY(0) scale(1);
 }
 
-.modal-price{
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:var(--primary);
-
-    margin-bottom:15px;
-
+.gmp-modal.is-closing .gmp-modal__card {
+  transform: translateY(12px) scale(0.985);
 }
 
-.modal-description{
-
-    color:#666;
-
-    line-height:1.7;
-
-    margin:20px 0;
-
+.gmp-modal__media {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.modal-close{
-
-    position:absolute;
-
-    top:15px;
-
-    right:15px;
-
-    width:42px;
-
-    height:42px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    cursor:pointer;
-
-    font-size:24px;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-
+.gmp-modal__media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.52), transparent);
+  pointer-events: none;
 }
 
-.modal-calorie{
-
-    display:inline-flex;
-
-    gap:8px;
-
-    background:#fff3df;
-
-    padding:10px 18px;
-
-    border-radius:30px;
-
-    font-weight:600;
-
+.gmp-modal__image {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  display: block;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 360ms ease, filter 360ms ease;
+  user-select: none;
+  cursor: zoom-in;
 }
 
-.nutrition-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:20px;
-
+.gmp-modal__card.is-zoomed .gmp-modal__image {
+  transform: scale(1.22);
+  filter: contrast(1.04) saturate(1.08);
+  cursor: zoom-out;
 }
 
-.nutrition-table td{
-
-    padding:12px 0;
-
-    border-bottom:1px solid #ececec;
-
+.gmp-modal__image-hint {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 1;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.34);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.nutrition-table td:last-child{
-
-    text-align:right;
-
-    font-weight:bold;
-
+.gmp-modal__content {
+  overflow: auto;
+  padding: clamp(26px, 4vw, 46px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(195, 161, 72, 0.45) transparent;
 }
 
-.modal-navigation{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin-top:30px;
-
+.gmp-modal__content::-webkit-scrollbar {
+  width: 7px;
 }
 
-.modal-navigation button{
-
-    padding:12px 22px;
-
-    border:none;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    font-weight:bold;
-
+.gmp-modal__content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.45);
 }
 
-.allergen-list{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    margin:20px 0;
-
+.gmp-modal__eyebrow {
+  width: fit-content;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border: 1px solid rgba(195, 161, 72, 0.3);
+  border-radius: 999px;
+  background: var(--gmp-soft);
+  color: var(--gmp-gold-strong);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.allergen-item{
-
-    background:#f3f3f3;
-
-    padding:8px 15px;
-
-    border-radius:30px;
-
-    font-size:14px;
-
+.gmp-modal__heading-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
 }
 
-@media(max-width:900px){
-
-.modal-box{
-
-grid-template-columns:1fr;
-
+.gmp-modal__title {
+  margin: 0;
+  color: var(--gmp-text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(34px, 4.2vw, 58px);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
 }
 
-.modal-left{
-
-padding:10px;
-
+.gmp-modal__price {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.16);
+  color: var(--gmp-gold-strong);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(195, 161, 72, 0.2);
 }
 
-.modal-right{
-
-padding:25px;
-
+.gmp-modal__description {
+  margin: 0 0 22px;
+  color: var(--gmp-muted);
+  font-size: 15px;
+  line-height: 1.75;
 }
 
-.modal-right h2{
-
-font-size:28px;
-
+.gmp-modal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 24px;
 }
 
+.gmp-chip,
+.gmp-allergen-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(246, 241, 231, 0.82);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gmp-modal__nutrition,
+.gmp-modal__allergens {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gmp-modal__nutrition h3,
+.gmp-modal__allergens h3 {
+  margin: 0 0 14px;
+  color: var(--gmp-text);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gmp-nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gmp-nutrition-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--gmp-radius-sm);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.gmp-nutrition-item span {
+  color: var(--gmp-muted);
+  font-size: 13px;
+}
+
+.gmp-nutrition-item strong {
+  color: var(--gmp-text);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.gmp-allergen-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gmp-modal__close,
+.gmp-modal__nav {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  transition: transform var(--gmp-transition), background var(--gmp-transition), opacity var(--gmp-transition);
+}
+
+.gmp-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gmp-modal__close:hover,
+.gmp-modal__nav:hover {
+  transform: translateY(-1px) scale(1.04);
+  background: rgba(195, 161, 72, 0.28);
+}
+
+.gmp-modal__close:focus-visible,
+.gmp-modal__nav:focus-visible {
+  outline: 2px solid var(--gmp-gold-strong);
+  outline-offset: 3px;
+}
+
+.gmp-modal__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.34);
+  color: #fff;
+  font-size: 38px;
+  transform: translateY(-50%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gmp-modal__nav--prev {
+  left: 16px;
+}
+
+.gmp-modal__nav--next {
+  right: 16px;
+}
+
+.gmp-modal__nav:disabled {
+  opacity: 0.24;
+  cursor: not-allowed;
+}
+
+@media (max-width: 920px) {
+  .gmp-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .gmp-modal__card {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    grid-template-columns: 1fr;
+    grid-template-rows: 45dvh 1fr;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .gmp-modal__media {
+    min-height: 0;
+  }
+
+  .gmp-modal__image {
+    min-height: 45dvh;
+  }
+
+  .gmp-modal__content {
+    padding: 24px 18px 34px;
+  }
+
+  .gmp-modal__heading-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gmp-modal__price {
+    width: fit-content;
+  }
+
+  .gmp-modal__nav {
+    top: 22.5dvh;
+    width: 42px;
+    height: 42px;
+    font-size: 32px;
+  }
+
+  .gmp-modal__nav--prev {
+    left: 12px;
+  }
+
+  .gmp-modal__nav--next {
+    right: 12px;
+  }
+
+  .gmp-modal__image-hint {
+    display: none;
+  }
+
+  .gmp-nutrition-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-item.gmp-ready::after {
+    display: none;
+  }
+
+  .gmp-modal__close {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .gmp-modal__title {
+    font-size: 34px;
+  }
+
+  .gmp-modal__description {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gmp-modal,
+  .gmp-modal__card,
+  .gmp-modal__image,
+  .menu-item.gmp-ready::after,
+  .gmp-modal__close,
+  .gmp-modal__nav {
+    transition: none !important;
+    animation: none !important;
+  }
 }
