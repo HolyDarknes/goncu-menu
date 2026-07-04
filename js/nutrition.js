@@ -1,12 +1,12 @@
 /**
- * GÖNCÜ MENU PRO - Sprint 3 Nutrition Data Layer
+ * GÖNCÜ MENU PRO - Sprint 3 Freeze Fix Nutrition Data Layer
  * ------------------------------------------------------------
- * data/nutrition.json dosyasını yükler, ürün adlarını Türkçe karakter
- * uyumlu slug ile eşleştirir ve modal sistemine senkron API sunar.
+ * data/nutrition.json dosyasını güvenli şekilde yükler.
  *
- * Kullanım:
- * - HTML'de js/nutrition.js dosyasını js/modal.js dosyasından önce ekleyin.
- * - Yeni ürün eklemek için data/nutrition.json içine yeni kayıt eklemek yeterlidir.
+ * Bu sürüm özellikle şu problemi çözer:
+ * - nutrition.json yüklenemezse modal sürekli "yükleniyor" döngüsüne girmez.
+ * - Hata durumunda popup donmaz, kullanıcıya net uyarı gösterilir.
+ * - JSON sonradan düzeltildiğinde sayfa yenilemesiyle sistem tekrar çalışır.
  */
 (() => {
   'use strict';
@@ -14,10 +14,12 @@
   const DATA_URL = 'data/nutrition.json';
   const READY_EVENT = 'goncu:nutrition-ready';
   const ERROR_EVENT = 'goncu:nutrition-error';
+  const LOAD_TIMEOUT_MS = 4500;
 
   const state = {
     ready: false,
     loading: false,
+    settled: false,
     error: null,
     raw: null,
     byKey: new Map(),
@@ -33,7 +35,7 @@
   const normalizeText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
 
   /**
-   * Modal sistemiyle aynı Türkçe uyumlu slug üretimini kullanır.
+   * Türkçe karakterleri koruyarak güvenli slug üretir.
    * @param {string} value
    * @returns {string}
    */
@@ -51,7 +53,7 @@
     .replace(/^-+|-+$/g, '');
 
   /**
-   * Kategori metninin TR/EN birlikte gelmesi ihtimaline karşı sade anahtar üretir.
+   * Kategori metninde TR/EN birlikte gelirse tek kategori anahtarı üretir.
    * @param {string} category
    * @returns {string}
    */
@@ -65,7 +67,7 @@
   /**
    * Alerjen kodlarını ikonlu objelere çevirir.
    * @param {object} item
-   * @returns {object}
+   * @returns {object|null}
    */
   const enrichItem = (item) => {
     if (!item) return null;
@@ -74,13 +76,13 @@
       ...item,
       allergens: (item.allergens || []).map((key) => ({
         key,
-        ...(legend[key] || { name: key, icon: '•' }),
+        ...(legend[key] || { name: key, nameEn: key, icon: '•' }),
       })),
     };
   };
 
   /**
-   * Tek bir ürün için tüm aranabilir anahtarları üretir.
+   * Ürün için aranabilir tüm anahtarları üretir.
    * @param {object} item
    * @returns {string[]}
    */
@@ -99,6 +101,8 @@
 
     Object.values(data.items || {}).forEach((item) => {
       const enriched = enrichItem(item);
+      if (!enriched) return;
+
       getSearchKeys(item).forEach((key) => state.byKey.set(key, enriched));
 
       const categoryKey = normalizeCategoryKey(item.category || '');
@@ -109,33 +113,88 @@
   };
 
   /**
-   * Nutrition JSON dosyasını yükler.
+   * Fetch işlemini zaman aşımıyla çalıştırır.
+   * @param {string} url
    * @returns {Promise<object>}
    */
-  const load = async () => {
-    if (state.ready) return state.raw;
-    if (state.loading && state.readyPromise) return state.readyPromise;
+  const fetchJsonWithTimeout = async (url) => {
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = window.setTimeout(() => controller?.abort(), LOAD_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, {
+        cache: 'no-store',
+        signal: controller?.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`nutrition.json yüklenemedi: HTTP ${response.status}`);
+      }
+
+      return await response.json();
+    } finally {
+      window.clearTimeout(timeoutId);
+    }
+  };
+
+  /**
+   * Başarılı yükleme sonrası state günceller.
+   * @param {object} data
+   * @returns {object}
+   */
+  const markReady = (data) => {
+    state.raw = data;
+    state.error = null;
+    indexData(data);
+    state.ready = true;
+    state.loading = false;
+    state.settled = true;
+
+    window.dispatchEvent(new CustomEvent(READY_EVENT, {
+      detail: { total: state.byKey.size },
+    }));
+
+    return data;
+  };
+
+  /**
+   * Hata durumunda sonsuz yükleme döngüsünü engeller.
+   * @param {Error} error
+   * @returns {null}
+   */
+  const markFailed = (error) => {
+    state.error = error;
+    state.ready = false;
+    state.loading = false;
+    state.settled = true;
+
+    window.dispatchEvent(new CustomEvent(ERROR_EVENT, { detail: { error } }));
+    console.warn('[GÖNCÜ MENU PRO] Besin verisi yüklenemedi:', error);
+
+    return null;
+  };
+
+  /**
+   * Nutrition JSON dosyasını yükler.
+   * @param {{force?: boolean}} options
+   * @returns {Promise<object|null>}
+   */
+  const load = async (options = {}) => {
+    const force = Boolean(options.force);
+
+    if (state.ready && !force) return state.raw;
+    if (state.loading && state.readyPromise && !force) return state.readyPromise;
+    if (state.settled && state.error && !force) return null;
 
     state.loading = true;
-    state.readyPromise = fetch(DATA_URL, { cache: 'no-store' })
-      .then((response) => {
-        if (!response.ok) throw new Error(`nutrition.json yüklenemedi: ${response.status}`);
-        return response.json();
-      })
-      .then((data) => {
-        state.raw = data;
-        indexData(data);
-        state.ready = true;
+    state.settled = false;
+    state.error = null;
+
+    state.readyPromise = fetchJsonWithTimeout(DATA_URL)
+      .then(markReady)
+      .catch(markFailed)
+      .finally(() => {
         state.loading = false;
-        window.dispatchEvent(new CustomEvent(READY_EVENT, { detail: { total: state.byKey.size } }));
-        return data;
-      })
-      .catch((error) => {
-        state.error = error;
-        state.loading = false;
-        window.dispatchEvent(new CustomEvent(ERROR_EVENT, { detail: { error } }));
-        console.warn('[GÖNCÜ MENU PRO] Besin verisi yüklenemedi:', error);
-        return null;
       });
 
     return state.readyPromise;
@@ -169,6 +228,9 @@
     load,
     ready: () => state.readyPromise || load(),
     isReady: () => state.ready,
+    isLoading: () => state.loading,
+    isSettled: () => state.settled,
+    hasError: () => Boolean(state.error),
     getError: () => state.error,
     getRaw: () => state.raw,
     slugify,
@@ -177,13 +239,17 @@
     getAll: () => state.ready ? Array.from(new Set(state.byKey.values())) : [],
     refresh: () => {
       state.ready = false;
+      state.loading = false;
+      state.settled = false;
+      state.error = null;
       state.raw = null;
-      return load();
+      state.readyPromise = null;
+      return load({ force: true });
     },
   });
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', load, { once: true });
+    document.addEventListener('DOMContentLoaded', () => load(), { once: true });
   } else {
     load();
   }

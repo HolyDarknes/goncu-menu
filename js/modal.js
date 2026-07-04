@@ -281,6 +281,50 @@
     elements.allergens.hidden = false;
   };
 
+
+  /**
+   * Nutrition yüklemesi tamamlandığında modalı yalnızca bir kez yeniler.
+   * Hata durumunda sonsuz render döngüsüne girmeyi engeller.
+   * @param {Promise} readyPromise
+   */
+  const scheduleDataRefresh = (readyPromise) => {
+    if (typeof readyPromise?.then !== 'function' || !elements.modal) return;
+    if (elements.modal.dataset.gmpAwaitingNutrition === 'true') return;
+
+    elements.modal.dataset.gmpAwaitingNutrition = 'true';
+
+    readyPromise.finally(() => {
+      if (elements.modal) {
+        delete elements.modal.dataset.gmpAwaitingNutrition;
+      }
+
+      if (!elements.modal?.classList.contains(CSS.open) || state.currentIndex < 0) return;
+
+      const item = state.items[state.currentIndex];
+      if (!item) return;
+
+      const product = extractProductData(item);
+      renderNutrition(product);
+      renderAllergens(product);
+    });
+  };
+
+  /**
+   * Nutrition JSON yüklenemediğinde kullanıcıya net hata gösterir.
+   * @param {object} api
+   * @returns {boolean}
+   */
+  const showNutritionLoadErrorIfNeeded = (api) => {
+    const error = typeof api?.getError === 'function' ? api.getError() : null;
+    const hasError = Boolean(error) || (typeof api?.hasError === 'function' && api.hasError());
+
+    if (!hasError) return false;
+
+    showNutritionMessage('Besin verileri yüklenemedi. data/nutrition.json dosyasının proje klasöründe olduğundan ve sayfanın Live Server / GitHub Pages üzerinden açıldığından emin olun.', 'warning');
+    showAllergenMessage('Alerjen verileri yüklenemedi. nutrition.json okunamadığı için alerjenler gösterilemiyor.', 'warning');
+    return true;
+  };
+
   /**
    * Sprint 2 için hazır bağlantı noktasıdır. window.GoncuNutrition varsa
    * besin değerlerini modal içinde gösterir; yoksa alanı gizler.
@@ -297,15 +341,11 @@
     }
 
     if (typeof api.isReady === 'function' && !api.isReady()) {
+      if (showNutritionLoadErrorIfNeeded(api)) return;
+
       showNutritionMessage('Besin değerleri yükleniyor...', 'info');
       const readyPromise = typeof api.ready === 'function' ? api.ready() : null;
-      if (typeof readyPromise?.then === 'function') {
-        readyPromise.then(() => {
-          if (elements.modal?.classList.contains(CSS.open) && state.currentIndex >= 0) {
-            renderProduct(state.currentIndex);
-          }
-        });
-      }
+      scheduleDataRefresh(readyPromise);
       return;
     }
 
@@ -355,15 +395,11 @@
     }
 
     if (typeof nutritionApi.isReady === 'function' && !nutritionApi.isReady()) {
+      if (showNutritionLoadErrorIfNeeded(nutritionApi)) return;
+
       showAllergenMessage('Alerjen bilgileri yükleniyor...', 'info');
       const readyPromise = typeof nutritionApi.ready === 'function' ? nutritionApi.ready() : null;
-      if (typeof readyPromise?.then === 'function') {
-        readyPromise.then(() => {
-          if (elements.modal?.classList.contains(CSS.open) && state.currentIndex >= 0) {
-            renderProduct(state.currentIndex);
-          }
-        });
-      }
+      scheduleDataRefresh(readyPromise);
       return;
     }
 
