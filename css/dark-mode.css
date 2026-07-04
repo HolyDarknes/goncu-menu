@@ -1,0 +1,602 @@
+/* ============================================================
+   GÖNCÜ MENU PRO - Sprint 8 White Light Theme Fix
+   ------------------------------------------------------------
+   Amaç:
+   - Açık temada premium gold renkleri korumak.
+   - Sadece koyu/siyah zeminleri beyaz/açık zemine çevirmek.
+   - Mevcut ürün, arama, favori ve popup sistemlerini bozmadan çalışmak.
+   - Vanilla JS ile eklenen tema butonunu stillendirmek.
+   ============================================================ */
+
+:root {
+  color-scheme: light dark;
+
+  --gmp-theme-duration: 220ms;
+  --gmp-theme-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Projenin ana gold tonu değiştirilmez. */
+  --gmp-brand-gold: var(--gmp-gold, #c3a148);
+  --gmp-brand-gold-strong: var(--gmp-gold-strong, #d9b86c);
+  --gmp-brand-gold-soft: rgba(195, 161, 72, 0.14);
+
+  /* Açık tema: siyah/koyu alanları direkt beyaza çevirir, gold tonu korur. */
+  --gmp-light-bg: #ffffff;
+  --gmp-light-bg-soft: #ffffff;
+  --gmp-light-surface: #ffffff;
+  --gmp-light-surface-strong: #ffffff;
+  --gmp-light-border: rgba(195, 161, 72, 0.24);
+  --gmp-light-text: #1f1f1f;
+  --gmp-light-muted: rgba(31, 31, 31, 0.62);
+  --gmp-light-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+
+  /* Koyu tema: mevcut premium koyu/gold hissini korur. */
+  --gmp-dark-bg: #07080b;
+  --gmp-dark-bg-soft: #101116;
+  --gmp-dark-surface: rgba(19, 21, 28, 0.82);
+  --gmp-dark-surface-strong: rgba(23, 25, 33, 0.94);
+  --gmp-dark-border: rgba(255, 255, 255, 0.12);
+  --gmp-dark-text: #f7f0e5;
+  --gmp-dark-muted: rgba(247, 240, 229, 0.68);
+  --gmp-dark-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+
+  --gmp-theme-bg: var(--gmp-light-bg);
+  --gmp-theme-bg-soft: var(--gmp-light-bg-soft);
+  --gmp-theme-surface: var(--gmp-light-surface);
+  --gmp-theme-surface-strong: var(--gmp-light-surface-strong);
+  --gmp-theme-border: var(--gmp-light-border);
+  --gmp-theme-text: var(--gmp-light-text);
+  --gmp-theme-muted: var(--gmp-light-muted);
+  --gmp-theme-gold: var(--gmp-brand-gold);
+  --gmp-theme-gold-strong: var(--gmp-brand-gold-strong);
+  --gmp-theme-shadow: var(--gmp-light-shadow);
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --gmp-theme-bg: var(--gmp-dark-bg);
+  --gmp-theme-bg-soft: var(--gmp-dark-bg-soft);
+  --gmp-theme-surface: var(--gmp-dark-surface);
+  --gmp-theme-surface-strong: var(--gmp-dark-surface-strong);
+  --gmp-theme-border: var(--gmp-dark-border);
+  --gmp-theme-text: var(--gmp-dark-text);
+  --gmp-theme-muted: var(--gmp-dark-muted);
+  --gmp-theme-gold: var(--gmp-brand-gold-strong);
+  --gmp-theme-gold-strong: var(--gmp-brand-gold-strong);
+  --gmp-theme-shadow: var(--gmp-dark-shadow);
+
+  --gmp-bg: rgba(5, 6, 10, 0.82);
+  --gmp-card: rgba(17, 19, 26, 0.9);
+  --gmp-card-strong: rgba(24, 26, 34, 0.96);
+  --gmp-card-light: rgba(255, 255, 255, 0.075);
+  --gmp-card-border: rgba(255, 255, 255, 0.13);
+  --gmp-text: #f7f0e5;
+  --gmp-muted: rgba(247, 240, 229, 0.68);
+  --gmp-soft: rgba(217, 184, 108, 0.13);
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
+
+  --gmp-theme-bg: var(--gmp-light-bg);
+  --gmp-theme-bg-soft: var(--gmp-light-bg-soft);
+  --gmp-theme-surface: var(--gmp-light-surface);
+  --gmp-theme-surface-strong: var(--gmp-light-surface-strong);
+  --gmp-theme-border: var(--gmp-light-border);
+  --gmp-theme-text: var(--gmp-light-text);
+  --gmp-theme-muted: var(--gmp-light-muted);
+  --gmp-theme-gold: var(--gmp-brand-gold);
+  --gmp-theme-gold-strong: var(--gmp-brand-gold-strong);
+  --gmp-theme-shadow: var(--gmp-light-shadow);
+
+  /* Modal/popup değişkenleri: gold sabit, zemin direkt beyaz. */
+  --gmp-bg: #ffffff;
+  --gmp-card: #ffffff;
+  --gmp-card-strong: #ffffff;
+  --gmp-card-light: #ffffff;
+  --gmp-card-border: rgba(195, 161, 72, 0.23);
+  --gmp-text: #1f1f1f;
+  --gmp-muted: rgba(31, 31, 31, 0.62);
+  --gmp-soft: rgba(195, 161, 72, 0.12);
+}
+
+html.gmp-theme-transitioning,
+html.gmp-theme-transitioning *,
+html.gmp-theme-transitioning *::before,
+html.gmp-theme-transitioning *::after {
+  transition:
+    background-color var(--gmp-theme-duration) var(--gmp-theme-ease),
+    color var(--gmp-theme-duration) var(--gmp-theme-ease),
+    border-color var(--gmp-theme-duration) var(--gmp-theme-ease),
+    box-shadow var(--gmp-theme-duration) var(--gmp-theme-ease),
+    opacity var(--gmp-theme-duration) var(--gmp-theme-ease) !important;
+}
+
+html[data-theme='dark'] body,
+html[data-theme='light'] body {
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at top left, rgba(217, 184, 108, 0.17), transparent 32rem),
+    linear-gradient(135deg, var(--gmp-theme-bg), var(--gmp-theme-bg-soft));
+}
+
+html[data-theme='light'] body {
+  background: #ffffff !important;
+}
+
+html[data-theme='dark'] body::before,
+html[data-theme='light'] body::before {
+  opacity: 0.42;
+}
+
+/* Tema butonu */
+.gmp-theme-switcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 10px;
+  vertical-align: middle;
+}
+
+.gmp-theme-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid rgba(195, 161, 72, 0.38);
+  border-radius: 999px;
+  background: var(--gmp-theme-surface-strong);
+  color: var(--gmp-theme-text);
+  box-shadow: 0 10px 28px rgba(195, 161, 72, 0.12);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.gmp-theme-toggle:hover {
+  transform: translateY(-1px);
+  border-color: var(--gmp-theme-gold);
+  box-shadow: 0 14px 34px rgba(195, 161, 72, 0.18);
+}
+
+.gmp-theme-toggle:focus-visible {
+  outline: 2px solid var(--gmp-theme-gold);
+  outline-offset: 3px;
+}
+
+.gmp-theme-toggle__icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.18);
+  color: var(--gmp-theme-gold);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.gmp-theme-toggle__label {
+  display: inline-block;
+}
+
+/* Üst navigasyon ve dil butonları */
+html[data-theme] .nav-wrapper,
+html[data-theme] .nav-bar,
+html[data-theme] header,
+html[data-theme] .header,
+html[data-theme] .navbar {
+  border-color: var(--gmp-theme-border);
+  background-color: var(--gmp-theme-surface);
+  color: var(--gmp-theme-text);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+html[data-theme] .nav-link,
+html[data-theme] .lang-btn,
+html[data-theme] .language-btn,
+html[data-theme] .lang-switcher button,
+html[data-theme] .language-switcher button {
+  border-color: rgba(195, 161, 72, 0.24);
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme] .nav-link:hover,
+html[data-theme] .nav-link.active,
+html[data-theme] .lang-btn.active,
+html[data-theme] .language-btn.active,
+html[data-theme] .lang-switcher button.active,
+html[data-theme] .language-switcher button.active {
+  background: rgba(195, 161, 72, 0.16);
+  color: var(--gmp-theme-gold);
+}
+
+/* Gold çizgiler, aktif menüler ve fiyatlar sabit tutulur. */
+html[data-theme] .nav-link.active,
+html[data-theme] .nav-link.is-active,
+html[data-theme] .item-price,
+html[data-theme] .price,
+html[data-theme] .gmp-modal__price,
+html[data-theme] .gmp-modal__eyebrow,
+html[data-theme] .gmp-allergen-summary,
+html[data-theme] .gmp-allergen-status,
+html[data-theme] .gmp-theme-toggle__icon {
+  color: var(--gmp-theme-gold) !important;
+}
+
+html[data-theme] .nav-wrapper::after,
+html[data-theme] .nav-bar::after,
+html[data-theme] .nav-scroll-progress,
+html[data-theme] .nav-progress {
+  background: var(--gmp-theme-gold) !important;
+}
+
+/* Menü bölümleri ve kartlar */
+html[data-theme] .menu-section,
+html[data-theme] section.menu-section {
+  color: var(--gmp-theme-text);
+  scroll-margin-top: 118px;
+}
+
+html[data-theme] .section-title,
+html[data-theme] .menu-section h2 {
+  color: var(--gmp-theme-text);
+  text-shadow: 0 12px 32px rgba(195, 161, 72, 0.13);
+}
+
+html[data-theme] .menu-item {
+  border-color: var(--gmp-theme-border);
+  background: var(--gmp-theme-surface-strong);
+  color: var(--gmp-theme-text);
+  box-shadow: var(--gmp-theme-shadow);
+}
+
+html[data-theme] .menu-item:hover {
+  border-color: rgba(195, 161, 72, 0.42);
+  box-shadow: 0 22px 60px rgba(195, 161, 72, 0.16);
+}
+
+html[data-theme] .item-name,
+html[data-theme] .menu-item h3,
+html[data-theme] .menu-item h4 {
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme] .item-description,
+html[data-theme] .menu-item p {
+  color: var(--gmp-theme-muted);
+}
+
+html[data-theme] .item-price,
+html[data-theme] .price {
+  color: var(--gmp-theme-gold) !important;
+}
+
+html[data-theme='dark'] .item-image,
+html[data-theme='dark'] .menu-item img {
+  filter: saturate(1.06) contrast(1.03) brightness(0.88);
+}
+
+html[data-theme='light'] .item-image,
+html[data-theme='light'] .menu-item img {
+  filter: none;
+}
+
+/* Arama sistemi */
+html[data-theme] .gmp-search,
+html[data-theme] .gm-search,
+html[data-theme] .search-panel,
+html[data-theme] [data-gmp-search],
+html[data-theme] .gmp-search-panel {
+  border-color: var(--gmp-theme-border);
+  background: var(--gmp-theme-surface-strong);
+  color: var(--gmp-theme-text);
+  box-shadow: var(--gmp-theme-shadow);
+}
+
+html[data-theme] .gmp-search input,
+html[data-theme] .gm-search input,
+html[data-theme] .search-panel input,
+html[data-theme] [data-gmp-search] input,
+html[data-theme] .gmp-search-input,
+html[data-theme] .search-input {
+  border-color: var(--gmp-theme-border);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme='dark'] .gmp-search input,
+html[data-theme='dark'] .gm-search input,
+html[data-theme='dark'] .search-panel input,
+html[data-theme='dark'] [data-gmp-search] input,
+html[data-theme='dark'] .gmp-search-input,
+html[data-theme='dark'] .search-input {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme] .gmp-search input::placeholder,
+html[data-theme] .gm-search input::placeholder,
+html[data-theme] .search-panel input::placeholder,
+html[data-theme] .gmp-search-input::placeholder,
+html[data-theme] .search-input::placeholder {
+  color: var(--gmp-theme-muted);
+}
+
+html[data-theme] .gmp-search button,
+html[data-theme] .gm-search button,
+html[data-theme] .search-panel button,
+html[data-theme] .gmp-clear-search,
+html[data-theme] .search-clear {
+  border-color: rgba(195, 161, 72, 0.32);
+  background: rgba(195, 161, 72, 0.11);
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme] .gmp-search-count,
+html[data-theme] .search-count,
+html[data-theme] .gmp-no-results,
+html[data-theme] .no-results {
+  color: var(--gmp-theme-muted);
+}
+
+/* Favoriler sistemi */
+html[data-theme] .gmp-favorites,
+html[data-theme] .gmp-favorites-drawer,
+html[data-theme] .favorites-drawer,
+html[data-theme] .favorite-panel,
+html[data-theme] [data-gmp-favorites] {
+  border-color: var(--gmp-theme-border);
+  background: var(--gmp-theme-surface-strong);
+  color: var(--gmp-theme-text);
+  box-shadow: var(--gmp-theme-shadow);
+}
+
+html[data-theme] .gmp-favorite-button,
+html[data-theme] .favorite-button,
+html[data-theme] [data-gmp-favorite] {
+  border-color: rgba(195, 161, 72, 0.34);
+  background: var(--gmp-theme-surface-strong);
+  color: var(--gmp-theme-gold);
+}
+
+html[data-theme] .gmp-favorite-button.is-active,
+html[data-theme] .favorite-button.is-active,
+html[data-theme] [data-gmp-favorite].is-active {
+  background: rgba(195, 161, 72, 0.18);
+  color: var(--gmp-theme-gold);
+}
+
+/* Modal/popup sistemi */
+html[data-theme] .gmp-modal__overlay {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(195, 161, 72, 0.18), transparent 34%),
+    radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.08), transparent 34%),
+    var(--gmp-bg);
+}
+
+html[data-theme] .gmp-modal__card {
+  border-color: var(--gmp-theme-border);
+  background: var(--gmp-card);
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme='light'] .gmp-modal__card {
+  background: #ffffff !important;
+}
+
+html[data-theme='dark'] .gmp-modal__card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)), var(--gmp-card);
+}
+
+html[data-theme] .gmp-modal__title,
+html[data-theme] .gmp-section-title,
+html[data-theme] .gmp-modal__nutrition h3,
+html[data-theme] .gmp-modal__allergens h3 {
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme] .gmp-modal__description,
+html[data-theme] .gmp-nutrition-label,
+html[data-theme] .gmp-allergen-note,
+html[data-theme] .gmp-data-note {
+  color: var(--gmp-theme-muted);
+}
+
+html[data-theme] .gmp-nutrition-item,
+html[data-theme] .gmp-chip,
+html[data-theme] .gmp-allergen-pill,
+html[data-theme] .gmp-allergen-item {
+  border-color: var(--gmp-theme-border);
+  background: rgba(195, 161, 72, 0.1);
+  color: var(--gmp-theme-text);
+}
+
+html[data-theme] .gmp-modal__close,
+html[data-theme] .gmp-modal__nav {
+  border-color: rgba(195, 161, 72, 0.28);
+  background: rgba(0, 0, 0, 0.38);
+  color: #ffffff;
+}
+
+html[data-theme='light'] .gmp-modal__close,
+html[data-theme='light'] .gmp-modal__nav {
+  background: rgba(255, 255, 255, 0.78);
+  color: #1f1f1f;
+}
+
+@media (max-width: 720px) {
+  .gmp-theme-switcher {
+    margin-inline-start: 6px;
+  }
+
+  .gmp-theme-toggle {
+    min-height: 36px;
+    padding: 7px 10px;
+  }
+
+  .gmp-theme-toggle__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.gmp-theme-transitioning,
+  html.gmp-theme-transitioning *,
+  html.gmp-theme-transitioning *::before,
+  html.gmp-theme-transitioning *::after,
+  .gmp-theme-toggle {
+    transition: none !important;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   WHITE LIGHT FIX
+   Açık temada krem/bej/şeffaf zemin bırakmaz.
+   Gold detaylar korunur, sadece açık alanlar direkt beyaz olur.
+   ------------------------------------------------------------ */
+html[data-theme='light'],
+html[data-theme='light'] body {
+  background: #ffffff !important;
+}
+
+html[data-theme='light'] body::before,
+html[data-theme='light'] body::after {
+  opacity: 0 !important;
+}
+
+html[data-theme='light'] .nav-wrapper,
+html[data-theme='light'] .nav-bar,
+html[data-theme='light'] header,
+html[data-theme='light'] .header,
+html[data-theme='light'] .navbar,
+html[data-theme='light'] .logo-container,
+html[data-theme='light'] .logo-section,
+html[data-theme='light'] .brand-section,
+html[data-theme='light'] .hero,
+html[data-theme='light'] .hero-section,
+html[data-theme='light'] .menu-section,
+html[data-theme='light'] .menu-grid,
+html[data-theme='light'] .menu-item,
+html[data-theme='light'] .gmp-search,
+html[data-theme='light'] .gm-search,
+html[data-theme='light'] .search-panel,
+html[data-theme='light'] [data-gmp-search],
+html[data-theme='light'] .gmp-search-panel,
+html[data-theme='light'] .gmp-favorites,
+html[data-theme='light'] .gmp-favorites-bar,
+html[data-theme='light'] .gmp-favorites-drawer,
+html[data-theme='light'] .favorites-drawer,
+html[data-theme='light'] .favorite-panel,
+html[data-theme='light'] [data-gmp-favorites],
+html[data-theme='light'] .gmp-modal__card,
+html[data-theme='light'] .gmp-modal__media,
+html[data-theme='light'] .gmp-modal__content,
+html[data-theme='light'] .gmp-theme-toggle {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html[data-theme='light'] .gmp-search input,
+html[data-theme='light'] .gm-search input,
+html[data-theme='light'] .search-panel input,
+html[data-theme='light'] [data-gmp-search] input,
+html[data-theme='light'] .gmp-search-input,
+html[data-theme='light'] .search-input,
+html[data-theme='light'] .gmp-nutrition-item,
+html[data-theme='light'] .gmp-chip,
+html[data-theme='light'] .gmp-allergen-pill,
+html[data-theme='light'] .gmp-allergen-item,
+html[data-theme='light'] .gmp-modal__close,
+html[data-theme='light'] .gmp-modal__nav,
+html[data-theme='light'] .gmp-favorite-button,
+html[data-theme='light'] .favorite-button,
+html[data-theme='light'] [data-gmp-favorite] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html[data-theme='light'] .nav-link.active,
+html[data-theme='light'] .nav-link.is-active,
+html[data-theme='light'] .lang-btn.active,
+html[data-theme='light'] .language-btn.active,
+html[data-theme='light'] .lang-switcher button.active,
+html[data-theme='light'] .language-switcher button.active,
+html[data-theme='light'] .gmp-favorite-button.is-active,
+html[data-theme='light'] .favorite-button.is-active,
+html[data-theme='light'] [data-gmp-favorite].is-active {
+  background: rgba(195, 161, 72, 0.16) !important;
+  color: var(--gmp-theme-gold) !important;
+}
+
+html[data-theme='light'] .item-price,
+html[data-theme='light'] .price,
+html[data-theme='light'] .gmp-modal__price,
+html[data-theme='light'] .gmp-modal__eyebrow,
+html[data-theme='light'] .gmp-allergen-summary,
+html[data-theme='light'] .gmp-allergen-status,
+html[data-theme='light'] .gmp-theme-toggle__icon,
+html[data-theme='light'] .nav-wrapper::after,
+html[data-theme='light'] .nav-bar::after,
+html[data-theme='light'] .nav-scroll-progress,
+html[data-theme='light'] .nav-progress {
+  color: var(--gmp-theme-gold) !important;
+}
+
+html[data-theme='light'] .nav-wrapper::after,
+html[data-theme='light'] .nav-bar::after,
+html[data-theme='light'] .nav-scroll-progress,
+html[data-theme='light'] .nav-progress {
+  background: var(--gmp-theme-gold) !important;
+}
+
+html[data-theme='light'] .menu-item,
+html[data-theme='light'] .gmp-search,
+html[data-theme='light'] .gmp-search-panel,
+html[data-theme='light'] .gmp-favorites,
+html[data-theme='light'] .gmp-favorites-bar,
+html[data-theme='light'] .gmp-modal__card {
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.07) !important;
+}
+
+/* ------------------------------------------------------------
+   SPRINT 8 NAV EDGE FIX
+   Sağ üstte görünen altın/kare blok, eski navigasyon edge pseudo
+   elementinin tema rengini yanlış yüzeye taşımasından kaynaklanır.
+   Gold renkler korunur; yalnızca kenardaki kare/kapak kapatılır.
+   ------------------------------------------------------------ */
+html[data-theme] .nav-wrapper::after,
+html[data-theme] .nav-bar::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='light'] .nav-wrapper,
+html[data-theme='light'] .nav-bar,
+html[data-theme='light'] header,
+html[data-theme='light'] .header,
+html[data-theme='light'] .navbar {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html[data-theme='light'] .nav-scroll-progress,
+html[data-theme='light'] .nav-progress {
+  background: var(--gmp-theme-gold) !important;
+}

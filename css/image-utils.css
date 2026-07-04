@@ -1,0 +1,12 @@
+/*
+ * GÖNCÜ MENU PRO - Safe Image Utilities CSS
+ * Layout'a müdahale etmez; sadece eksik görseller için hafif arka plan verir.
+ */
+
+img.gm-image-resolved {
+  opacity: 1;
+}
+
+img.gm-image-missing {
+  background: #ffffff;
+}
