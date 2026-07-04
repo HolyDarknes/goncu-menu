@@ -1,481 +1,514 @@
-/* ============================================================
-   GÖNCÜ MENU PRO - Sprint 1 Premium Modal Styles
-   ------------------------------------------------------------
-   Mevcut menü tasarımını bozmadan .menu-item kartlarına premium
-   glassmorphism popup deneyimi ekler.
-   ============================================================ */
+/**
+ * GÖNCÜ MENU PRO - Sprint 1 Modal System
+ * ------------------------------------------------------------
+ * Vanilla JavaScript ile çalışan premium ürün popup sistemi.
+ * Mevcut index.html içindeki .menu-item yapısını bozmadan okur,
+ * modal HTML'ini otomatik oluşturur ve ürün verilerini kartlardan çeker.
+ *
+ * Desteklenen mevcut HTML alanları:
+ * - .menu-item
+ * - .item-image
+ * - .item-name
+ * - .item-price
+ * - .item-description
+ * - .menu-section > .section-title
+ */
+(() => {
+  'use strict';
 
-:root {
-  --gmp-gold: #c3a148;
-  --gmp-gold-strong: #d9b86c;
-  --gmp-bg: rgba(9, 10, 14, 0.72);
-  --gmp-card: rgba(20, 22, 29, 0.78);
-  --gmp-card-light: rgba(255, 255, 255, 0.08);
-  --gmp-card-border: rgba(255, 255, 255, 0.14);
-  --gmp-text: #f6f1e7;
-  --gmp-muted: rgba(246, 241, 231, 0.68);
-  --gmp-soft: rgba(195, 161, 72, 0.12);
-  --gmp-danger: #ff6b6b;
-  --gmp-radius-lg: 30px;
-  --gmp-radius-md: 20px;
-  --gmp-radius-sm: 14px;
-  --gmp-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
-  --gmp-transition: 220ms ease;
-}
+  const SELECTORS = Object.freeze({
+    menuItem: '.menu-item',
+    itemImage: '.item-image',
+    itemName: '.item-name',
+    itemPrice: '.item-price',
+    itemDescription: '.item-description',
+    section: '.menu-section',
+    sectionTitle: '.section-title',
+    activeLangButton: '.lang-btn.active',
+  });
 
-body.gmp-modal-open {
-  overflow: hidden;
-  touch-action: none;
-}
+  const CSS = Object.freeze({
+    open: 'is-open',
+    closing: 'is-closing',
+    imageZoomed: 'is-zoomed',
+    bodyLocked: 'gmp-modal-open',
+    ready: 'gmp-ready',
+  });
 
-.menu-item.gmp-ready {
-  cursor: pointer;
-  position: relative;
-  isolation: isolate;
-}
+  const SWIPE_THRESHOLD = 48;
+  const EMPTY_TEXT = 'Detay bilgisi yakında eklenecek.';
 
-.menu-item.gmp-ready::after {
-  content: 'Detay';
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 2;
-  padding: 6px 10px;
-  border: 1px solid rgba(195, 161, 72, 0.35);
-  border-radius: 999px;
-  background: rgba(11, 12, 16, 0.72);
-  color: var(--gmp-gold-strong);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity var(--gmp-transition), transform var(--gmp-transition);
-  pointer-events: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
+  let state = {
+    items: [],
+    currentIndex: -1,
+    lastFocusedElement: null,
+    touchStartX: 0,
+    touchStartY: 0,
+    isPointerDown: false,
+  };
 
-.menu-item.gmp-ready:hover::after,
-.menu-item.gmp-ready:focus-visible::after {
-  opacity: 1;
-  transform: translateY(0);
-}
+  let elements = {};
 
-.menu-item.gmp-ready:focus-visible {
-  outline: 2px solid rgba(195, 161, 72, 0.72);
-  outline-offset: 3px;
-}
+  /**
+   * Fazla boşlukları temizleyerek kullanıcıya düzenli metin gösterir.
+   * @param {string} value
+   * @returns {string}
+   */
+  const normalizeText = (value = '') => value.replace(/\s+/g, ' ').trim();
 
-.gmp-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--gmp-transition);
-}
+  /**
+   * Türkçe karakterleri de güvenli şekilde slug formatına çevirir.
+   * Sprint 2'de nutrition.json eşleşmeleri için aynı anahtar kullanılacak.
+   * @param {string} value
+   * @returns {string}
+   */
+  const slugify = (value = '') => normalizeText(value)
+    .toLocaleLowerCase('tr-TR')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ı/g, 'i')
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
-.gmp-modal.is-open,
-.gmp-modal.is-closing {
-  opacity: 1;
-  pointer-events: auto;
-}
+  /**
+   * Aktif dili mevcut TR/EN butonlarından ya da html lang değerinden algılar.
+   * @returns {'tr' | 'en' | string}
+   */
+  const getActiveLanguage = () => {
+    const activeButton = document.querySelector(SELECTORS.activeLangButton);
+    return activeButton?.dataset?.langTrigger || document.documentElement.lang || 'tr';
+  };
 
-.gmp-modal__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(195, 161, 72, 0.18), transparent 34%),
-    radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.08), transparent 34%),
-    var(--gmp-bg);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-}
+  /**
+   * İçinde data-lang bulunan alanlarda aktif dildeki metni alır.
+   * data-lang yoksa normal textContent döner.
+   * @param {Element|null} node
+   * @returns {string}
+   */
+  const getLocalizedText = (node) => {
+    if (!node) return '';
+    const activeLanguage = getActiveLanguage();
+    const translatedNode = node.querySelector(`[data-lang="${activeLanguage}"]`);
+    return normalizeText(translatedNode?.textContent || node.textContent || '');
+  };
 
-.gmp-modal__card {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(320px, 0.95fr) minmax(340px, 1fr);
-  width: min(1080px, 94vw);
-  max-height: min(760px, 92vh);
-  overflow: hidden;
-  border: 1px solid var(--gmp-card-border);
-  border-radius: var(--gmp-radius-lg);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-    var(--gmp-card);
-  color: var(--gmp-text);
-  box-shadow: var(--gmp-shadow);
-  transform: translateY(16px) scale(0.98);
-  transition: transform var(--gmp-transition), opacity var(--gmp-transition);
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
-  outline: none;
-}
+  /**
+   * Bir ürün kartından modal için gerekli tüm bilgileri okur.
+   * HTML yapısını değiştirmez; sadece mevcut DOM üzerinden veri çeker.
+   * @param {HTMLElement} item
+   * @returns {object}
+   */
+  const extractProductData = (item) => {
+    const image = item.querySelector(SELECTORS.itemImage);
+    const nameNode = item.querySelector(SELECTORS.itemName);
+    const priceNode = item.querySelector(SELECTORS.itemPrice);
+    const descriptionNode = item.querySelector(SELECTORS.itemDescription);
+    const section = item.closest(SELECTORS.section);
+    const categoryNode = section?.querySelector(SELECTORS.sectionTitle);
 
-.gmp-modal.is-open .gmp-modal__card {
-  transform: translateY(0) scale(1);
-}
+    const name = getLocalizedText(nameNode) || normalizeText(image?.alt || 'Ürün');
+    const description = getLocalizedText(descriptionNode) || EMPTY_TEXT;
+    const category = getLocalizedText(categoryNode) || 'Menü';
 
-.gmp-modal.is-closing .gmp-modal__card {
-  transform: translateY(12px) scale(0.985);
-}
+    return {
+      id: item.dataset.productId || slugify(name),
+      name,
+      price: normalizeText(priceNode?.textContent || ''),
+      description,
+      category,
+      imageSrc: image?.getAttribute('src') || '',
+      imageAlt: image?.getAttribute('alt') || name,
+      rawElement: item,
+    };
+  };
 
-.gmp-modal__media {
-  position: relative;
-  min-height: 520px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-}
+  /**
+   * Modal HTML'ini tek sefer oluşturur. Böylece index.html içine ekstra modal
+   * bloğu eklemeye gerek kalmaz.
+   * @returns {HTMLElement}
+   */
+  const createModalMarkup = () => {
+    const modal = document.createElement('div');
+    modal.id = 'productModal';
+    modal.className = 'gmp-modal product-modal';
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
 
-.gmp-modal__media::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0;
-  height: 42%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.52), transparent);
-  pointer-events: none;
-}
+    modal.innerHTML = `
+      <div class="gmp-modal__overlay modal-overlay" data-gmp-close></div>
+      <article class="gmp-modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" tabindex="-1">
+        <button class="gmp-modal__close modal-close" type="button" aria-label="Popup kapat" data-gmp-close>
+          <span aria-hidden="true">×</span>
+        </button>
 
-.gmp-modal__image {
-  width: 100%;
-  height: 100%;
-  min-height: 520px;
-  display: block;
-  object-fit: cover;
-  transform: scale(1);
-  transition: transform 360ms ease, filter 360ms ease;
-  user-select: none;
-  cursor: zoom-in;
-}
+        <button class="gmp-modal__nav gmp-modal__nav--prev" type="button" aria-label="Önceki ürün" data-gmp-prev>
+          <span aria-hidden="true">‹</span>
+        </button>
 
-.gmp-modal__card.is-zoomed .gmp-modal__image {
-  transform: scale(1.22);
-  filter: contrast(1.04) saturate(1.08);
-  cursor: zoom-out;
-}
+        <figure class="gmp-modal__media">
+          <img id="modalImage" class="gmp-modal__image" src="" alt="" decoding="async">
+          <figcaption class="gmp-modal__image-hint">Görsele dokunarak yakınlaştır</figcaption>
+        </figure>
 
-.gmp-modal__image-hint {
-  position: absolute;
-  left: 22px;
-  bottom: 22px;
-  z-index: 1;
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.34);
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 12px;
-  font-weight: 600;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
+        <section class="gmp-modal__content">
+          <div class="gmp-modal__eyebrow" id="modalCategory">Menü</div>
+          <div class="gmp-modal__heading-row">
+            <h2 id="modalTitle" class="gmp-modal__title"></h2>
+            <div id="modalPrice" class="gmp-modal__price"></div>
+          </div>
+          <p id="modalDescription" class="gmp-modal__description"></p>
 
-.gmp-modal__content {
-  overflow: auto;
-  padding: clamp(26px, 4vw, 46px);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(195, 161, 72, 0.45) transparent;
-}
+          <div class="gmp-modal__meta" aria-label="Ürün bilgileri">
+            <span class="gmp-chip" data-gmp-product-order></span>
+            <span class="gmp-chip">Premium Menü</span>
+          </div>
 
-.gmp-modal__content::-webkit-scrollbar {
-  width: 7px;
-}
+          <div class="gmp-modal__nutrition" data-gmp-nutrition hidden>
+            <h3>Besin Değerleri</h3>
+            <div class="gmp-nutrition-grid" data-gmp-nutrition-grid></div>
+          </div>
 
-.gmp-modal__content::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: rgba(195, 161, 72, 0.45);
-}
+          <div class="gmp-modal__allergens" data-gmp-allergens hidden>
+            <h3>Alerjenler</h3>
+            <div class="gmp-allergen-list" data-gmp-allergen-list></div>
+          </div>
+        </section>
 
-.gmp-modal__eyebrow {
-  width: fit-content;
-  margin-bottom: 16px;
-  padding: 8px 12px;
-  border: 1px solid rgba(195, 161, 72, 0.3);
-  border-radius: 999px;
-  background: var(--gmp-soft);
-  color: var(--gmp-gold-strong);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+        <button class="gmp-modal__nav gmp-modal__nav--next" type="button" aria-label="Sonraki ürün" data-gmp-next>
+          <span aria-hidden="true">›</span>
+        </button>
+      </article>
+    `;
 
-.gmp-modal__heading-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 18px;
-  align-items: start;
-  margin-bottom: 18px;
-}
+    document.body.appendChild(modal);
+    return modal;
+  };
 
-.gmp-modal__title {
-  margin: 0;
-  color: var(--gmp-text);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(34px, 4.2vw, 58px);
-  font-weight: 600;
-  line-height: 0.96;
-  letter-spacing: -0.02em;
-}
+  /**
+   * Sık kullanılan DOM elemanlarını cache'ler.
+   */
+  const cacheElements = () => {
+    elements.modal = document.getElementById('productModal') || createModalMarkup();
+    elements.card = elements.modal.querySelector('.gmp-modal__card');
+    elements.closeButtons = elements.modal.querySelectorAll('[data-gmp-close]');
+    elements.prevButton = elements.modal.querySelector('[data-gmp-prev]');
+    elements.nextButton = elements.modal.querySelector('[data-gmp-next]');
+    elements.image = elements.modal.querySelector('#modalImage');
+    elements.category = elements.modal.querySelector('#modalCategory');
+    elements.title = elements.modal.querySelector('#modalTitle');
+    elements.price = elements.modal.querySelector('#modalPrice');
+    elements.description = elements.modal.querySelector('#modalDescription');
+    elements.order = elements.modal.querySelector('[data-gmp-product-order]');
+    elements.nutrition = elements.modal.querySelector('[data-gmp-nutrition]');
+    elements.nutritionGrid = elements.modal.querySelector('[data-gmp-nutrition-grid]');
+    elements.allergens = elements.modal.querySelector('[data-gmp-allergens]');
+    elements.allergenList = elements.modal.querySelector('[data-gmp-allergen-list]');
+  };
 
-.gmp-modal__price {
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(195, 161, 72, 0.16);
-  color: var(--gmp-gold-strong);
-  font-size: clamp(18px, 2vw, 24px);
-  font-weight: 800;
-  white-space: nowrap;
-  box-shadow: inset 0 0 0 1px rgba(195, 161, 72, 0.2);
-}
+  /**
+   * Ürün görsellerine lazy loading ve async decode ekler.
+   */
+  const prepareImages = () => {
+    document.querySelectorAll(SELECTORS.itemImage).forEach((image) => {
+      image.loading = image.loading || 'lazy';
+      image.decoding = image.decoding || 'async';
+    });
+  };
 
-.gmp-modal__description {
-  margin: 0 0 22px;
-  color: var(--gmp-muted);
-  font-size: 15px;
-  line-height: 1.75;
-}
+  /**
+   * Tüm ürünleri yeniden toplar. İleride HTML'e yeni ürün eklenirse tekrar
+   * çağrıldığında otomatik dahil olur.
+   */
+  const collectItems = () => {
+    state.items = Array.from(document.querySelectorAll(SELECTORS.menuItem));
 
-.gmp-modal__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 0 0 24px;
-}
+    state.items.forEach((item, index) => {
+      item.dataset.gmpIndex = String(index);
+      item.classList.add(CSS.ready);
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-label', `${getLocalizedText(item.querySelector(SELECTORS.itemName)) || 'Ürün'} detayını aç`);
+    });
+  };
 
-.gmp-chip,
-.gmp-allergen-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(246, 241, 231, 0.82);
-  font-size: 12px;
-  font-weight: 700;
-}
+  /**
+   * Sprint 2 için hazır bağlantı noktasıdır. window.GoncuNutrition varsa
+   * besin değerlerini modal içinde gösterir; yoksa alanı gizler.
+   * @param {object} product
+   */
+  const renderNutrition = (product) => {
+    const api = window.GoncuNutrition;
+    const nutrition = typeof api?.getByProductName === 'function'
+      ? api.getByProductName(product.name)
+      : null;
 
-.gmp-modal__nutrition,
-.gmp-modal__allergens {
-  margin-top: 22px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+    if (!nutrition || !elements.nutritionGrid) {
+      elements.nutrition.hidden = true;
+      return;
+    }
 
-.gmp-modal__nutrition h3,
-.gmp-modal__allergens h3 {
-  margin: 0 0 14px;
-  color: var(--gmp-text);
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+    const nutritionRows = [
+      ['Kalori', nutrition.calories, 'kcal'],
+      ['Protein', nutrition.protein, 'g'],
+      ['Karbonhidrat', nutrition.carbohydrate, 'g'],
+      ['Yağ', nutrition.fat, 'g'],
+      ['Doymuş Yağ', nutrition.saturatedFat, 'g'],
+      ['Şeker', nutrition.sugar, 'g'],
+      ['Lif', nutrition.fiber, 'g'],
+      ['Tuz', nutrition.salt, 'g'],
+      ['Porsiyon', nutrition.portion, ''],
+    ].filter(([, value]) => value !== undefined && value !== null && value !== '');
 
-.gmp-nutrition-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
+    elements.nutritionGrid.innerHTML = nutritionRows.map(([label, value, unit]) => `
+      <div class="gmp-nutrition-item">
+        <span>${label}</span>
+        <strong>${value}${unit ? ` ${unit}` : ''}</strong>
+      </div>
+    `).join('');
 
-.gmp-nutrition-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--gmp-radius-sm);
-  background: rgba(255, 255, 255, 0.055);
-}
+    elements.nutrition.hidden = nutritionRows.length === 0;
+  };
 
-.gmp-nutrition-item span {
-  color: var(--gmp-muted);
-  font-size: 13px;
-}
+  /**
+   * Sprint 3 için hazır bağlantı noktasıdır. window.GoncuNutrition varsa
+   * alerjen listesini modal içinde ikonlu gösterir; yoksa alanı gizler.
+   * @param {object} product
+   */
+  const renderAllergens = (product) => {
+    const api = window.GoncuNutrition;
+    const nutrition = typeof api?.getByProductName === 'function'
+      ? api.getByProductName(product.name)
+      : null;
 
-.gmp-nutrition-item strong {
-  color: var(--gmp-text);
-  font-size: 13px;
-  white-space: nowrap;
-}
+    if (!nutrition?.allergens?.length || !elements.allergenList) {
+      elements.allergens.hidden = true;
+      return;
+    }
 
-.gmp-allergen-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    elements.allergenList.innerHTML = nutrition.allergens.map((allergen) => `
+      <span class="gmp-allergen-pill">${allergen.icon || '•'} ${allergen.name || allergen}</span>
+    `).join('');
 
-.gmp-modal__close,
-.gmp-modal__nav {
-  appearance: none;
-  border: 0;
-  cursor: pointer;
-  transition: transform var(--gmp-transition), background var(--gmp-transition), opacity var(--gmp-transition);
-}
+    elements.allergens.hidden = false;
+  };
 
-.gmp-modal__close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 4;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.42);
-  color: #fff;
-  font-size: 28px;
-  line-height: 1;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
+  /**
+   * Modal içeriğini seçilen ürüne göre yeniler.
+   * @param {number} index
+   */
+  const renderProduct = (index) => {
+    const item = state.items[index];
+    if (!item) return;
 
-.gmp-modal__close:hover,
-.gmp-modal__nav:hover {
-  transform: translateY(-1px) scale(1.04);
-  background: rgba(195, 161, 72, 0.28);
-}
+    const product = extractProductData(item);
+    state.currentIndex = index;
 
-.gmp-modal__close:focus-visible,
-.gmp-modal__nav:focus-visible {
-  outline: 2px solid var(--gmp-gold-strong);
-  outline-offset: 3px;
-}
+    elements.card.classList.remove(CSS.imageZoomed);
+    elements.image.src = product.imageSrc;
+    elements.image.alt = product.imageAlt || product.name;
+    elements.category.textContent = product.category;
+    elements.title.textContent = product.name;
+    elements.price.textContent = product.price;
+    elements.description.textContent = product.description;
+    elements.order.textContent = `${index + 1} / ${state.items.length}`;
 
-.gmp-modal__nav {
-  position: absolute;
-  top: 50%;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.34);
-  color: #fff;
-  font-size: 38px;
-  transform: translateY(-50%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
+    elements.prevButton.disabled = state.items.length < 2;
+    elements.nextButton.disabled = state.items.length < 2;
 
-.gmp-modal__nav--prev {
-  left: 16px;
-}
+    renderNutrition(product);
+    renderAllergens(product);
+  };
 
-.gmp-modal__nav--next {
-  right: 16px;
-}
+  /**
+   * Modalı seçili ürünle açar.
+   * @param {number} index
+   */
+  const openModal = (index) => {
+    if (!state.items[index]) return;
 
-.gmp-modal__nav:disabled {
-  opacity: 0.24;
-  cursor: not-allowed;
-}
+    state.lastFocusedElement = document.activeElement;
+    renderProduct(index);
 
-@media (max-width: 920px) {
-  .gmp-modal {
-    padding: 0;
-    align-items: stretch;
+    elements.modal.hidden = false;
+    requestAnimationFrame(() => {
+      elements.modal.classList.add(CSS.open);
+      elements.modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add(CSS.bodyLocked);
+      elements.card.focus({ preventScroll: true });
+    });
+  };
+
+  /**
+   * Modalı yumuşak animasyonla kapatır.
+   */
+  const closeModal = () => {
+    if (!elements.modal.classList.contains(CSS.open)) return;
+
+    elements.modal.classList.add(CSS.closing);
+    elements.modal.classList.remove(CSS.open);
+    elements.modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove(CSS.bodyLocked);
+
+    window.setTimeout(() => {
+      elements.modal.classList.remove(CSS.closing);
+      elements.modal.hidden = true;
+      elements.image.removeAttribute('src');
+      state.lastFocusedElement?.focus?.({ preventScroll: true });
+    }, 220);
+  };
+
+  /**
+   * Ürünler arasında ileri/geri geçiş yapar.
+   * @param {1|-1} direction
+   */
+  const navigateProduct = (direction) => {
+    if (state.items.length < 2) return;
+    const nextIndex = (state.currentIndex + direction + state.items.length) % state.items.length;
+    renderProduct(nextIndex);
+  };
+
+  /**
+   * Modal açıkken Tab odağını dialog içinde tutar.
+   * @param {KeyboardEvent} event
+   */
+  const trapFocus = (event) => {
+    if (event.key !== 'Tab' || !elements.modal.classList.contains(CSS.open)) return;
+
+    const focusable = Array.from(elements.modal.querySelectorAll(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    ));
+
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  /**
+   * Klavye kısayollarını yönetir.
+   * @param {KeyboardEvent} event
+   */
+  const handleKeyboard = (event) => {
+    if (!elements.modal.classList.contains(CSS.open)) return;
+
+    if (event.key === 'Escape') closeModal();
+    if (event.key === 'ArrowLeft') navigateProduct(-1);
+    if (event.key === 'ArrowRight') navigateProduct(1);
+    trapFocus(event);
+  };
+
+  /**
+   * Mobil swipe hareketini başlatır.
+   * @param {PointerEvent|TouchEvent} event
+   */
+  const handlePointerStart = (event) => {
+    const point = event.touches?.[0] || event;
+    state.touchStartX = point.clientX;
+    state.touchStartY = point.clientY;
+    state.isPointerDown = true;
+  };
+
+  /**
+   * Mobil swipe hareketini tamamlar.
+   * @param {PointerEvent|TouchEvent} event
+   */
+  const handlePointerEnd = (event) => {
+    if (!state.isPointerDown) return;
+
+    const point = event.changedTouches?.[0] || event;
+    const diffX = point.clientX - state.touchStartX;
+    const diffY = point.clientY - state.touchStartY;
+
+    state.isPointerDown = false;
+
+    if (Math.abs(diffX) < SWIPE_THRESHOLD || Math.abs(diffX) < Math.abs(diffY)) return;
+    navigateProduct(diffX < 0 ? 1 : -1);
+  };
+
+  /**
+   * Kullanıcı etkileşimlerini tek merkezden bağlar.
+   */
+  const bindEvents = () => {
+    document.addEventListener('click', (event) => {
+      const item = event.target.closest(SELECTORS.menuItem);
+      if (!item || elements.modal.contains(event.target)) return;
+      openModal(Number(item.dataset.gmpIndex));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const item = event.target.closest?.(SELECTORS.menuItem);
+      if (item && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        openModal(Number(item.dataset.gmpIndex));
+        return;
+      }
+
+      handleKeyboard(event);
+    });
+
+    elements.closeButtons.forEach((button) => button.addEventListener('click', closeModal));
+    elements.prevButton.addEventListener('click', () => navigateProduct(-1));
+    elements.nextButton.addEventListener('click', () => navigateProduct(1));
+    elements.image.addEventListener('click', () => elements.card.classList.toggle(CSS.imageZoomed));
+
+    elements.card.addEventListener('pointerdown', handlePointerStart, { passive: true });
+    elements.card.addEventListener('pointerup', handlePointerEnd, { passive: true });
+    elements.card.addEventListener('touchstart', handlePointerStart, { passive: true });
+    elements.card.addEventListener('touchend', handlePointerEnd, { passive: true });
+
+    window.addEventListener('resize', () => {
+      if (elements.modal.classList.contains(CSS.open)) elements.card.focus({ preventScroll: true });
+    });
+  };
+
+  /**
+   * Dışarıdan ürünler güncellenirse manuel yenileme imkanı verir.
+   */
+  const exposePublicApi = () => {
+    window.GoncuMenuModal = Object.freeze({
+      refresh() {
+        prepareImages();
+        collectItems();
+      },
+      openByIndex(index) {
+        openModal(Number(index));
+      },
+      close() {
+        closeModal();
+      },
+      getItems() {
+        return state.items.map(extractProductData);
+      },
+    });
+  };
+
+  /**
+   * Modal sistemini başlatır.
+   */
+  const init = () => {
+    cacheElements();
+    prepareImages();
+    collectItems();
+    bindEvents();
+    exposePublicApi();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
   }
-
-  .gmp-modal__card {
-    width: 100vw;
-    height: 100dvh;
-    max-height: none;
-    grid-template-columns: 1fr;
-    grid-template-rows: 45dvh 1fr;
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
-  }
-
-  .gmp-modal__media {
-    min-height: 0;
-  }
-
-  .gmp-modal__image {
-    min-height: 45dvh;
-  }
-
-  .gmp-modal__content {
-    padding: 24px 18px 34px;
-  }
-
-  .gmp-modal__heading-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .gmp-modal__price {
-    width: fit-content;
-  }
-
-  .gmp-modal__nav {
-    top: 22.5dvh;
-    width: 42px;
-    height: 42px;
-    font-size: 32px;
-  }
-
-  .gmp-modal__nav--prev {
-    left: 12px;
-  }
-
-  .gmp-modal__nav--next {
-    right: 12px;
-  }
-
-  .gmp-modal__image-hint {
-    display: none;
-  }
-
-  .gmp-nutrition-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .menu-item.gmp-ready::after {
-    display: none;
-  }
-
-  .gmp-modal__close {
-    top: 12px;
-    right: 12px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .gmp-modal__title {
-    font-size: 34px;
-  }
-
-  .gmp-modal__description {
-    font-size: 14px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gmp-modal,
-  .gmp-modal__card,
-  .gmp-modal__image,
-  .menu-item.gmp-ready::after,
-  .gmp-modal__close,
-  .gmp-modal__nav {
-    transition: none !important;
-    animation: none !important;
-  }
-}
+})();
