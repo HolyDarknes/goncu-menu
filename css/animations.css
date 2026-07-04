@@ -1,0 +1,447 @@
+/* ============================================================
+   GÖNCÜ MENU PRO - SPRINT 6
+   Premium Animation System
+   ------------------------------------------------------------
+   Amaç:
+   - Mevcut HTML yapısını bozmadan premium mikro animasyonlar eklemek.
+   - Ürün kartları, kategori başlıkları, arama paneli ve popup için
+     yumuşak, performans dostu hareketler sağlamak.
+   - Mobil cihazlarda hızlı çalışmak için transform/opacity odaklı
+     animasyonlar kullanmak.
+   - Erişilebilirlik için prefers-reduced-motion ayarına saygı duymak.
+
+   Not:
+   Bu dosya override/iyileştirme dosyasıdır. modal.css, search.css ve
+   responsive.css dosyalarından sonra yüklenmelidir.
+   ============================================================ */
+
+:root {
+  --gmp-anim-fast: 160ms;
+  --gmp-anim-normal: 260ms;
+  --gmp-anim-slow: 520ms;
+  --gmp-anim-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gmp-anim-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --gmp-anim-gold: rgba(214, 178, 94, 0.42);
+  --gmp-anim-gold-soft: rgba(214, 178, 94, 0.18);
+  --gmp-anim-card-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+}
+
+/* JS hazır olduğunda sayfa genelinde animasyon katmanı aktif olur. */
+html.gmp-anim-html-ready {
+  scroll-behavior: smooth;
+}
+
+body.gmp-anim-ready .nav-wrapper {
+  animation: gmp-nav-drop var(--gmp-anim-slow) var(--gmp-anim-ease-soft) both;
+}
+
+body.gmp-anim-ready .gmp-search {
+  animation: gmp-search-enter var(--gmp-anim-slow) var(--gmp-anim-ease-soft) 80ms both;
+}
+
+/* Bölüm başlıkları ve kartlar görünür alana girince açılır. */
+.gmp-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.985);
+  transition:
+    opacity var(--gmp-anim-slow) var(--gmp-anim-ease-soft),
+    transform var(--gmp-anim-slow) var(--gmp-anim-ease-soft),
+    filter var(--gmp-anim-slow) var(--gmp-anim-ease-soft);
+  transition-delay: calc(var(--gmp-stagger, 0) * 32ms);
+  will-change: opacity, transform;
+}
+
+.gmp-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.menu-section.gmp-reveal {
+  transform: translate3d(0, 14px, 0);
+}
+
+.section-title.gmp-reveal,
+.menu-section > h2.gmp-reveal,
+.menu-section > h3.gmp-reveal {
+  transform: translate3d(-8px, 10px, 0);
+}
+
+/* Ürün kartı mikro etkileşimleri. */
+.menu-item {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition:
+    transform var(--gmp-anim-normal) var(--gmp-anim-ease),
+    box-shadow var(--gmp-anim-normal) var(--gmp-anim-ease),
+    border-color var(--gmp-anim-normal) var(--gmp-anim-ease),
+    filter var(--gmp-anim-normal) var(--gmp-anim-ease),
+    opacity var(--gmp-anim-normal) var(--gmp-anim-ease);
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at var(--gmp-pointer-x, 50%) var(--gmp-pointer-y, 50%), rgba(255, 255, 255, 0.16), transparent 30%),
+    linear-gradient(135deg, rgba(214, 178, 94, 0.14), transparent 42%);
+  opacity: 0;
+  transition: opacity var(--gmp-anim-normal) var(--gmp-anim-ease);
+  pointer-events: none;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: var(--gmp-anim-card-shadow);
+}
+
+.menu-item:hover::before,
+.menu-item:focus-visible::before {
+  opacity: 1;
+}
+
+.menu-item:active {
+  transform: translate3d(0, -1px, 0) scale(0.992);
+}
+
+.item-image,
+.menu-item img {
+  transition:
+    transform 520ms var(--gmp-anim-ease-soft),
+    filter 520ms var(--gmp-anim-ease-soft),
+    opacity var(--gmp-anim-normal) var(--gmp-anim-ease);
+  transform-origin: center center;
+}
+
+.menu-item:hover .item-image,
+.menu-item:focus-visible .item-image,
+.menu-item:hover img,
+.menu-item:focus-visible img {
+  transform: scale(1.035);
+  filter: saturate(1.06) contrast(1.03);
+}
+
+/* Görsel yüklenme hissini daha temiz hale getirir. */
+.item-image:not(.gmp-img-loaded),
+.menu-item img:not(.gmp-img-loaded) {
+  opacity: 0.72;
+  filter: blur(3px) saturate(0.9);
+}
+
+.item-image.gmp-img-loaded,
+.menu-item img.gmp-img-loaded {
+  opacity: 1;
+  filter: none;
+}
+
+/* Tıklama dalgası: JS tek bir span üretir, DOM'u şişirmez. */
+.gmp-ripple {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: var(--gmp-ripple-x, 50%);
+  top: var(--gmp-ripple-y, 50%);
+  z-index: 1;
+  border-radius: 999px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.38), rgba(214, 178, 94, 0.28) 42%, transparent 68%);
+  transform: translate(-50%, -50%) scale(0.35);
+  animation: gmp-ripple 620ms var(--gmp-anim-ease-soft) forwards;
+  mix-blend-mode: screen;
+}
+
+/* Arama sırasında ürünlerin saklanması daha yumuşak görünür. */
+.gmp-search-hidden {
+  opacity: 0 !important;
+  transform: scale(0.965) translate3d(0, 10px, 0) !important;
+  pointer-events: none !important;
+}
+
+.gmp-search-match {
+  animation: gmp-match-pop 340ms var(--gmp-anim-ease-soft) both;
+}
+
+.gmp-search__field,
+.gmp-search__reset,
+.gmp-search__clear,
+.lang-btn,
+.nav-link,
+.gmp-modal__close,
+.gmp-modal__nav {
+  transition:
+    transform var(--gmp-anim-fast) var(--gmp-anim-ease),
+    box-shadow var(--gmp-anim-fast) var(--gmp-anim-ease),
+    background var(--gmp-anim-fast) var(--gmp-anim-ease),
+    border-color var(--gmp-anim-fast) var(--gmp-anim-ease),
+    color var(--gmp-anim-fast) var(--gmp-anim-ease),
+    opacity var(--gmp-anim-fast) var(--gmp-anim-ease);
+}
+
+.gmp-search__reset:hover,
+.gmp-search__clear:hover,
+.lang-btn:hover,
+.nav-link:hover,
+.gmp-modal__close:hover,
+.gmp-modal__nav:hover {
+  transform: translateY(-1px);
+}
+
+.nav-link.is-active,
+.nav-link.active,
+.lang-btn.active {
+  animation: gmp-soft-pulse 1200ms var(--gmp-anim-ease-soft) both;
+}
+
+/* Modal içeriği için ek premium hissiyat. Mevcut modal.css üzerine çalışır. */
+.gmp-modal.is-open .gmp-modal__card {
+  animation: gmp-modal-card-in 320ms var(--gmp-anim-ease-soft) both;
+}
+
+.gmp-modal.is-closing .gmp-modal__card {
+  animation: gmp-modal-card-out 220ms ease both;
+}
+
+.gmp-modal.is-open .gmp-modal__media,
+.gmp-modal.is-open .gmp-modal__content {
+  animation: gmp-panel-fade 420ms var(--gmp-anim-ease-soft) both;
+}
+
+.gmp-modal.is-open .gmp-modal__content {
+  animation-delay: 70ms;
+}
+
+.gmp-modal__image {
+  will-change: transform;
+}
+
+.gmp-nutrition-item,
+.gmp-allergen-pill,
+.gmp-chip {
+  animation: gmp-chip-enter 360ms var(--gmp-anim-ease-soft) both;
+}
+
+.gmp-nutrition-item:nth-child(2),
+.gmp-allergen-pill:nth-child(2) { animation-delay: 28ms; }
+.gmp-nutrition-item:nth-child(3),
+.gmp-allergen-pill:nth-child(3) { animation-delay: 56ms; }
+.gmp-nutrition-item:nth-child(4),
+.gmp-allergen-pill:nth-child(4) { animation-delay: 84ms; }
+.gmp-nutrition-item:nth-child(5),
+.gmp-allergen-pill:nth-child(5) { animation-delay: 112ms; }
+.gmp-nutrition-item:nth-child(6),
+.gmp-allergen-pill:nth-child(6) { animation-delay: 140ms; }
+.gmp-nutrition-item:nth-child(7),
+.gmp-allergen-pill:nth-child(7) { animation-delay: 168ms; }
+.gmp-nutrition-item:nth-child(8),
+.gmp-allergen-pill:nth-child(8) { animation-delay: 196ms; }
+.gmp-nutrition-item:nth-child(9),
+.gmp-allergen-pill:nth-child(9) { animation-delay: 224ms; }
+
+/* Loading / parıltı efekti: abartısız premium highlight. */
+.gmp-modal__price,
+.item-price {
+  position: relative;
+  overflow: hidden;
+}
+
+.gmp-modal__price::after,
+.item-price::after {
+  content: '';
+  position: absolute;
+  inset: -30% auto -30% -55%;
+  width: 38%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.menu-item:hover .item-price::after,
+.gmp-modal.is-open .gmp-modal__price::after {
+  animation: gmp-shine 1250ms var(--gmp-anim-ease-soft) 120ms both;
+}
+
+/* Mobilde hover animasyonları daha sakin; dokunma performansı öncelikli. */
+@media (hover: none) {
+  .menu-item:hover,
+  .menu-item:focus-visible {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  .menu-item:hover .item-image,
+  .menu-item:focus-visible .item-image,
+  .menu-item:hover img,
+  .menu-item:focus-visible img {
+    transform: none;
+    filter: none;
+  }
+
+  .gmp-search__reset:hover,
+  .gmp-search__clear:hover,
+  .lang-btn:hover,
+  .nav-link:hover,
+  .gmp-modal__close:hover,
+  .gmp-modal__nav:hover {
+    transform: none;
+  }
+}
+
+/* Kısa ekranlarda hareketleri daha küçük tutar. */
+@media (max-height: 720px) {
+  .gmp-reveal {
+    transform: translate3d(0, 10px, 0);
+    transition-duration: 360ms;
+  }
+
+  .gmp-modal.is-open .gmp-modal__card {
+    animation-duration: 240ms;
+  }
+}
+
+/* Erişilebilirlik: kullanıcı hareket azaltmayı tercih ederse tüm animasyonları kapat. */
+@media (prefers-reduced-motion: reduce) {
+  html.gmp-anim-html-ready {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .gmp-reveal,
+  .gmp-reveal.is-visible,
+  .gmp-search-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .gmp-ripple {
+    display: none !important;
+  }
+}
+
+@keyframes gmp-nav-drop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes gmp-search-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes gmp-modal-card-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(0.965);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes gmp-modal-card-out {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.975);
+  }
+}
+
+@keyframes gmp-panel-fade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes gmp-chip-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes gmp-ripple {
+  from {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(18);
+  }
+}
+
+@keyframes gmp-match-pop {
+  0% {
+    transform: scale(0.985);
+  }
+  70% {
+    transform: scale(1.012);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes gmp-soft-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--gmp-anim-gold-soft);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(214, 178, 94, 0);
+  }
+}
+
+@keyframes gmp-shine {
+  0% {
+    opacity: 0;
+    left: -60%;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    left: 120%;
+  }
+}
