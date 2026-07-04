@@ -1,0 +1,9 @@
+/*
+ * GÖNCÜ MENU PRO - Safe Optimization CSS
+ * Ürün kartlarını gizleyen veya tıklamayı engelleyen hiçbir kural içermez.
+ */
+.menu-item img,
+.item-image,
+.gm-modal-image {
+  object-fit: cover;
+}
