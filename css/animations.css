@@ -445,3 +445,21 @@ body.gmp-anim-ready .gmp-search {
     left: 120%;
   }
 }
+
+/* ============================================================
+   STABILITY HOTFIX
+   Eski reveal sınıfları sayfayı gizli bırakmasın.
+   ============================================================ */
+.gmp-reveal,
+.gmp-reveal.is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+.menu-item,
+.menu-section,
+.menu-grid,
+.item-image,
+.menu-item img {
+  visibility: visible !important;
+}

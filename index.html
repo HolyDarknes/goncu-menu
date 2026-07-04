@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wens Viento - Dijital Menü</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wens Viento - Dijital Menü</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
         :root {
             --bg-color: #0b0c10;
             --surface-color: rgba(255, 255, 255, 0.03);
@@ -252,846 +253,810 @@
             display: none;
         }
     </style>
-    <link rel="stylesheet" href="css/modal.css">
+<link href="css/modal.css" rel="stylesheet"/>
+<link href="css/search.css" rel="stylesheet"/>
+<link href="css/responsive.css" rel="stylesheet"/>
+<link href="css/animations.css" rel="stylesheet"/>
+<link href="css/favorites.css" rel="stylesheet"/>
+<link href="css/dark-mode.css" rel="stylesheet"/>
 </head>
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/search.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/animations.css">
-<link rel="stylesheet" href="css/favorites.css">
-<link rel="stylesheet" href="css/dark-mode.css">
-<link rel="stylesheet" href="css/optimization.css">
 <body>
-
 <div class="nav-wrapper">
-    <div class="lang-switcher">
-        <button class="lang-btn active" data-lang-trigger="tr" onclick="switchLanguage('tr')">TR</button>
-        <button class="lang-btn" data-lang-trigger="en" onclick="switchLanguage('en')">EN</button>
-    </div>
-    <nav class="nav-bar">
-        <a href="#kahvalti" class="nav-link active"><span data-lang="tr">Kahvaltılar</span><span data-lang="en">Breakfast</span></a>
-        <a href="#baslangic" class="nav-link"><span data-lang="tr">Başlangıçlar</span><span data-lang="en">Starters</span></a>
-        <a href="#bowls" class="nav-link"><span data-lang="tr">Bowl's</span><span data-lang="en">Bowls</span></a>
-        <a href="#salatalar" class="nav-link"><span data-lang="tr">Salatalar</span><span data-lang="en">Salads</span></a>
-        <a href="#atistirmalik" class="nav-link"><span data-lang="tr">Atıştırmalıklar</span><span data-lang="en">Appetizers</span></a>
-        <a href="#makarnalar" class="nav-link"><span data-lang="tr">Makarnalar</span><span data-lang="en">Pastas</span></a>
-        <a href="#hamburgerler" class="nav-link"><span data-lang="tr">Hamburgerler</span><span data-lang="en">Burgers</span></a>
-        <a href="#pizzalar" class="nav-link"><span data-lang="tr">Pizzalar</span><span data-lang="en">Pizzas</span></a>
-        <a href="#anayemek" class="nav-link"><span data-lang="tr">Ana Yemekler</span><span data-lang="en">Main Courses</span></a>
-        <a href="#sicak-kahve" class="nav-link"><span data-lang="tr">Sıcak Kahveler</span><span data-lang="en">Hot Coffees</span></a>
-        <a href="#soguk-kahve" class="nav-link"><span data-lang="tr">Soğuk Kahveler</span><span data-lang="en">Cold Coffees</span></a>
-        <a href="#alkolsuz-kokteyl" class="nav-link"><span data-lang="tr">Alkolsüz Kokteyller</span><span data-lang="en">Mocktails</span></a>
-        <a href="#soft-icecek" class="nav-link"><span data-lang="tr">Soft İçecekler</span><span data-lang="en">Soft Drinks</span></a>
-        <a href="#viskiler" class="nav-link"><span data-lang="tr">Viskiler</span><span data-lang="en">Whiskies</span></a>
-        <a href="#imza-kokteyl" class="nav-link"><span data-lang="tr">İmza Kokteyller</span><span data-lang="en">Signatures</span></a>
-        <a href="#klasik-kokteyl" class="nav-link"><span data-lang="tr">Klasik Kokteyller</span><span data-lang="en">Classics</span></a>
-        <a href="#shotlar" class="nav-link"><span data-lang="tr">Shotlar</span><span data-lang="en">Shots</span></a>
-        <a href="#rakilar" class="nav-link"><span data-lang="tr">Rakılar</span><span data-lang="en">Rakı</span></a>
-        <a href="#biralar" class="nav-link"><span data-lang="tr">Biralar</span><span data-lang="en">Beers</span></a>
-        <a href="#cinler" class="nav-link"><span data-lang="tr">Cin</span><span data-lang="en">Gin</span></a>
-        <a href="#votka" class="nav-link"><span data-lang="tr">Votka</span><span data-lang="en">Vodka</span></a>
-        <a href="#konyak" class="nav-link"><span data-lang="tr">Konyak</span><span data-lang="en">Cognac</span></a>
-        <a href="#rom" class="nav-link"><span data-lang="tr">Rom</span><span data-lang="en">Rum</span></a>
-        <a href="#tekila" class="nav-link"><span data-lang="tr">Tekila</span><span data-lang="en">Tequila</span></a>
-        <a href="#bitter" class="nav-link"><span data-lang="tr">Bitter Alkoller</span><span data-lang="en">Bitters</span></a>
-        <a href="#likor" class="nav-link"><span data-lang="tr">Likörler</span><span data-lang="en">Liqueurs</span></a>
-        <a href="#sampanya" class="nav-link"><span data-lang="tr">Şampanya</span><span data-lang="en">Champagne</span></a>
-        <a href="#kirmizi-sarap" class="nav-link"><span data-lang="tr">Kırmızı Şaraplar</span><span data-lang="en">Red Wines</span></a>
-        <a href="#beyaz-sarap" class="nav-link"><span data-lang="tr">Beyaz Şaraplar</span><span data-lang="en">White Wines</span></a>
-        <a href="#pembe-sarap" class="nav-link"><span data-lang="tr">Pembe Şaraplar</span><span data-lang="en">Rose Wines</span></a>
-        <a href="#dondurma" class="nav-link"><span data-lang="tr">Dondurmalar</span><span data-lang="en">Ice Creams</span></a>
-    </nav>
+<div class="lang-switcher">
+<button class="lang-btn active" data-lang-trigger="tr" onclick="switchLanguage('tr')">TR</button>
+<button class="lang-btn" data-lang-trigger="en" onclick="switchLanguage('en')">EN</button>
 </div>
-
+<nav class="nav-bar">
+<a class="nav-link active" href="#kahvalti"><span data-lang="tr">Kahvaltılar</span><span data-lang="en">Breakfast</span></a>
+<a class="nav-link" href="#baslangic"><span data-lang="tr">Başlangıçlar</span><span data-lang="en">Starters</span></a>
+<a class="nav-link" href="#bowls"><span data-lang="tr">Bowl's</span><span data-lang="en">Bowls</span></a>
+<a class="nav-link" href="#salatalar"><span data-lang="tr">Salatalar</span><span data-lang="en">Salads</span></a>
+<a class="nav-link" href="#atistirmalik"><span data-lang="tr">Atıştırmalıklar</span><span data-lang="en">Appetizers</span></a>
+<a class="nav-link" href="#makarnalar"><span data-lang="tr">Makarnalar</span><span data-lang="en">Pastas</span></a>
+<a class="nav-link" href="#hamburgerler"><span data-lang="tr">Hamburgerler</span><span data-lang="en">Burgers</span></a>
+<a class="nav-link" href="#pizzalar"><span data-lang="tr">Pizzalar</span><span data-lang="en">Pizzas</span></a>
+<a class="nav-link" href="#anayemek"><span data-lang="tr">Ana Yemekler</span><span data-lang="en">Main Courses</span></a>
+<a class="nav-link" href="#sicak-kahve"><span data-lang="tr">Sıcak Kahveler</span><span data-lang="en">Hot Coffees</span></a>
+<a class="nav-link" href="#soguk-kahve"><span data-lang="tr">Soğuk Kahveler</span><span data-lang="en">Cold Coffees</span></a>
+<a class="nav-link" href="#alkolsuz-kokteyl"><span data-lang="tr">Alkolsüz Kokteyller</span><span data-lang="en">Mocktails</span></a>
+<a class="nav-link" href="#soft-icecek"><span data-lang="tr">Soft İçecekler</span><span data-lang="en">Soft Drinks</span></a>
+<a class="nav-link" href="#viskiler"><span data-lang="tr">Viskiler</span><span data-lang="en">Whiskies</span></a>
+<a class="nav-link" href="#imza-kokteyl"><span data-lang="tr">İmza Kokteyller</span><span data-lang="en">Signatures</span></a>
+<a class="nav-link" href="#klasik-kokteyl"><span data-lang="tr">Klasik Kokteyller</span><span data-lang="en">Classics</span></a>
+<a class="nav-link" href="#shotlar"><span data-lang="tr">Shotlar</span><span data-lang="en">Shots</span></a>
+<a class="nav-link" href="#rakilar"><span data-lang="tr">Rakılar</span><span data-lang="en">Rakı</span></a>
+<a class="nav-link" href="#biralar"><span data-lang="tr">Biralar</span><span data-lang="en">Beers</span></a>
+<a class="nav-link" href="#cinler"><span data-lang="tr">Cin</span><span data-lang="en">Gin</span></a>
+<a class="nav-link" href="#votka"><span data-lang="tr">Votka</span><span data-lang="en">Vodka</span></a>
+<a class="nav-link" href="#konyak"><span data-lang="tr">Konyak</span><span data-lang="en">Cognac</span></a>
+<a class="nav-link" href="#rom"><span data-lang="tr">Rom</span><span data-lang="en">Rum</span></a>
+<a class="nav-link" href="#tekila"><span data-lang="tr">Tekila</span><span data-lang="en">Tequila</span></a>
+<a class="nav-link" href="#bitter"><span data-lang="tr">Bitter Alkoller</span><span data-lang="en">Bitters</span></a>
+<a class="nav-link" href="#likor"><span data-lang="tr">Likörler</span><span data-lang="en">Liqueurs</span></a>
+<a class="nav-link" href="#sampanya"><span data-lang="tr">Şampanya</span><span data-lang="en">Champagne</span></a>
+<a class="nav-link" href="#kirmizi-sarap"><span data-lang="tr">Kırmızı Şaraplar</span><span data-lang="en">Red Wines</span></a>
+<a class="nav-link" href="#beyaz-sarap"><span data-lang="tr">Beyaz Şaraplar</span><span data-lang="en">White Wines</span></a>
+<a class="nav-link" href="#pembe-sarap"><span data-lang="tr">Pembe Şaraplar</span><span data-lang="en">Rose Wines</span></a>
+<a class="nav-link" href="#dondurma"><span data-lang="tr">Dondurmalar</span><span data-lang="en">Ice Creams</span></a>
+</nav>
+</div>
 <div class="container">
-    <header>
-        <img src="viento GOLD (1).png" alt="Wens Viento Logo" class="logo-img">
-    </header>
-
-    <section id="kahvalti" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Kahvaltılar</span><span data-lang="en">Breakfast</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="serpme-kahvalti.jpg" alt="Serpme Kahvaltı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Serpme Kahvaltı</span><span data-lang="en">Spread Breakfast</span></span>
-                    <span class="item-price">550 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Kişi başı fiyatıdır.</span><span data-lang="en">Price per person.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="kahvalti-tabagi.jpg" alt="Kahvaltı Tabağı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Kahvaltı Tabağı</span><span data-lang="en">Breakfast Platter</span></span>
-                    <span class="item-price">425 ₺</span>
-                </div>
-                <div class="item-description">
-                    <span data-lang="tr">Beyaz peynir, misket peynir, burgu peynir, kaşar peynir, otlu peynir, göz yumurta, domates, salatalık, tereyağ, bal, iki çeşit reçel, sucuk, hellim peynir, üç çeşit zeytin, yeşillik, sınırsız çay ikram edilir.</span>
-                    <span data-lang="en">White cheese, pearl cheese, twist cheese, kashar, herbed cheese, fried egg, tomato, cucumber, butter, honey, two types of jam, sucuk, halloumi, three types of olives, greens, served with unlimited tea.</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="mantarli-omlet.jpg" alt="Mantarlı Omlet" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Mantarlı Omlet</span><span data-lang="en">Mushroom Omelette</span></span>
-                    <span class="item-price">150 ₺</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="sebzeli-omlet.jpg" alt="Sebzeli Omlet" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sebzeli Omlet</span><span data-lang="en">Vegetable Omelette</span></span>
-                    <span class="item-price">130 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mevsim sebzeleri, mantar.</span><span data-lang="en">Seasonal vegetables, mushrooms.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="wens-omlet.jpg" alt="Wens Omlet" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Wens Omlet</span><span data-lang="en">Wens Omelette</span></span>
-                    <span class="item-price">150 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Dört peynirli.</span><span data-lang="en">Four cheese.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="sade-omlet.jpg" alt="Sade Omlet" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sade Omlet</span><span data-lang="en">Plain Omelette</span></span>
-                    <span class="item-price">120 ₺</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="peynirli-menemen.jpg" alt="Peynirli Menemen" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Peynirli Menemen</span><span data-lang="en">Menemen with Cheese</span></span>
-                    <span class="item-price">150 ₺</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="menemen.jpg" alt="Menemen" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Menemen</span><span data-lang="en">Traditional Scrambled Eggs</span></span>
-                    <span class="item-price">130 ₺</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="sucuklu-yumurta.jpg" alt="Sucuklu Yumurta" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sucuklu Yumurta</span><span data-lang="en">Eggs with Sucuk</span></span>
-                    <span class="item-price">200 ₺</span>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="sucuk.jpg" alt="Sucuk" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sucuk</span><span data-lang="en">Grilled Sucuk</span></span>
-                    <span class="item-price">130 ₺</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="baslangic" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Başlangıçlar</span><span data-lang="en">Starters</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="sarkuteri-tabagi.jpg" alt="Şarküteri Tabağı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Şarküteri Tabağı</span><span data-lang="en">Charcuterie Board</span></span>
-                    <span class="item-price">875 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Eski Kaşar, Göbek Kaşar (biberli, çörekotlu, kekikli), İsli çerkez peynir, Hindi füme ve kuru et.</span><span data-lang="en">Aged Kashar, Cecil Kashar (with pepper, black cumin, thyme), Smoked Circassian cheese, Smoked turkey and dried beef.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="meyve-tabagi.jpg" alt="Meyve Tabağı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Meyve Tabağı</span><span data-lang="en">Fruit Platter</span></span>
-                    <span class="item-price">530 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mevsim Meyveleri</span><span data-lang="en">Seasonal Fruits</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tapas.jpg" alt="Tapas" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Tapas</span>
-                    <span class="item-price">435 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Şefin Özel soslarıyla süslendirilmiş 4 adet baget ekmek dilimi ile servis edilir.</span><span data-lang="en">Served with 4 slices of baguette bread garnished with Chef's special sauces.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tost-3-peynirli.jpg" alt="3 Peynirli Tost" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">3 Peynirli Tost</span><span data-lang="en">3 Cheese Toast</span></span>
-                    <span class="item-price">250 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Tost Ekmeği, Kaşar, Örgü, otlu peynir ve karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Kashar, Knit cheese, herbed cheese, served with mixed salad.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tost-beyaz-peynirli.jpg" alt="Beyaz Peynirli Tost" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Beyaz Peynirli Tost</span><span data-lang="en">White Cheese Toast</span></span>
-                    <span class="item-price">250 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Tost ekmeği, Beyaz peynir, Domates ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, White cheese, Tomato, served with mixed salad.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tost-sucuklu.jpg" alt="Sucuklu Tost" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sucuklu Tost</span><span data-lang="en">Sucuk Toast</span></span>
-                    <span class="item-price">300 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Tost Ekmeği, Sucuk ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Sucuk, served with mixed salad.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tost-karisik.jpg" alt="Karışık Tost" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Karışık Tost</span><span data-lang="en">Mixed Toast</span></span>
-                    <span class="item-price">275 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Tost ekmeği, Kaşar, Sucuk ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Kashar, Sucuk, served with mixed salad.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="meze-cesitleri.jpg" alt="Meze Çeşitleri" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Meze Çeşitleri</span><span data-lang="en">Meze Selection</span></span>
-                    <span class="item-price">175 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Haydari, Havuç Tarator, Mamzana, Biber Borani, Acuka, Zeytin Salatası, Atom</span><span data-lang="en">Traditional Turkish cold appetizers variety.</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="bowls" class="menu-section">
-        <h2 class="section-title">Bowl's</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="fit-bowl.jpg" alt="Fit Bowl" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Fit Bowl</span>
-                    <span class="item-price">375 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mevsimsel Meyveler, Granola, Çiğ Badem, Çiğ fındık, Yulaf, Süzme Yoğurt</span><span data-lang="en">Seasonal Fruits, Granola, Raw Almonds, Raw Hazelnuts, Oats, Strained Yogurt</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="salatalar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Salatalar</span><span data-lang="en">Salads</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="bonfile-salata.jpg" alt="Bonfile Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Bonfile Salata</span><span data-lang="en">Beef Tenderloin Salad</span></span>
-                    <span class="item-price">500 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">100gr Bonfile dilimleri, kıvırcık Marul, çeri domates, salatalık, parmesan</span><span data-lang="en">100g Beef slices, lettuce, cherry tomatoes, cucumber, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="sezar-salata.jpg" alt="Sezar Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sezar Salata</span><span data-lang="en">Caesar Salad</span></span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">100gr Izgara tavuk dilimleri, kruton, atom marul, çeri domates, salatalık,sezar sos, parmesan</span><span data-lang="en">100g Grilled chicken, croutons, romaine lettuce, cherry tomatoes, caesar dressing, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="greek-salata.jpg" alt="Greek Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Greek Salata</span><span data-lang="en">Greek Salad</span></span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Soğan, domates, salatalık, biber, peynir, kekik</span><span data-lang="en">Onion, tomato, cucumber, pepper, feta cheese, thyme</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="roka-salata.jpg" alt="Roka Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Roka Salata</span><span data-lang="en">Arugula Salad</span></span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Roka, ceviz, çeri domates, parmesan</span><span data-lang="en">Arugula, walnuts, cherry tomatoes, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="fit-salata.jpg" alt="Fit Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Fit Salata</span><span data-lang="en">Fit Salad</span></span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Kıvırcık, bulgur, maş fasulyesi, domates, kabak rende, havuç rende</span><span data-lang="en">Lettuce, bulgur, mung beans, tomato, shredded zucchini & carrot</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="akdeniz-salata.jpg" alt="Akdeniz Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Akdeniz Salata</span><span data-lang="en">Mediterranean Salad</span></span>
-                    <span class="item-price">330 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mevsim yeşillikleri, domates</span><span data-lang="en">Seasonal greens, tomatoes</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="ton-balikli-salata.jpg" alt="Ton Balıklı Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Ton Balıklı Salata</span><span data-lang="en">Tuna Salad</span></span>
-                    <span class="item-price">400 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mevsim yeşillikleri, domates, salatalık, ton balığı, mısır, kırmızı soğan</span><span data-lang="en">Seasonal greens, tomato, cucumber, tuna, corn, red onion</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="wens-salata.jpg" alt="Wens Salata" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Wens Salata</span><span data-lang="en">Wens Salad</span></span>
-                    <span class="item-price">385 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Kıvırcık, roka, atom marul, çeri domates, ceviz, rende havuç, meksika fasulyesi</span><span data-lang="en">Lettuce, arugula, romaine, cherry tomatoes, walnuts, shredded carrot, kidney beans</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="atistirmalik" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Atıştırmalıklar</span><span data-lang="en">Appetizers</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="patates-kizartmasi.jpg" alt="Patates Kızartması" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Patates Kızartması</span><span data-lang="en">French Fries</span></span>
-                    <span class="item-price">275 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Sos eşliğinde</span><span data-lang="en">Served with sauces</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="borek-sepeti.jpg" alt="Börek Sepeti" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Börek Sepeti</span><span data-lang="en">Pastry Basket</span></span>
-                    <span class="item-price">290 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">6 adet peynirli sigara böreği</span><span data-lang="en">6 pieces of cheese spring rolls</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="bira-tabagi.jpg" alt="Bira Tabağı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Bira Tabağı</span><span data-lang="en">Beer Platter</span></span>
-                    <span class="item-price">515 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Sosis, Patates Kızartması, çıtır tavuk, soğan halkası</span><span data-lang="en">Sausage, French fries, crispy chicken, onion rings</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="sogan-halkasi.jpg" alt="Soğan Halkası" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Soğan Halkası</span><span data-lang="en">Onion Rings</span></span>
-                    <span class="item-price">250 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">8 adet soğan halkası patates kızartması eşliğinde</span><span data-lang="en">8 pieces of onion rings served with french fries</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="citir-tavuk.jpg" alt="Çıtır Tavuk" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Çıtır Tavuk</span><span data-lang="en">Crispy Chicken</span></span>
-                    <span class="item-price">370 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">8 adet çıtır tavuk parçası</span><span data-lang="en">8 pieces of crispy chicken bites</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="sosis-tabagi.jpg" alt="Sosis Tabağı" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Sosis Tabağı</span><span data-lang="en">Sausage Platter</span></span>
-                    <span class="item-price">290 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">6 adet sosis ve patates kızartması eşliğinde</span><span data-lang="en">6 pieces of sausages served with french fries</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="makarnalar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Makarnalar</span><span data-lang="en">Pastas</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="pesto-fettuccine.jpg" alt="Pesto Fettuccine" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Pesto Fettuccine</span>
-                    <span class="item-price">410 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Pesto Sos, krema, 110gr Fettuccini makarna, parmesan</span><span data-lang="en">Pesto sauce, cream, 110g Fettuccine, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="spaghetti-bolonez.jpg" alt="Spaghetti Bolonez" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Spaghetti Bolonez</span>
-                    <span class="item-price">440 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">60 gr Kıyma, napoliten sos, 110gr spaghetti makarna, parmesan</span><span data-lang="en">60g Minced meat, Neapolitan sauce, 110g spaghetti, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="fettucine-alfredo.jpg" alt="Fettucine Alfredo" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Fettucine Alfredo</span>
-                    <span class="item-price">410 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">100gr Tavuk gögüs, krema, mantar, 110gr fettuccini makarna, parmesan</span><span data-lang="en">100g Chicken breast, cream, mushroom, 110g fettuccine, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="korili-fettuccine.jpg" alt="Körili Fettuccine Alfredo" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Körili Fettuccine Alfredo</span>
-                    <span class="item-price">410 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">100gr Tavuk gögüs, krema, mantar, köri, 110gr fettuccini makarna, parmesan</span><span data-lang="en">100g Chicken breast, cream, mushroom, curry, 110g fettuccine, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="spaghetti-napoliten.jpg" alt="Spaghetti Napoliten" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Spaghetti Napoliten</span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Napoliten sos, 110gr spaghetti makarna, fesleğen, parmesan</span><span data-lang="en">Neapolitan sauce, 110g spaghetti, basil, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="penne-arabiatta.jpg" alt="Penne Arabiatta" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Penne Arabiatta</span>
-                    <span class="item-price">350 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Acılı sos, 110gr spaghetti makarna, siyah ve yeşil zeytin, mısır, parmesan</span><span data-lang="en">Spicy sauce, 110g spaghetti, black & green olives, corn, parmesan</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="wens-special-fettuccine.jpg" alt="Wens Special Fettuccine" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Wens Special Fettuccine</span>
-                    <span class="item-price">440 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Dört farklı peynir, krema, fesleğen, 110gr fettuccine makarna</span><span data-lang="en">Four cheeses, cream, basil, 110g fettuccine</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="hamburgerler" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Hamburgerler</span><span data-lang="en">Burgers</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="cheese-burger.jpg" alt="Cheese Burger" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Cheese Burger</span>
-                    <span class="item-price">520 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">2x60gr smash köftesi, cheddar peyniri, burger sos, patates kızartması, ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, cheddar, burger sauce, french fries and dipping sauces.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="hamburger.jpg" alt="Hamburger" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Hamburger</span>
-                    <span class="item-price">490 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">2x60gr smash köftesi, domates, marul, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, tomato, lettuce, burger sauce, french fries.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="wens-burger.jpg" alt="Wens Burger" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Wens Burger</span>
-                    <span class="item-price">545 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">2x60gr smash köftesi, rose beef ,karamelize soğan, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, roast beef, caramelized onions, burger sauce, fries.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tavuk-burger.jpg" alt="Tavuk Burger" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Tavuk Burger</span><span data-lang="en">Chicken Burger</span></span>
-                    <span class="item-price">465 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">150 gr tavuk gögüs, domates, marul, turşu, acı sos, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">150g chicken breast, tomato, lettuce, pickles, hot sauce, burger sauce, fries.</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="pizzalar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Pizzalar</span><span data-lang="en">Pizzas</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="margarita.jpg" alt="Margarita" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Margarita</span>
-                    <span class="item-price">480 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mozarella peynir ve özel pizza sosu</span><span data-lang="en">Mozzarella cheese and special pizza sauce</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="quatro-formaggi.jpg" alt="Quatro Formaggi" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Quatro Formaggi</span>
-                    <span class="item-price">590 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Dört farklı peynir ve özel pizza sosu</span><span data-lang="en">Four different cheeses and special pizza sauce</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="ton-balikli-pizza.jpg" alt="Ton Balıklı Pizza" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Ton Balıklı</span><span data-lang="en">Tuna Pizza</span></span>
-                    <span class="item-price">550 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mozarella peynir, mor soğan, ton balığı ve özel pizza sosu</span><span data-lang="en">Mozzarella, red onion, tuna and special pizza sauce</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="vegie-pizza.jpg" alt="Vegie Pizza" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Vegie</span>
-                    <span class="item-price">550 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mozarella peynir, közlenmiş patlıcan, közlenmiş kapya biber, yeşil biber, mantar ve özel pizza sosu</span><span data-lang="en">Mozzarella, roasted eggplant, roasted capia pepper, green pepper, mushroom, pizza sauce</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="wens-pizza.jpg" alt="Wens Pizza" class="item-image">
-                <div class="item-header">
-                    <span class="item-name">Wens Pizza</span>
-                    <span class="item-price">610 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">Mozarella peynir, mantar, yeşil biber, kapya biber, mısır, sucuk, sosis ve özel pizza sosu.</span><span data-lang="en">Mozzarella, mushroom, green pepper, capia pepper, corn, sucuk, sausage, pizza sauce.</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="anayemek" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Ana Yemekler</span><span data-lang="en">Main Courses</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="bonfile.jpg" alt="Bonfile" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Bonfile</span><span data-lang="en">Beef Tenderloin</span></span>
-                    <span class="item-price">880 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">200-250 gr arası bonfile, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g tenderloin, served with baked potatoes.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="antrikot.jpg" alt="Antrikot" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Antrikot</span><span data-lang="en">Ribeye Steak</span></span>
-                    <span class="item-price">830 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">200-250 gr arası antrikot, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g ribeye, served with baked potatoes.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="tavuk-izgara.jpg" alt="Tavuk Izgara" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Tavuk Izgara</span><span data-lang="en">Grilled Chicken</span></span>
-                    <span class="item-price">530 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">200-250 gr arası tavuk, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g chicken, served with baked potatoes.</span></div>
-            </div>
-            <div class="menu-item">
-                <img src="begendili-kofte.jpg" alt="Beğendili Köfte" class="item-image">
-                <div class="item-header">
-                    <span class="item-name"><span data-lang="tr">Beğendili Köfte</span><span data-lang="en">Meatballs with Eggplant Puree</span></span>
-                    <span class="item-price">660 ₺</span>
-                </div>
-                <div class="item-description"><span data-lang="tr">5 adet X 60gr olarak tabak porsiyonudur.</span><span data-lang="en">5 pieces x 60g plate portion.</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="sicak-kahve" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Sıcak Kahveler</span><span data-lang="en">Hot Coffees</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="espresso.jpg" alt="Espresso" class="item-image"><div class="item-header"><span class="item-name">Espresso</span><span class="item-price">150 ₺</span></div></div>
-            <div class="menu-item"><img src="double-espresso.jpg" alt="Double Espresso" class="item-image"><div class="item-header"><span class="item-name">Double Espresso</span><span class="item-price">190 ₺</span></div></div>
-            <div class="menu-item"><img src="americano.jpg" alt="Americano" class="item-image"><div class="item-header"><span class="item-name">Americano</span><span class="item-price">180 ₺</span></div></div>
-            <div class="menu-item"><img src="cappuccino.jpg" alt="Cappuccino" class="item-image"><div class="item-header"><span class="item-name">Cappuccino</span><span class="item-price">210 ₺</span></div></div>
-            <div class="menu-item"><img src="macchiato.jpg" alt="Macchiato" class="item-image"><div class="item-header"><span class="item-name">Maccihato</span><span class="item-price">200 ₺</span></div></div>
-            <div class="menu-item"><img src="moccaccino.jpg" alt="Moccaccino" class="item-image"><div class="item-header"><span class="item-name">Moccaccino</span><span class="item-price">200 ₺</span></div></div>
-            <div class="menu-item"><img src="latte-macchiato.jpg" alt="Latte Macchiato" class="item-image"><div class="item-header"><span class="item-name">Latte Maccihato</span><span class="item-price">200 ₺</span></div></div>
-            <div class="menu-item">
-                <img src="aromali-latte.jpg" alt="Aromalı Latte" class="item-image">
-                <div class="item-header"><span class="item-name"><span data-lang="tr">Aromalı Latte Maccihato</span><span data-lang="en">Flavored Latte Macchiato</span></span><span class="item-price">220 ₺</span></div>
-                <div class="item-description"><span data-lang="tr">Vanilya - Fındık - Karamel</span><span data-lang="en">Vanilla - Hazelnut - Caramel</span></div>
-            </div>
-            <div class="menu-item"><img src="sicak-cikolata.jpg" alt="Sıcak Çikolata" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Sıcak Çikolata</span><span data-lang="en">Hot Chocolate</span></span><span class="item-price">220 ₺</span></div></div>
-            <div class="menu-item"><img src="filtre-kahve.jpg" alt="Filtre Kahve" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Filtre Kahve</span><span data-lang="en">Filter Coffee</span></span><span class="item-price">200 ₺</span></div></div>
-            <div class="menu-item"><img src="turk-kahvesi.jpg" alt="Türk Kahvesi" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Türk Kahvesi</span><span data-lang="en">Turkish Coffee</span></span><span class="item-price">180 ₺</span></div></div>
-            <div class="menu-item"><img src="double-turk-kahvesi.jpg" alt="Double Türk Kahvesi" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Double Türk Kahvesi</span><span data-lang="en">Double Turkish Coffee</span></span><span class="item-price">200 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="soguk-kahve" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Soğuk Kahveler</span><span data-lang="en">Cold Coffees</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="ice-americano.jpg" alt="Ice Americano" class="item-image"><div class="item-header"><span class="item-name">Ice Americano</span><span class="item-price">180 ₺</span></div></div>
-            <div class="menu-item"><img src="ice-mocha.jpg" alt="Ice Mocha" class="item-image"><div class="item-header"><span class="item-name">Ice Mocha</span><span class="item-price">260 ₺</span></div></div>
-            <div class="menu-item"><img src="ice-latte.jpg" alt="Ice Latte" class="item-image"><div class="item-header"><span class="item-name">Ice Latte</span><span class="item-price">210 ₺</span></div></div>
-            <div class="menu-item"><img src="aromali-ice-latte.jpg" alt="Aromalı Ice Latte" class="item-image"><div class="item-header"><span class="item-name">Aromalı Ice Latte</span><span class="item-price">270 ₺</span></div></div>
-            <div class="menu-item"><img src="ice-white-chocolate.jpg" alt="Ice White Chocolate" class="item-image"><div class="item-header"><span class="item-name">Ice White Chocolate</span><span class="item-price">260 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="alkolsuz-kokteyl" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Alkolsüz Kokteyller</span><span data-lang="en">Mocktails</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="mojito.jpg" alt="Mojito" class="item-image"><div class="item-header"><span class="item-name">Mojito</span><span class="item-price">260 ₺</span></div></div>
-            <div class="menu-item"><img src="mariquita.jpg" alt="Mariquita" class="item-image"><div class="item-header"><span class="item-name">Mariquita</span><span class="item-price">260 ₺</span></div></div>
-            <div class="menu-item"><img src="frozen.jpg" alt="Frozen" class="item-image"><div class="item-header"><span class="item-name">Frozen</span><span class="item-price">240 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="soft-icecek" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Soft İçecekler</span><span data-lang="en">Soft Drinks</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="limonata.jpg" alt="Limonata" class="item-image"><div class="item-header"><span class="item-name">Limonata</span><span class="item-price">140 ₺</span></div></div>
-            <div class="menu-item"><img src="redbull.jpg" alt="Red Bull" class="item-image"><div class="item-header"><span class="item-name">Red Bull</span><span class="item-price">140 ₺</span></div></div>
-            <div class="menu-item"><img src="cocacola.jpg" alt="Cococola" class="item-image"><div class="item-header"><span class="item-name">Cococola</span><span class="item-price">95 ₺</span></div></div>
-            <div class="menu-item"><img src="cocacola-zero.jpg" alt="Cocacola Zero" class="item-image"><div class="item-header"><span class="item-name">Cocacola Zero</span><span class="item-price">95 ₺</span></div></div>
-            <div class="menu-item"><img src="sprite.jpg" alt="Sprite" class="item-image"><div class="item-header"><span class="item-name">Sprite</span><span class="item-price">95 ₺</span></div></div>
-            <div class="menu-item"><img src="fanta.jpg" alt="Fanta" class="item-image"><div class="item-header"><span class="item-name">Fanta</span><span class="item-price">95 ₺</span></div></div>
-            <div class="menu-item"><img src="fusetea.jpg" alt="Fuse Tea" class="item-image"><div class="item-header"><span class="item-name">Fuse Tea</span><span class="item-price">95 ₺</span></div><div class="item-description"><span data-lang="tr">(Şeftali-Ananas-Limon)</span><span data-lang="en">(Peach-Pineapple-Lemon)</span></div></div>
-            <div class="menu-item"><img src="ayran.jpg" alt="Ayran" class="item-image"><div class="item-header"><span class="item-name">Ayran</span><span class="item-price">95 ₺</span></div></div>
-            <div class="menu-item"><img src="meyveli-soda.jpg" alt="Meyveli Soda" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Meyveli Soda</span><span data-lang="en">Fruit Mineral Water</span></span><span class="item-price">85 ₺</span></div></div>
-            <div class="menu-item"><img src="sade-soda.jpg" alt="Sade Soda" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Sade Soda</span><span data-lang="en">Mineral Water</span></span><span class="item-price">80 ₺</span></div></div>
-            <div class="menu-item"><img src="kucuk-su.jpg" alt="Küçük Su" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Küçük Su</span><span data-lang="en">Small Water</span></span><span class="item-price">80 ₺</span></div><div class="item-description">Uludağ Premium</div></div>
-            <div class="menu-item"><img src="buyuk-su.jpg" alt="Büyük Su" class="item-image"><div class="item-header"><span class="item-name"><span data-lang="tr">Büyük Su</span><span data-lang="en">Large Water</span></span><span class="item-price">130 ₺</span></div><div class="item-description">1L Uludağ premium</div></div>
-            <div class="menu-item"><img src="churchill.jpg" alt="Churchill" class="item-image"><div class="item-header"><span class="item-name">Churchill</span><span class="item-price">120 ₺</span></div></div>
-            <div class="menu-item"><img src="tonik.jpg" alt="Tonik" class="item-image"><div class="item-header"><span class="item-name">Tonik</span><span class="item-price">110 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="viskiler" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Viskiler</span><span data-lang="en">Whiskies</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="maccallan.jpg" alt="Maccallan Classic Cut" class="item-image"><div class="item-header"><span class="item-name">Maccallan Classic Cut</span><span class="item-price">Tek 979₺ / Duble 1463₺</span></div></div>
-            <div class="menu-item"><img src="glenmorangie-14.jpg" alt="Glenmorangie 14y" class="item-image"><div class="item-header"><span class="item-name">Glenmorangie 14y</span><span class="item-price">Tek 737₺ / Duble 1089₺</span></div></div>
-            <div class="menu-item"><img src="glenmorangie-10.jpg" alt="Glenmorangie 10y" class="item-image"><div class="item-header"><span class="item-name">Glenmorangie 10y</span><span class="item-price">Tek 550₺ / Duble 880₺</span></div></div>
-            <div class="menu-item"><img src="glenfiddich-18.jpg" alt="Glenfiddich 18y" class="item-image"><div class="item-header"><span class="item-name">Glenfiddich 18y</span><span class="item-price">Tek 572₺ / Duble 847₺</span></div></div>
-            <div class="menu-item"><img src="talisker-10.jpg" alt="Talisker 10y" class="item-image"><div class="item-header"><span class="item-name">Talisker 10y</span><span class="item-price">Tek 715₺ / Duble 1067₺</span></div></div>
-            <div class="menu-item"><img src="chivas-18.jpg" alt="Chivas Regal 18y" class="item-image"><div class="item-header"><span class="item-name">Chivas Regal 18y</span><span class="item-price">Tek 687₺ / Duble 1045₺</span></div></div>
-            <div class="menu-item"><img src="chivas-15.jpg" alt="Chivas Regal 15y" class="item-image"><div class="item-header"><span class="item-name">Chivas Regal 15y</span><span class="item-price">Tek 649₺ / Duble 968₺</span></div></div>
-            <div class="menu-item"><img src="chivas-12.jpg" alt="Chivas Regal 12y" class="item-image"><div class="item-header"><span class="item-name">Chivas Regal 12y</span><span class="item-price">Tek 325₺ / Duble 485₺</span></div></div>
-            <div class="menu-item"><img src="chivas-12-70.jpg" alt="Chivas Regal 12y 70'lik" class="item-image"><div class="item-header"><span class="item-name">Chivas Regal 12y 70'lik</span><span class="item-price">5500 ₺</span></div><div class="item-description"><span data-lang="tr">2 Soda/ 2 Red Bull ,Meyve Tabağı, Çerez Tabağı</span><span data-lang="en">2 Mineral Water/ 2 Red Bull ,Fruit Platter, Nut Platter</span></div></div>
-            <div class="menu-item"><img src="woodford-reserve.jpg" alt="Woodford Reserve" class="item-image"><div class="item-header"><span class="item-name">Woodford Reserve</span><span class="item-price">Tek 759₺ / Duble 1133₺</span></div></div>
-            <div class="menu-item"><img src="gentleman-jack.jpg" alt="Gentleman Jack" class="item-image"><div class="item-header"><span class="item-name">Gentleman Jack</span><span class="item-price">Tek 462₺ / Duble 687₺</span></div></div>
-            <div class="menu-item"><img src="jack-daniels.jpg" alt="Jack Daniel's" class="item-image"><div class="item-header"><span class="item-name">Jack Daniel's</span><span class="item-price">Tek 352₺ / Duble 528₺</span></div></div>
-            <div class="menu-item"><img src="double-black.jpg" alt="Double Black" class="item-image"><div class="item-header"><span class="item-name">Double Black</span><span class="item-price">Tek 572₺ / Duble 858₺</span></div></div>
-            <div class="menu-item"><img src="black-label.jpg" alt="Black Label" class="item-image"><div class="item-header"><span class="item-name">Black Label</span><span class="item-price">Tek 374₺ / Duble 550₺</span></div></div>
-            <div class="menu-item"><img src="red-label.jpg" alt="Red Label" class="item-image"><div class="item-header"><span class="item-name">Red Label</span><span class="item-price">Tek 264₺ / Duble 396₺</span></div></div>
-            <div class="menu-item"><img src="jameson.jpg" alt="Jameson" class="item-image"><div class="item-header"><span class="item-name">Jameson</span><span class="item-price">Tek 462₺ / Duble 682₺</span></div></div>
-            <div class="menu-item"><img src="jb.jpg" alt="J&B" class="item-image"><div class="item-header"><span class="item-name">J&B</span><span class="item-price">Tek 275₺ / Duble 418₺</span></div></div>
-            <div class="menu-item"><img src="jim-beam.jpg" alt="Jim Beam" class="item-image"><div class="item-header"><span class="item-name">Jim Beam</span><span class="item-price">Tek 324₺ / Duble 484₺</span></div></div>
-            <div class="menu-item"><img src="ballantines.jpg" alt="Ballantine's" class="item-image"><div class="item-header"><span class="item-name">Ballantine's</span><span class="item-price">Tek 440₺ / Duble 550₺</span></div></div>
-            <div class="menu-item"><img src="dimple.jpg" alt="Dimple Golden Selection" class="item-image"><div class="item-header"><span class="item-name">Dimple Golden Selection</span><span class="item-price">Tek 264₺ / Duble 396₺</span></div></div>
-            <div class="menu-item"><img src="famous-grouse.jpg" alt="The Famous Grouse" class="item-image"><div class="item-header"><span class="item-name">The Famous Grouse</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
-            <div class="menu-item"><img src="sir-edwards.jpg" alt="Sır Edwards" class="item-image"><div class="item-header"><span class="item-name">Sır Edwards</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
-            <div class="menu-item"><img src="hankey-bannister.jpg" alt="Hankey Bannıster" class="item-image"><div class="item-header"><span class="item-name">Hankey Bannıster</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
-            <div class="menu-item"><img src="jameson-black.jpg" alt="Jameson Black Barrel" class="item-image"><div class="item-header"><span class="item-name">Jameson Black Barrel</span><span class="item-price">Tek 340₺ / Duble 500₺</span></div></div>
-            <div class="menu-item"><img src="glenlivet-12.jpg" alt="The Glenlıvet 12Y" class="item-image"><div class="item-header"><span class="item-name">The Glenlıvet 12Y</span><span class="item-price">Tek 550₺ / Duble 880₺</span></div></div>
-            <div class="menu-item"><img src="chivas-12-35.jpg" alt="Chivas Regal 12y 35'lik" class="item-image"><div class="item-header"><span class="item-name">Chivas Regal 12y 35'lik</span><span class="item-price">3500 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="imza-kokteyl" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">İmza Kokteyller</span><span data-lang="en">Signatures</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="submarine.jpg" alt="Submarine" class="item-image"><div class="item-header"><span class="item-name">Submarine</span><span class="item-price">500 ₺</span></div><div class="item-description">Votka, Limoncello, S&S, Yeşil elma püre</div></div>
-            <div class="menu-item"><img src="tiramisu-espresso.jpg" alt="Tiramisu Espresso Martini" class="item-image"><div class="item-header"><span class="item-name">Tiramisu Espresso Martini</span><span class="item-price">500 ₺</span></div><div class="item-description">Votka, baileys, kremşanti, tiramisu şurubu, kakao tozu.</div></div>
-            <div class="menu-item"><img src="pablo-escobar.jpg" alt="Pablo Emilio Escobar Gaviria" class="item-image"><div class="item-header"><span class="item-name">Pablo Emilio Escobar Gaviria</span><span class="item-price">500 ₺</span></div><div class="item-description">Jalapeno infused tekila, greyfurt suyu, passion fruit püre, s&s, tuz rim.</div></div>
-            <div class="menu-item"><img src="shandy-special.jpg" alt="Shandy Special" class="item-image"><div class="item-header"><span class="item-name">Shandy Special</span><span class="item-price">500 ₺</span></div><div class="item-description">Cin, absolut citron, wens özel sos, yeşil erik, kuzu kulağı, s&s.</div></div>
-        </div>
-    </section>
-
-    <section id="klasik-kokteyl" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Klasik Kokteyller</span><span data-lang="en">Classics</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="margarita-cocktail.jpg" alt="Margarita" class="item-image"><div class="item-header"><span class="item-name">Margarita</span><span class="item-price">550 ₺</span></div><div class="item-description">Tekila, countreau, s&s, tuz rim.</div></div>
-            <div class="menu-item"><img src="cin-fizz.jpg" alt="Cin Fizz" class="item-image"><div class="item-header"><span class="item-name">Cin Fizz</span><span class="item-price">550 ₺</span></div><div class="item-description">Cin, limon suyu, pudra şekeri, soda.</div></div>
-            <div class="menu-item"><img src="whisky-sour.jpg" alt="Whisky Sour" class="item-image"><div class="item-header"><span class="item-name">Whisky Sour</span><span class="item-price">550 ₺</span></div><div class="item-description">Bourbon viski, s&s, esmer şeker.</div></div>
-            <div class="menu-item"><img src="espresso-martini.jpg" alt="Espresso Martini" class="item-image"><div class="item-header"><span class="item-name">Espresso Martini</span><span class="item-price">550 ₺</span></div><div class="item-description">Absoult vanilla, kahlua, espresso.</div></div>
-            <div class="menu-item"><img src="sex-on-the-beach.jpg" alt="Sex On The Beach" class="item-image"><div class="item-header"><span class="item-name">Sex On The Beach</span><span class="item-price">550 ₺</span></div><div class="item-description">Votka, tekila, archers, portakal suyu, nar şurubu.</div></div>
-            <div class="menu-item"><img src="mojito-classic.jpg" alt="Mojito" class="item-image"><div class="item-header"><span class="item-name">Mojito</span><span class="item-price">550 ₺</span></div><div class="item-description">Rom, esmer şeker, taze nane, lime limon, soda.</div></div>
-            <div class="menu-item"><img src="irish-coffee.jpg" alt="Irish Coffee" class="item-image"><div class="item-header"><span class="item-name">Irish Coffee</span><span class="item-price">550 ₺</span></div><div class="item-description">Jameson, espresso, kremşanti.</div></div>
-            <div class="menu-item"><img src="baileys-coffee.jpg" alt="Baileys Coffee" class="item-image"><div class="item-header"><span class="item-name">Baileys Coffee</span><span class="item-price">550 ₺</span></div><div class="item-description">Baileys, espresso, kremşanti.</div></div>
-            <div class="menu-item"><img src="negroni.jpg" alt="Negroni" class="item-image"><div class="item-header"><span class="item-name">Negroni</span><span class="item-price">550 ₺</span></div><div class="item-description">Cin,campari,martini rosso.</div></div>
-            <div class="menu-item"><img src="aperol-spritz.jpg" alt="Aperol Spritz" class="item-image"><div class="item-header"><span class="item-name">Aperol Spritz</span><span class="item-price">450 ₺</span></div><div class="item-description">Aperol, şampanya, soda.</div></div>
-            <div class="menu-item"><img src="long-island.jpg" alt="Long Island Ice Tea" class="item-image"><div class="item-header"><span class="item-name">Long Island Ice Tea</span><span class="item-price">550 ₺</span></div><div class="item-description">Votka, rom, cin, tekila, portakal likörü, limon suyu, kola.</div></div>
-            <div class="menu-item"><img src="kuzu-kulagi.jpg" alt="Kuzu Kulağı" class="item-image"><div class="item-header"><span class="item-name">Kuzu Kulağı</span><span class="item-price">550 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="shotlar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Shotlar</span><span data-lang="en">Shots</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="tekila-6li.jpg" alt="Tekila Shot" class="item-image"><div class="item-header"><span class="item-name">Tekila Shot (Tek 6'lı Shovel)</span><span class="item-price">1250 ₺</span></div></div>
-            <div class="menu-item"><img src="jager-6li.jpg" alt="Jagermaister" class="item-image"><div class="item-header"><span class="item-name">Jagermaister (Tek 6'lı Shovel)</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="jager-shot.jpg" alt="Jagermaister Shot" class="item-image"><div class="item-header"><span class="item-name">Jagermaister Shot</span><span class="item-price">220 ₺</span></div></div>
-            <div class="menu-item"><img src="tekila-shot.jpg" alt="Tekila Shot" class="item-image"><div class="item-header"><span class="item-name">Tekila Shot</span><span class="item-price">250 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="rakilar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Rakılar</span><span data-lang="en">Rakı</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="anadolu-tek.jpg" alt="Anadolu Rakı Tek" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı Tek</span><span class="item-price">275 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-duble.jpg" alt="Anadolu Rakı Double" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı Double</span><span class="item-price">385 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-20.jpg" alt="Anadolu Rakı 20cl" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı 20cl</span><span class="item-price">770 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-35.jpg" alt="Anadolu Rakı 35'lik" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı 35'lik</span><span class="item-price">1430 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-70.jpg" alt="Anadolu Rakı 70'lik" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı 70'lik</span><span class="item-price">2420 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-100.jpg" alt="Anadolu Rakı 100'lük" class="item-image"><div class="item-header"><span class="item-name">Anadolu Rakı 100'lük</span><span class="item-price">2860 ₺</span></div></div>
-            <div class="menu-item"><img src="beylerbeyi-20.jpg" alt="Beylerbeyi Rakı 20'lik" class="item-image"><div class="item-header"><span class="item-name">Beylerbeyi Rakı 20'lik</span><span class="item-price">880 ₺</span></div></div>
-            <div class="menu-item"><img src="beylerbeyi-35.jpg" alt="Beylerbeyi Rakı 35'lik" class="item-image"><div class="item-header"><span class="item-name">Beylerbeyi Rakı 35'lik</span><span class="item-price">1540 ₺</span></div></div>
-            <div class="menu-item"><img src="beylerbeyi-50.jpg" alt="Beylerbeyi Rakı 50'lik" class="item-image"><div class="item-header"><span class="item-name">Beylerbeyi Rakı 50'lik</span><span class="item-price">1870 ₺</span></div></div>
-            <div class="menu-item"><img src="beylerbeyi-70.jpg" alt="Beylerbeyi Rakı 70'lik" class="item-image"><div class="item-header"><span class="item-name">Beylerbeyi Rakı 70'lik</span><span class="item-price">2585 ₺</span></div></div>
-            <div class="menu-item"><img src="beylerbeyi-100.jpg" alt="Beylerbeyi Rakı 100'lük" class="item-image"><div class="item-header"><span class="item-name">Beylerbeyi Rakı 100'lük</span><span class="item-price">3080 ₺</span></div></div>
-            <div class="menu-item"><img src="anadolu-ahenk-70.jpg" alt="Anadolu Ahenk Rakı 70cl" class="item-image"><div class="item-header"><span class="item-name">Anadolu Ahenk Rakı 70cl</span><span class="item-price">3850 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="biralar" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Biralar</span><span data-lang="en">Beers</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="efes-50.jpg" alt="Efes +1 50cl" class="item-image"><div class="item-header"><span class="item-name">Efes +1 50cl</span><span class="item-price">280 ₺</span></div></div>
-            <div class="menu-item"><img src="efes-kova.jpg" alt="Efes +1 Kova" class="item-image"><div class="item-header"><span class="item-name">Efes +1 Kova (5+1)</span><span class="item-price">1400 ₺</span></div></div>
-            <div class="menu-item"><img src="efes-malt-50.jpg" alt="Efes Malt 50cl" class="item-image"><div class="item-header"><span class="item-name">Efes Malt 50cl</span><span class="item-price">250 ₺</span></div></div>
-            <div class="menu-item"><img src="miller-50.jpg" alt="Miller 50cl" class="item-image"><div class="item-header"><span class="item-name">Miller 50cl</span><span class="item-price">270 ₺</span></div></div>
-            <div class="menu-item"><img src="heineken-33.jpg" alt="Heineken 33cl" class="item-image"><div class="item-header"><span class="item-name">Heineken 33cl</span><span class="item-price">325 ₺</span></div></div>
-            <div class="menu-item"><img src="bomonti-filtresiz.jpg" alt="Bomonti Filtresiz" class="item-image"><div class="item-header"><span class="item-name">Bomonti Filtresiz</span><span class="item-price">280 ₺</span></div></div>
-            <div class="menu-item"><img src="guinness-50.jpg" alt="Guinness 50cl" class="item-image"><div class="item-header"><span class="item-name">Guinness 50cl</span><span class="item-price">325 ₺</span></div></div>
-            <div class="menu-item"><img src="weihenstephan-33.jpg" alt="Weihenstephan 33cl" class="item-image"><div class="item-header"><span class="item-name">Weihenstephan 33cl</span><span class="item-price">290 ₺</span></div></div>
-            <div class="menu-item"><img src="blanc-33.jpg" alt="Blanc 33cl" class="item-image"><div class="item-header"><span class="item-name">Blanc 33cl</span><span class="item-price">260 ₺</span></div></div>
-            <div class="menu-item"><img src="desperados-33.jpg" alt="Desperados 33cl" class="item-image"><div class="item-header"><span class="item-name">Desperados 33cl</span><span class="item-price">295 ₺</span></div></div>
-            <div class="menu-item"><img src="bud-50.jpg" alt="Bud 50cl" class="item-image"><div class="item-header"><span class="item-name">Bud 50cl</span><span class="item-price">280 ₺</span></div></div>
-            <div class="menu-item"><img src="belfast.jpg" alt="Belfast" class="item-image"><div class="item-header"><span class="item-name">Belfast</span><span class="item-price">220 ₺</span></div></div>
-            <div class="menu-item"><img src="becks.jpg" alt="Beck's" class="item-image"><div class="item-header"><span class="item-name">Beck's</span><span class="item-price">270 ₺</span></div></div>
-            <div class="menu-item"><img src="corona.jpg" alt="Corono" class="item-image"><div class="item-header"><span class="item-name">Corono</span><span class="item-price">280 ₺</span></div></div>
-            <div class="menu-item"><img src="amsterdam.jpg" alt="Amsterdam" class="item-image"><div class="item-header"><span class="item-name">Amsterdam</span><span class="item-price">325 ₺</span></div></div>
-            <div class="menu-item"><img src="miller-lime.jpg" alt="Miller Lime" class="item-image"><div class="item-header"><span class="item-name">Miller Lime</span><span class="item-price">270 ₺</span></div></div>
-            <div class="menu-item"><img src="efes-malt-kova.jpg" alt="Efes Malt Kova" class="item-image"><div class="item-header"><span class="item-name">Efes Malt Kova (5+1)</span><span class="item-price">1250 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="cinler" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Cin</span><span data-lang="en">Gin</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="istanbul-cin.jpg" alt="İstanbul Cin" class="item-image"><div class="item-header"><span class="item-name">İstanbul Cin</span><span class="item-price">Tek: 260₺ / Duble: 425₺</span></div></div>
-            <div class="menu-item"><img src="gordons-dry.jpg" alt="Gordon's Dry Cin" class="item-image"><div class="item-header"><span class="item-name">Gordon's Dry Cin</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="gordons-pink.jpg" alt="Gordon's Pink" class="item-image"><div class="item-header"><span class="item-name">Gordon's Pink</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="beefeater.jpg" alt="Beefeater Gin" class="item-image"><div class="item-header"><span class="item-name">Beefeater Gin</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="ashmont.jpg" alt="Ashmont Premıum Cin" class="item-image"><div class="item-header"><span class="item-name">Ashmont Premıum Cin</span><span class="item-price">Tek: 585₺ / Duble: 910₺</span></div></div>
-            <div class="menu-item"><img src="caorunn.jpg" alt="CAORUNN" class="item-image"><div class="item-header"><span class="item-name">CAORUNN</span><span class="item-price">Tek: 585₺ / Duble: 910₺</span></div></div>
-            <div class="menu-item"><img src="gordons-lemon.jpg" alt="GORDON'S SICILINA LEMON" class="item-image"><div class="item-header"><span class="item-name">GORDON'S SICILINA LEMON</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="gordons-dry-70.jpg" alt="Gordon's Dry Cin 70'lik & Tonik" class="item-image"><div class="item-header"><span class="item-name">Gordon's Dry Cin 70'lik & Tonik</span><span class="item-price">4500 ₺</span></div><div class="item-description">Çerez Tabağı , Meyve Tabağı</div></div>
-        </div>
-    </section>
-
-    <section id="votka" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Votka</span><span data-lang="en">Vodka</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="absolut-vodka.jpg" alt="Absolut Vodka" class="item-image"><div class="item-header"><span class="item-name">Absolut Vodka</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
-            <div class="menu-item"><img src="absolut-70.jpg" alt="Absolut Vodka 70'lik" class="item-image"><div class="item-header"><span class="item-name">Absolut Vodka 70'lik</span><span class="item-price">4500 ₺</span></div><div class="item-description">2 Soda / 2 Red Bull, Meyve Tabağı, Çerez Tabağı</div></div>
-            <div class="menu-item"><img src="absolut-citron.jpg" alt="Absolut Citron" class="item-image"><div class="item-header"><span class="item-name">Absolut Citron</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
-            <div class="menu-item"><img src="absolut-vanilia.jpg" alt="Absolut Vanılıa" class="item-image"><div class="item-header"><span class="item-name">Absolut Vanılıa</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
-            <div class="menu-item"><img src="votka-1967.jpg" alt="Votka 1967" class="item-image"><div class="item-header"><span class="item-name">Votka 1967</span><span class="item-price">Tek: 260₺ / Duble: 425₺</span></div></div>
-            <div class="menu-item"><img src="smirnoff.jpg" alt="Smirnoff" class="item-image"><div class="item-header"><span class="item-name">Smirnoff</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
-            <div class="menu-item"><img src="russian-standart.jpg" alt="Russian Standart" class="item-image"><div class="item-header"><span class="item-name">Russian Standart</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
-            <div class="menu-item"><img src="pervak.jpg" alt="Pervak" class="item-image"><div class="item-header"><span class="item-name">Pervak</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
-            <div class="menu-item"><img src="khortytsa.jpg" alt="Khortytsa" class="item-image"><div class="item-header"><span class="item-name">Khortytsa</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
-            <div class="menu-item"><img src="absolut-35.jpg" alt="Absolut Vodka 35'lik" class="item-image"><div class="item-header"><span class="item-name">Absolut Vodka 35'lik</span><span class="item-price">3000 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="konyak" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Konyak</span><span data-lang="en">Cognac</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="hennessy-vs.jpg" alt="HENNESSY VS" class="item-image"><div class="item-header"><span class="item-name">HENNESSY VS</span><span class="item-price">Tek 485₺ / Duble 950₺</span></div></div>
-            <div class="menu-item"><img src="courvoisier-vsop.jpg" alt="COURVOISIER VSOP" class="item-image"><div class="item-header"><span class="item-name">COURVOISIER VSOP</span><span class="item-price">Tek 520₺ / Duble 1010₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="rom" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Rom</span><span data-lang="en">Rum</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="kraken.jpg" alt="Kraken" class="item-image"><div class="item-header"><span class="item-name">Kraken</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="captain-spice.jpg" alt="Caption Morgan Spice Gold" class="item-image"><div class="item-header"><span class="item-name">Caption Morgan Spice Gold</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="captain-white.jpg" alt="Caption Morgan White" class="item-image"><div class="item-header"><span class="item-name">Caption Morgan White</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="caribica.jpg" alt="Carıbıca" class="item-image"><div class="item-header"><span class="item-name">Carıbıca</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="tekila" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Tekila</span><span data-lang="en">Tequila</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="don-julio.jpg" alt="Don Julio Reposado" class="item-image"><div class="item-header"><span class="item-name">Don Julio Reposado</span><span class="item-price">455 ₺</span></div></div>
-            <div class="menu-item"><img src="volcan-gold.jpg" alt="Volcan Gold" class="item-image"><div class="item-header"><span class="item-name">Volcan Gold</span><span class="item-price">390 ₺</span></div></div>
-            <div class="menu-item"><img src="volcan-silver.jpg" alt="Volcan Silver" class="item-image"><div class="item-header"><span class="item-name">Volcan Silver</span><span class="item-price">295 ₺</span></div></div>
-            <div class="menu-item"><img src="pueblo.jpg" alt="Pueblo" class="item-image"><div class="item-header"><span class="item-name">Pueblo</span><span class="item-price">195 ₺</span></div></div>
-            <div class="menu-item"><img src="casamigos.jpg" alt="Casamigos Mezcal" class="item-image"><div class="item-header"><span class="item-name">Casamigos Mezcal</span><span class="item-price">455 ₺</span></div></div>
-            <div class="menu-item"><img src="olmeca-35.jpg" alt="Olmeca Tekila 35'LİK" class="item-image"><div class="item-header"><span class="item-name">Olmeca Tekila 35'LİK</span><span class="item-price">3000 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="bitter" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Bitter Alkoller</span><span data-lang="en">Bitters</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="martini-bianco.jpg" alt="Martini Bianco" class="item-image"><div class="item-header"><span class="item-name">Martini Bianco</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="martini-rosso.jpg" alt="Martini Rosso" class="item-image"><div class="item-header"><span class="item-name">Martini Rosso</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="martini-extra-dry.jpg" alt="Martini Extra Dry" class="item-image"><div class="item-header"><span class="item-name">Martini Extra Dry</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="aperol-bitter.jpg" alt="Aperol" class="item-image"><div class="item-header"><span class="item-name">Aperol</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="campari.jpg" alt="Campari" class="item-image"><div class="item-header"><span class="item-name">Campari</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="likor" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Likörler</span><span data-lang="en">Liqueurs</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="limoncello.jpg" alt="Villa Massa Limoncello" class="item-image"><div class="item-header"><span class="item-name">Villa Massa Limoncello</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="countreau.jpg" alt="Countreau" class="item-image"><div class="item-header"><span class="item-name">Countreau</span><span class="item-price">Tek: 390₺ / Double: 611₺</span></div></div>
-            <div class="menu-item"><img src="kahlua.jpg" alt="Kahlua" class="item-image"><div class="item-header"><span class="item-name">Kahlua</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="baileys-likor.jpg" alt="Baileys" class="item-image"><div class="item-header"><span class="item-name">Baileys</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="malibu.jpg" alt="Malibu" class="item-image"><div class="item-header"><span class="item-name">Malibu</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
-            <div class="menu-item"><img src="passoa.jpg" alt="Passoa" class="item-image"><div class="item-header"><span class="item-name">Passoa</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
-            <div class="menu-item"><img src="joi-de-france.jpg" alt="Joı De France Acıbadem" class="item-image"><div class="item-header"><span class="item-name">Joı De France Acıbadem</span><span class="item-price">Tek: 195₺ / Double: 325₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="sampanya" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Şampanya</span><span data-lang="en">Champagne</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="moet.jpg" alt="Moet&Chandon Beyaz Hero İmperial" class="item-image"><div class="item-header"><span class="item-name">Moet&Chandon Beyaz Hero İmperial</span><span class="item-price">7000 ₺</span></div></div>
-            <div class="menu-item"><img src="dom-perignon.jpg" alt="Dom Perignon Blanc" class="item-image"><div class="item-header"><span class="item-name">Dom Perignon Blanc</span><span class="item-price">25000 ₺</span></div></div>
-            <div class="menu-item"><img src="doluca-bianca.jpg" alt="Doluca Bianca" class="item-image"><div class="item-header"><span class="item-name">Doluca Bianca</span><span class="item-price">1650 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="kirmizi-sarap" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Kırmızı Şaraplar</span><span data-lang="en">Red Wines</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="odris-merlot.jpg" alt="Odris Merlot 2017 Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Odris Merlot 2017 Şişe 75cl</span><span class="item-price">1900 ₺</span></div></div>
-            <div class="menu-item"><img src="tulip-cabernet-merlot.jpg" alt="Tulip Cabernet Sauvignon Merlot 2018 75cl" class="item-image"><div class="item-header"><span class="item-name">Tulip Cabernet Sauvignon Merlot 2018 75cl</span><span class="item-price">1800 ₺</span></div></div>
-            <div class="menu-item"><img src="tulip-cabernet.jpg" alt="Tulip Cabernet Sauvignon 2018 Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Tulip Cabernet Sauvignon 2018 Şişe 75cl</span><span class="item-price">1800 ₺</span></div></div>
-            <div class="menu-item"><img src="vineyards-shiraz.jpg" alt="Vineyards Shiraz şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Vineyards Shiraz şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="vineyards-cabernet.jpg" alt="Vineyards Cabernet Sauvignon Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Vineyards Cabernet Sauvignon Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="vineyards-merlot.jpg" alt="Vineyards Merlot Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Vineyards Merlot Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="vineyards-papaz.jpg" alt="Vineyards Papazkarası Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Vineyards Papazkarası Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="rauge-andrinople.jpg" alt="Rauge Andrinople Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Rauge Andrinople Şişe 75cl</span><span class="item-price">900 ₺</span></div></div>
-            <div class="menu-item"><img src="edrine-kirmizi.jpg" alt="Edrine Kırmızı Kadeh Şarap 25cl" class="item-image"><div class="item-header"><span class="item-name">Edrine Kırmızı Kadeh Şarap 25cl</span><span class="item-price">350 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="beyaz-sarap" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Beyaz Şaraplar</span><span data-lang="en">White Wines</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="odris-chardonnay.jpg" alt="ODRIS CHARDONNAY 2020 FRENCH OAK ŞİŞE 75CL" class="item-image"><div class="item-header"><span class="item-name">ODRIS CHARDONNAY 2020 FRENCH OAK ŞİŞE 75CL</span><span class="item-price">1900 ₺</span></div></div>
-            <div class="menu-item"><img src="odris-sauvignon.jpg" alt="ODRIS SAUVIGNON BLANC FÜME BLANC 2020 ŞİŞE 75CL" class="item-image"><div class="item-header"><span class="item-name">ODRIS SAUVIGNON BLANC FÜME BLANC 2020 ŞİŞE 75CL</span><span class="item-price">1900 ₺</span></div></div>
-            <div class="menu-item"><img src="vineyards-sauvignon.jpg" alt="Vineyards Sauvignon Blanc 2020 Şişe 75cl" class="item-image"><div class="item-header"><span class="item-name">Vineyards Sauvignon Blanc 2020 Şişe 75cl</span><span class="item-price">1400 ₺</span></div></div>
-            <div class="menu-item"><img src="edrine-beyaz.jpg" alt="Edrine Beyaz Kadeh Şarap 25cl" class="item-image"><div class="item-header"><span class="item-name">Edrine Beyaz Kadeh Şarap 25cl</span><span class="item-price">300 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="pembe-sarap" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Pembe Şaraplar</span><span data-lang="en">Rose Wines</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="karnaval-blush.jpg" alt="KARNAVAL BLUSH ŞİŞE 75CL" class="item-image"><div class="item-header"><span class="item-name">KARNAVAL BLUSH ŞİŞE 75CL</span><span class="item-price">1200 ₺</span></div></div>
-            <div class="menu-item"><img src="edrine-pembe.jpg" alt="Edrine Pembe Kadeh Şarap 25cl" class="item-image"><div class="item-header"><span class="item-name">Edrine Pembe Kadeh Şarap 25cl</span><span class="item-price">350 ₺</span></div></div>
-        </div>
-    </section>
-
-    <section id="dondurma" class="menu-section">
-        <h2 class="section-title"><span data-lang="tr">Dondurmalar</span><span data-lang="en">Ice Creams</span></h2>
-        <div class="menu-grid">
-            <div class="menu-item"><img src="cornetto.jpg" alt="Cornetto" class="item-image"><div class="item-header"><span class="item-name">Cornetto</span><span class="item-price">135 ₺</span></div></div>
-            <div class="menu-item"><img src="nogger.jpg" alt="Nogger" class="item-image"><div class="item-header"><span class="item-name">Nogger</span><span class="item-price">135 ₺</span></div></div>
-            <div class="menu-item"><img src="magnum.jpg" alt="Magnum" class="item-image"><div class="item-header"><span class="item-name">Magnum</span><span class="item-price">150 ₺</span></div></div>
-        </div>
-    </section>
+<header>
+<img alt="Wens Viento Logo" class="logo-img" decoding="async" loading="eager" src="images/viento GOLD (1).jpg"/>
+</header>
+<section class="menu-section" id="kahvalti">
+<h2 class="section-title"><span data-lang="tr">Kahvaltılar</span><span data-lang="en">Breakfast</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Serpme Kahvaltı" class="item-image" decoding="async" loading="lazy" src="images/serpme-kahvalti.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Serpme Kahvaltı</span><span data-lang="en">Spread Breakfast</span></span>
+<span class="item-price">550 ₺</span>
 </div>
-
+<div class="item-description"><span data-lang="tr">Kişi başı fiyatıdır.</span><span data-lang="en">Price per person.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Kahvaltı Tabağı" class="item-image" decoding="async" loading="lazy" src="images/kahvalti-tabagi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Kahvaltı Tabağı</span><span data-lang="en">Breakfast Platter</span></span>
+<span class="item-price">425 ₺</span>
+</div>
+<div class="item-description">
+<span data-lang="tr">Beyaz peynir, misket peynir, burgu peynir, kaşar peynir, otlu peynir, göz yumurta, domates, salatalık, tereyağ, bal, iki çeşit reçel, sucuk, hellim peynir, üç çeşit zeytin, yeşillik, sınırsız çay ikram edilir.</span>
+<span data-lang="en">White cheese, pearl cheese, twist cheese, kashar, herbed cheese, fried egg, tomato, cucumber, butter, honey, two types of jam, sucuk, halloumi, three types of olives, greens, served with unlimited tea.</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Mantarlı Omlet" class="item-image" decoding="async" loading="lazy" src="images/mantarli-omlet.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Mantarlı Omlet</span><span data-lang="en">Mushroom Omelette</span></span>
+<span class="item-price">150 ₺</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Sebzeli Omlet" class="item-image" decoding="async" loading="lazy" src="images/sebzeli-omlet.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sebzeli Omlet</span><span data-lang="en">Vegetable Omelette</span></span>
+<span class="item-price">130 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mevsim sebzeleri, mantar.</span><span data-lang="en">Seasonal vegetables, mushrooms.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Wens Omlet" class="item-image" decoding="async" loading="lazy" src="images/wens-omlet.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Wens Omlet</span><span data-lang="en">Wens Omelette</span></span>
+<span class="item-price">150 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Dört peynirli.</span><span data-lang="en">Four cheese.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Sade Omlet" class="item-image" decoding="async" loading="lazy" src="images/sade-omlet.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sade Omlet</span><span data-lang="en">Plain Omelette</span></span>
+<span class="item-price">120 ₺</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Peynirli Menemen" class="item-image" decoding="async" loading="lazy" src="images/peynirli-menemen.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Peynirli Menemen</span><span data-lang="en">Menemen with Cheese</span></span>
+<span class="item-price">150 ₺</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Menemen" class="item-image" decoding="async" loading="lazy" src="images/menemen.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Menemen</span><span data-lang="en">Traditional Scrambled Eggs</span></span>
+<span class="item-price">130 ₺</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Sucuklu Yumurta" class="item-image" decoding="async" loading="lazy" src="images/sucuklu-yumurta.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sucuklu Yumurta</span><span data-lang="en">Eggs with Sucuk</span></span>
+<span class="item-price">200 ₺</span>
+</div>
+</div>
+<div class="menu-item">
+<img alt="Sucuk" class="item-image" decoding="async" loading="lazy" src="images/sucuk.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sucuk</span><span data-lang="en">Grilled Sucuk</span></span>
+<span class="item-price">130 ₺</span>
+</div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="baslangic">
+<h2 class="section-title"><span data-lang="tr">Başlangıçlar</span><span data-lang="en">Starters</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Şarküteri Tabağı" class="item-image" decoding="async" loading="lazy" src="images/sarkuteri-tabagi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Şarküteri Tabağı</span><span data-lang="en">Charcuterie Board</span></span>
+<span class="item-price">875 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Eski Kaşar, Göbek Kaşar (biberli, çörekotlu, kekikli), İsli çerkez peynir, Hindi füme ve kuru et.</span><span data-lang="en">Aged Kashar, Cecil Kashar (with pepper, black cumin, thyme), Smoked Circassian cheese, Smoked turkey and dried beef.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Meyve Tabağı" class="item-image" decoding="async" loading="lazy" src="images/meyve-tabagi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Meyve Tabağı</span><span data-lang="en">Fruit Platter</span></span>
+<span class="item-price">530 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mevsim Meyveleri</span><span data-lang="en">Seasonal Fruits</span></div>
+</div>
+<div class="menu-item">
+<img alt="Tapas" class="item-image" decoding="async" loading="lazy" src="images/tapas.jpg"/>
+<div class="item-header">
+<span class="item-name">Tapas</span>
+<span class="item-price">435 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Şefin Özel soslarıyla süslendirilmiş 4 adet baget ekmek dilimi ile servis edilir.</span><span data-lang="en">Served with 4 slices of baguette bread garnished with Chef's special sauces.</span></div>
+</div>
+<div class="menu-item">
+<img alt="3 Peynirli Tost" class="item-image" decoding="async" loading="lazy" src="images/tost-3-peynirli.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">3 Peynirli Tost</span><span data-lang="en">3 Cheese Toast</span></span>
+<span class="item-price">250 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Tost Ekmeği, Kaşar, Örgü, otlu peynir ve karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Kashar, Knit cheese, herbed cheese, served with mixed salad.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Beyaz Peynirli Tost" class="item-image" decoding="async" loading="lazy" src="images/tost-beyaz-peynirli.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Beyaz Peynirli Tost</span><span data-lang="en">White Cheese Toast</span></span>
+<span class="item-price">250 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Tost ekmeği, Beyaz peynir, Domates ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, White cheese, Tomato, served with mixed salad.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Sucuklu Tost" class="item-image" decoding="async" loading="lazy" src="images/tost-sucuklu.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sucuklu Tost</span><span data-lang="en">Sucuk Toast</span></span>
+<span class="item-price">300 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Tost Ekmeği, Sucuk ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Sucuk, served with mixed salad.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Karışık Tost" class="item-image" decoding="async" loading="lazy" src="images/tost-karisik.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Karışık Tost</span><span data-lang="en">Mixed Toast</span></span>
+<span class="item-price">275 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Tost ekmeği, Kaşar, Sucuk ve Karışık salata ile servis edilir.</span><span data-lang="en">Toast bread, Kashar, Sucuk, served with mixed salad.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Meze Çeşitleri" class="item-image" decoding="async" loading="lazy" src="images/meze-cesitleri.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Meze Çeşitleri</span><span data-lang="en">Meze Selection</span></span>
+<span class="item-price">175 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Haydari, Havuç Tarator, Mamzana, Biber Borani, Acuka, Zeytin Salatası, Atom</span><span data-lang="en">Traditional Turkish cold appetizers variety.</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="bowls">
+<h2 class="section-title">Bowl's</h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Fit Bowl" class="item-image" decoding="async" loading="lazy" src="images/fit-bowl.jpg"/>
+<div class="item-header">
+<span class="item-name">Fit Bowl</span>
+<span class="item-price">375 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mevsimsel Meyveler, Granola, Çiğ Badem, Çiğ fındık, Yulaf, Süzme Yoğurt</span><span data-lang="en">Seasonal Fruits, Granola, Raw Almonds, Raw Hazelnuts, Oats, Strained Yogurt</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="salatalar">
+<h2 class="section-title"><span data-lang="tr">Salatalar</span><span data-lang="en">Salads</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Bonfile Salata" class="item-image" decoding="async" loading="lazy" src="images/bonfile-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Bonfile Salata</span><span data-lang="en">Beef Tenderloin Salad</span></span>
+<span class="item-price">500 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">100gr Bonfile dilimleri, kıvırcık Marul, çeri domates, salatalık, parmesan</span><span data-lang="en">100g Beef slices, lettuce, cherry tomatoes, cucumber, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Sezar Salata" class="item-image" decoding="async" loading="lazy" src="images/sezar-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sezar Salata</span><span data-lang="en">Caesar Salad</span></span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">100gr Izgara tavuk dilimleri, kruton, atom marul, çeri domates, salatalık,sezar sos, parmesan</span><span data-lang="en">100g Grilled chicken, croutons, romaine lettuce, cherry tomatoes, caesar dressing, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Greek Salata" class="item-image" decoding="async" loading="lazy" src="images/greek-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Greek Salata</span><span data-lang="en">Greek Salad</span></span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Soğan, domates, salatalık, biber, peynir, kekik</span><span data-lang="en">Onion, tomato, cucumber, pepper, feta cheese, thyme</span></div>
+</div>
+<div class="menu-item">
+<img alt="Roka Salata" class="item-image" decoding="async" loading="lazy" src="images/roka-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Roka Salata</span><span data-lang="en">Arugula Salad</span></span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Roka, ceviz, çeri domates, parmesan</span><span data-lang="en">Arugula, walnuts, cherry tomatoes, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Fit Salata" class="item-image" decoding="async" loading="lazy" src="images/fit-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Fit Salata</span><span data-lang="en">Fit Salad</span></span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Kıvırcık, bulgur, maş fasulyesi, domates, kabak rende, havuç rende</span><span data-lang="en">Lettuce, bulgur, mung beans, tomato, shredded zucchini &amp; carrot</span></div>
+</div>
+<div class="menu-item">
+<img alt="Akdeniz Salata" class="item-image" decoding="async" loading="lazy" src="images/akdeniz-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Akdeniz Salata</span><span data-lang="en">Mediterranean Salad</span></span>
+<span class="item-price">330 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mevsim yeşillikleri, domates</span><span data-lang="en">Seasonal greens, tomatoes</span></div>
+</div>
+<div class="menu-item">
+<img alt="Ton Balıklı Salata" class="item-image" decoding="async" loading="lazy" src="images/ton-balikli-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Ton Balıklı Salata</span><span data-lang="en">Tuna Salad</span></span>
+<span class="item-price">400 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mevsim yeşillikleri, domates, salatalık, ton balığı, mısır, kırmızı soğan</span><span data-lang="en">Seasonal greens, tomato, cucumber, tuna, corn, red onion</span></div>
+</div>
+<div class="menu-item">
+<img alt="Wens Salata" class="item-image" decoding="async" loading="lazy" src="images/wens-salata.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Wens Salata</span><span data-lang="en">Wens Salad</span></span>
+<span class="item-price">385 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Kıvırcık, roka, atom marul, çeri domates, ceviz, rende havuç, meksika fasulyesi</span><span data-lang="en">Lettuce, arugula, romaine, cherry tomatoes, walnuts, shredded carrot, kidney beans</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="atistirmalik">
+<h2 class="section-title"><span data-lang="tr">Atıştırmalıklar</span><span data-lang="en">Appetizers</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Patates Kızartması" class="item-image" decoding="async" loading="lazy" src="images/patates-kizartmasi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Patates Kızartması</span><span data-lang="en">French Fries</span></span>
+<span class="item-price">275 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Sos eşliğinde</span><span data-lang="en">Served with sauces</span></div>
+</div>
+<div class="menu-item">
+<img alt="Börek Sepeti" class="item-image" decoding="async" loading="lazy" src="images/borek-sepeti.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Börek Sepeti</span><span data-lang="en">Pastry Basket</span></span>
+<span class="item-price">290 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">6 adet peynirli sigara böreği</span><span data-lang="en">6 pieces of cheese spring rolls</span></div>
+</div>
+<div class="menu-item">
+<img alt="Bira Tabağı" class="item-image" decoding="async" loading="lazy" src="images/bira-tabagi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Bira Tabağı</span><span data-lang="en">Beer Platter</span></span>
+<span class="item-price">515 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Sosis, Patates Kızartması, çıtır tavuk, soğan halkası</span><span data-lang="en">Sausage, French fries, crispy chicken, onion rings</span></div>
+</div>
+<div class="menu-item">
+<img alt="Soğan Halkası" class="item-image" decoding="async" loading="lazy" src="images/sogan-halkasi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Soğan Halkası</span><span data-lang="en">Onion Rings</span></span>
+<span class="item-price">250 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">8 adet soğan halkası patates kızartması eşliğinde</span><span data-lang="en">8 pieces of onion rings served with french fries</span></div>
+</div>
+<div class="menu-item">
+<img alt="Çıtır Tavuk" class="item-image" decoding="async" loading="lazy" src="images/citir-tavuk.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Çıtır Tavuk</span><span data-lang="en">Crispy Chicken</span></span>
+<span class="item-price">370 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">8 adet çıtır tavuk parçası</span><span data-lang="en">8 pieces of crispy chicken bites</span></div>
+</div>
+<div class="menu-item">
+<img alt="Sosis Tabağı" class="item-image" decoding="async" loading="lazy" src="images/sosis-tabagi.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Sosis Tabağı</span><span data-lang="en">Sausage Platter</span></span>
+<span class="item-price">290 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">6 adet sosis ve patates kızartması eşliğinde</span><span data-lang="en">6 pieces of sausages served with french fries</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="makarnalar">
+<h2 class="section-title"><span data-lang="tr">Makarnalar</span><span data-lang="en">Pastas</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Pesto Fettuccine" class="item-image" decoding="async" loading="lazy" src="images/pesto-fettuccine.jpg"/>
+<div class="item-header">
+<span class="item-name">Pesto Fettuccine</span>
+<span class="item-price">410 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Pesto Sos, krema, 110gr Fettuccini makarna, parmesan</span><span data-lang="en">Pesto sauce, cream, 110g Fettuccine, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Spaghetti Bolonez" class="item-image" decoding="async" loading="lazy" src="images/spaghetti-bolonez.jpg"/>
+<div class="item-header">
+<span class="item-name">Spaghetti Bolonez</span>
+<span class="item-price">440 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">60 gr Kıyma, napoliten sos, 110gr spaghetti makarna, parmesan</span><span data-lang="en">60g Minced meat, Neapolitan sauce, 110g spaghetti, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Fettucine Alfredo" class="item-image" decoding="async" loading="lazy" src="images/fettucine-alfredo.jpg"/>
+<div class="item-header">
+<span class="item-name">Fettucine Alfredo</span>
+<span class="item-price">410 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">100gr Tavuk gögüs, krema, mantar, 110gr fettuccini makarna, parmesan</span><span data-lang="en">100g Chicken breast, cream, mushroom, 110g fettuccine, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Körili Fettuccine Alfredo" class="item-image" decoding="async" loading="lazy" src="images/korili-fettuccine.jpg"/>
+<div class="item-header">
+<span class="item-name">Körili Fettuccine Alfredo</span>
+<span class="item-price">410 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">100gr Tavuk gögüs, krema, mantar, köri, 110gr fettuccini makarna, parmesan</span><span data-lang="en">100g Chicken breast, cream, mushroom, curry, 110g fettuccine, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Spaghetti Napoliten" class="item-image" decoding="async" loading="lazy" src="images/spaghetti-napoliten.jpg"/>
+<div class="item-header">
+<span class="item-name">Spaghetti Napoliten</span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Napoliten sos, 110gr spaghetti makarna, fesleğen, parmesan</span><span data-lang="en">Neapolitan sauce, 110g spaghetti, basil, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Penne Arabiatta" class="item-image" decoding="async" loading="lazy" src="images/penne-arabiatta.jpg"/>
+<div class="item-header">
+<span class="item-name">Penne Arabiatta</span>
+<span class="item-price">350 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Acılı sos, 110gr spaghetti makarna, siyah ve yeşil zeytin, mısır, parmesan</span><span data-lang="en">Spicy sauce, 110g spaghetti, black &amp; green olives, corn, parmesan</span></div>
+</div>
+<div class="menu-item">
+<img alt="Wens Special Fettuccine" class="item-image" decoding="async" loading="lazy" src="images/wens-special-fettuccine.jpg"/>
+<div class="item-header">
+<span class="item-name">Wens Special Fettuccine</span>
+<span class="item-price">440 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Dört farklı peynir, krema, fesleğen, 110gr fettuccine makarna</span><span data-lang="en">Four cheeses, cream, basil, 110g fettuccine</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="hamburgerler">
+<h2 class="section-title"><span data-lang="tr">Hamburgerler</span><span data-lang="en">Burgers</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Cheese Burger" class="item-image" decoding="async" loading="lazy" src="images/cheese-burger.jpg"/>
+<div class="item-header">
+<span class="item-name">Cheese Burger</span>
+<span class="item-price">520 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">2x60gr smash köftesi, cheddar peyniri, burger sos, patates kızartması, ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, cheddar, burger sauce, french fries and dipping sauces.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Hamburger" class="item-image" decoding="async" loading="lazy" src="images/hamburger.jpg"/>
+<div class="item-header">
+<span class="item-name">Hamburger</span>
+<span class="item-price">490 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">2x60gr smash köftesi, domates, marul, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, tomato, lettuce, burger sauce, french fries.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Wens Burger" class="item-image" decoding="async" loading="lazy" src="images/wens-burger.jpg"/>
+<div class="item-header">
+<span class="item-name">Wens Burger</span>
+<span class="item-price">545 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">2x60gr smash köftesi, rose beef ,karamelize soğan, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">2x60g smash patty, roast beef, caramelized onions, burger sauce, fries.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Tavuk Burger" class="item-image" decoding="async" loading="lazy" src="images/tavuk-burger.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Tavuk Burger</span><span data-lang="en">Chicken Burger</span></span>
+<span class="item-price">465 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">150 gr tavuk gögüs, domates, marul, turşu, acı sos, burger sos, patates kızartması ve soslar eşliğinde servis edilmektedir.</span><span data-lang="en">150g chicken breast, tomato, lettuce, pickles, hot sauce, burger sauce, fries.</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="pizzalar">
+<h2 class="section-title"><span data-lang="tr">Pizzalar</span><span data-lang="en">Pizzas</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Margarita" class="item-image" decoding="async" loading="lazy" src="images/margarita.jpg"/>
+<div class="item-header">
+<span class="item-name">Margarita</span>
+<span class="item-price">480 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mozarella peynir ve özel pizza sosu</span><span data-lang="en">Mozzarella cheese and special pizza sauce</span></div>
+</div>
+<div class="menu-item">
+<img alt="Quatro Formaggi" class="item-image" decoding="async" loading="lazy" src="images/quatro-formaggi.jpg"/>
+<div class="item-header">
+<span class="item-name">Quatro Formaggi</span>
+<span class="item-price">590 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Dört farklı peynir ve özel pizza sosu</span><span data-lang="en">Four different cheeses and special pizza sauce</span></div>
+</div>
+<div class="menu-item">
+<img alt="Ton Balıklı Pizza" class="item-image" decoding="async" loading="lazy" src="images/ton-balikli-pizza.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Ton Balıklı</span><span data-lang="en">Tuna Pizza</span></span>
+<span class="item-price">550 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mozarella peynir, mor soğan, ton balığı ve özel pizza sosu</span><span data-lang="en">Mozzarella, red onion, tuna and special pizza sauce</span></div>
+</div>
+<div class="menu-item">
+<img alt="Vegie Pizza" class="item-image" decoding="async" loading="lazy" src="images/vegie-pizza.jpg"/>
+<div class="item-header">
+<span class="item-name">Vegie</span>
+<span class="item-price">550 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mozarella peynir, közlenmiş patlıcan, közlenmiş kapya biber, yeşil biber, mantar ve özel pizza sosu</span><span data-lang="en">Mozzarella, roasted eggplant, roasted capia pepper, green pepper, mushroom, pizza sauce</span></div>
+</div>
+<div class="menu-item">
+<img alt="Wens Pizza" class="item-image" decoding="async" loading="lazy" src="images/wens-pizza.jpg"/>
+<div class="item-header">
+<span class="item-name">Wens Pizza</span>
+<span class="item-price">610 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">Mozarella peynir, mantar, yeşil biber, kapya biber, mısır, sucuk, sosis ve özel pizza sosu.</span><span data-lang="en">Mozzarella, mushroom, green pepper, capia pepper, corn, sucuk, sausage, pizza sauce.</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="anayemek">
+<h2 class="section-title"><span data-lang="tr">Ana Yemekler</span><span data-lang="en">Main Courses</span></h2>
+<div class="menu-grid">
+<div class="menu-item">
+<img alt="Bonfile" class="item-image" decoding="async" loading="lazy" src="images/bonfile.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Bonfile</span><span data-lang="en">Beef Tenderloin</span></span>
+<span class="item-price">880 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">200-250 gr arası bonfile, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g tenderloin, served with baked potatoes.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Antrikot" class="item-image" decoding="async" loading="lazy" src="images/antrikot.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Antrikot</span><span data-lang="en">Ribeye Steak</span></span>
+<span class="item-price">830 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">200-250 gr arası antrikot, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g ribeye, served with baked potatoes.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Tavuk Izgara" class="item-image" decoding="async" loading="lazy" src="images/tavuk-izgara.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Tavuk Izgara</span><span data-lang="en">Grilled Chicken</span></span>
+<span class="item-price">530 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">200-250 gr arası tavuk, Fırın Patates ile servis edilmektedir.</span><span data-lang="en">200-250g chicken, served with baked potatoes.</span></div>
+</div>
+<div class="menu-item">
+<img alt="Beğendili Köfte" class="item-image" decoding="async" loading="lazy" src="images/begendili-kofte.jpg"/>
+<div class="item-header">
+<span class="item-name"><span data-lang="tr">Beğendili Köfte</span><span data-lang="en">Meatballs with Eggplant Puree</span></span>
+<span class="item-price">660 ₺</span>
+</div>
+<div class="item-description"><span data-lang="tr">5 adet X 60gr olarak tabak porsiyonudur.</span><span data-lang="en">5 pieces x 60g plate portion.</span></div>
+</div>
+</div>
+</section>
+<section class="menu-section" id="sicak-kahve">
+<h2 class="section-title"><span data-lang="tr">Sıcak Kahveler</span><span data-lang="en">Hot Coffees</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Espresso" class="item-image" decoding="async" loading="lazy" src="images/espresso.jpg"/><div class="item-header"><span class="item-name">Espresso</span><span class="item-price">150 ₺</span></div></div>
+<div class="menu-item"><img alt="Double Espresso" class="item-image" decoding="async" loading="lazy" src="images/double-espresso.jpg"/><div class="item-header"><span class="item-name">Double Espresso</span><span class="item-price">190 ₺</span></div></div>
+<div class="menu-item"><img alt="Americano" class="item-image" decoding="async" loading="lazy" src="images/americano.jpg"/><div class="item-header"><span class="item-name">Americano</span><span class="item-price">180 ₺</span></div></div>
+<div class="menu-item"><img alt="Cappuccino" class="item-image" decoding="async" loading="lazy" src="images/cappuccino.jpg"/><div class="item-header"><span class="item-name">Cappuccino</span><span class="item-price">210 ₺</span></div></div>
+<div class="menu-item"><img alt="Macchiato" class="item-image" decoding="async" loading="lazy" src="images/macchiato.jpg"/><div class="item-header"><span class="item-name">Maccihato</span><span class="item-price">200 ₺</span></div></div>
+<div class="menu-item"><img alt="Moccaccino" class="item-image" decoding="async" loading="lazy" src="images/moccaccino.jpg"/><div class="item-header"><span class="item-name">Moccaccino</span><span class="item-price">200 ₺</span></div></div>
+<div class="menu-item"><img alt="Latte Macchiato" class="item-image" decoding="async" loading="lazy" src="images/latte-macchiato.jpg"/><div class="item-header"><span class="item-name">Latte Maccihato</span><span class="item-price">200 ₺</span></div></div>
+<div class="menu-item">
+<img alt="Aromalı Latte" class="item-image" decoding="async" loading="lazy" src="images/aromali-latte.jpg"/>
+<div class="item-header"><span class="item-name"><span data-lang="tr">Aromalı Latte Maccihato</span><span data-lang="en">Flavored Latte Macchiato</span></span><span class="item-price">220 ₺</span></div>
+<div class="item-description"><span data-lang="tr">Vanilya - Fındık - Karamel</span><span data-lang="en">Vanilla - Hazelnut - Caramel</span></div>
+</div>
+<div class="menu-item"><img alt="Sıcak Çikolata" class="item-image" decoding="async" loading="lazy" src="images/sicak-cikolata.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Sıcak Çikolata</span><span data-lang="en">Hot Chocolate</span></span><span class="item-price">220 ₺</span></div></div>
+<div class="menu-item"><img alt="Filtre Kahve" class="item-image" decoding="async" loading="lazy" src="images/filtre-kahve.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Filtre Kahve</span><span data-lang="en">Filter Coffee</span></span><span class="item-price">200 ₺</span></div></div>
+<div class="menu-item"><img alt="Türk Kahvesi" class="item-image" decoding="async" loading="lazy" src="images/turk-kahvesi.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Türk Kahvesi</span><span data-lang="en">Turkish Coffee</span></span><span class="item-price">180 ₺</span></div></div>
+<div class="menu-item"><img alt="Double Türk Kahvesi" class="item-image" decoding="async" loading="lazy" src="images/double-turk-kahvesi.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Double Türk Kahvesi</span><span data-lang="en">Double Turkish Coffee</span></span><span class="item-price">200 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="soguk-kahve">
+<h2 class="section-title"><span data-lang="tr">Soğuk Kahveler</span><span data-lang="en">Cold Coffees</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Ice Americano" class="item-image" decoding="async" loading="lazy" src="images/ice-americano.jpg"/><div class="item-header"><span class="item-name">Ice Americano</span><span class="item-price">180 ₺</span></div></div>
+<div class="menu-item"><img alt="Ice Mocha" class="item-image" decoding="async" loading="lazy" src="images/ice-mocha.jpg"/><div class="item-header"><span class="item-name">Ice Mocha</span><span class="item-price">260 ₺</span></div></div>
+<div class="menu-item"><img alt="Ice Latte" class="item-image" decoding="async" loading="lazy" src="images/ice-latte.jpg"/><div class="item-header"><span class="item-name">Ice Latte</span><span class="item-price">210 ₺</span></div></div>
+<div class="menu-item"><img alt="Aromalı Ice Latte" class="item-image" decoding="async" loading="lazy" src="images/aromali-ice-latte.jpg"/><div class="item-header"><span class="item-name">Aromalı Ice Latte</span><span class="item-price">270 ₺</span></div></div>
+<div class="menu-item"><img alt="Ice White Chocolate" class="item-image" decoding="async" loading="lazy" src="images/ice-white-chocolate.jpg"/><div class="item-header"><span class="item-name">Ice White Chocolate</span><span class="item-price">260 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="alkolsuz-kokteyl">
+<h2 class="section-title"><span data-lang="tr">Alkolsüz Kokteyller</span><span data-lang="en">Mocktails</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Mojito" class="item-image" decoding="async" loading="lazy" src="images/mojito.jpg"/><div class="item-header"><span class="item-name">Mojito</span><span class="item-price">260 ₺</span></div></div>
+<div class="menu-item"><img alt="Mariquita" class="item-image" decoding="async" loading="lazy" src="images/mariquita.jpg"/><div class="item-header"><span class="item-name">Mariquita</span><span class="item-price">260 ₺</span></div></div>
+<div class="menu-item"><img alt="Frozen" class="item-image" decoding="async" loading="lazy" src="images/frozen.jpg"/><div class="item-header"><span class="item-name">Frozen</span><span class="item-price">240 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="soft-icecek">
+<h2 class="section-title"><span data-lang="tr">Soft İçecekler</span><span data-lang="en">Soft Drinks</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Limonata" class="item-image" decoding="async" loading="lazy" src="images/limonata.jpg"/><div class="item-header"><span class="item-name">Limonata</span><span class="item-price">140 ₺</span></div></div>
+<div class="menu-item"><img alt="Red Bull" class="item-image" decoding="async" loading="lazy" src="images/redbull.jpg"/><div class="item-header"><span class="item-name">Red Bull</span><span class="item-price">140 ₺</span></div></div>
+<div class="menu-item"><img alt="Cococola" class="item-image" decoding="async" loading="lazy" src="images/cocacola.jpg"/><div class="item-header"><span class="item-name">Cococola</span><span class="item-price">95 ₺</span></div></div>
+<div class="menu-item"><img alt="Cocacola Zero" class="item-image" decoding="async" loading="lazy" src="images/cocacola-zero.jpg"/><div class="item-header"><span class="item-name">Cocacola Zero</span><span class="item-price">95 ₺</span></div></div>
+<div class="menu-item"><img alt="Sprite" class="item-image" decoding="async" loading="lazy" src="images/sprite.jpg"/><div class="item-header"><span class="item-name">Sprite</span><span class="item-price">95 ₺</span></div></div>
+<div class="menu-item"><img alt="Fanta" class="item-image" decoding="async" loading="lazy" src="images/fanta.jpg"/><div class="item-header"><span class="item-name">Fanta</span><span class="item-price">95 ₺</span></div></div>
+<div class="menu-item"><img alt="Fuse Tea" class="item-image" decoding="async" loading="lazy" src="images/fusetea.jpg"/><div class="item-header"><span class="item-name">Fuse Tea</span><span class="item-price">95 ₺</span></div><div class="item-description"><span data-lang="tr">(Şeftali-Ananas-Limon)</span><span data-lang="en">(Peach-Pineapple-Lemon)</span></div></div>
+<div class="menu-item"><img alt="Ayran" class="item-image" decoding="async" loading="lazy" src="images/ayran.jpg"/><div class="item-header"><span class="item-name">Ayran</span><span class="item-price">95 ₺</span></div></div>
+<div class="menu-item"><img alt="Meyveli Soda" class="item-image" decoding="async" loading="lazy" src="images/meyveli-soda.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Meyveli Soda</span><span data-lang="en">Fruit Mineral Water</span></span><span class="item-price">85 ₺</span></div></div>
+<div class="menu-item"><img alt="Sade Soda" class="item-image" decoding="async" loading="lazy" src="images/sade-soda.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Sade Soda</span><span data-lang="en">Mineral Water</span></span><span class="item-price">80 ₺</span></div></div>
+<div class="menu-item"><img alt="Küçük Su" class="item-image" decoding="async" loading="lazy" src="images/kucuk-su.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Küçük Su</span><span data-lang="en">Small Water</span></span><span class="item-price">80 ₺</span></div><div class="item-description">Uludağ Premium</div></div>
+<div class="menu-item"><img alt="Büyük Su" class="item-image" decoding="async" loading="lazy" src="images/buyuk-su.jpg"/><div class="item-header"><span class="item-name"><span data-lang="tr">Büyük Su</span><span data-lang="en">Large Water</span></span><span class="item-price">130 ₺</span></div><div class="item-description">1L Uludağ premium</div></div>
+<div class="menu-item"><img alt="Churchill" class="item-image" decoding="async" loading="lazy" src="images/churchill.jpg"/><div class="item-header"><span class="item-name">Churchill</span><span class="item-price">120 ₺</span></div></div>
+<div class="menu-item"><img alt="Tonik" class="item-image" decoding="async" loading="lazy" src="images/tonik.jpg"/><div class="item-header"><span class="item-name">Tonik</span><span class="item-price">110 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="viskiler">
+<h2 class="section-title"><span data-lang="tr">Viskiler</span><span data-lang="en">Whiskies</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Maccallan Classic Cut" class="item-image" decoding="async" loading="lazy" src="images/maccallan.jpg"/><div class="item-header"><span class="item-name">Maccallan Classic Cut</span><span class="item-price">Tek 979₺ / Duble 1463₺</span></div></div>
+<div class="menu-item"><img alt="Glenmorangie 14y" class="item-image" decoding="async" loading="lazy" src="images/glenmorangie-14.jpg"/><div class="item-header"><span class="item-name">Glenmorangie 14y</span><span class="item-price">Tek 737₺ / Duble 1089₺</span></div></div>
+<div class="menu-item"><img alt="Glenmorangie 10y" class="item-image" decoding="async" loading="lazy" src="images/glenmorangie-10.jpg"/><div class="item-header"><span class="item-name">Glenmorangie 10y</span><span class="item-price">Tek 550₺ / Duble 880₺</span></div></div>
+<div class="menu-item"><img alt="Glenfiddich 18y" class="item-image" decoding="async" loading="lazy" src="images/glenfiddich-18.jpg"/><div class="item-header"><span class="item-name">Glenfiddich 18y</span><span class="item-price">Tek 572₺ / Duble 847₺</span></div></div>
+<div class="menu-item"><img alt="Talisker 10y" class="item-image" decoding="async" loading="lazy" src="images/talisker-10.jpg"/><div class="item-header"><span class="item-name">Talisker 10y</span><span class="item-price">Tek 715₺ / Duble 1067₺</span></div></div>
+<div class="menu-item"><img alt="Chivas Regal 18y" class="item-image" decoding="async" loading="lazy" src="images/chivas-18.jpg"/><div class="item-header"><span class="item-name">Chivas Regal 18y</span><span class="item-price">Tek 687₺ / Duble 1045₺</span></div></div>
+<div class="menu-item"><img alt="Chivas Regal 15y" class="item-image" decoding="async" loading="lazy" src="images/chivas-15.jpg"/><div class="item-header"><span class="item-name">Chivas Regal 15y</span><span class="item-price">Tek 649₺ / Duble 968₺</span></div></div>
+<div class="menu-item"><img alt="Chivas Regal 12y" class="item-image" decoding="async" loading="lazy" src="images/chivas-12.jpg"/><div class="item-header"><span class="item-name">Chivas Regal 12y</span><span class="item-price">Tek 325₺ / Duble 485₺</span></div></div>
+<div class="menu-item"><img alt="Chivas Regal 12y 70'lik" class="item-image" decoding="async" loading="lazy" src="images/chivas-12-70.jpg"/><div class="item-header"><span class="item-name">Chivas Regal 12y 70'lik</span><span class="item-price">5500 ₺</span></div><div class="item-description"><span data-lang="tr">2 Soda/ 2 Red Bull ,Meyve Tabağı, Çerez Tabağı</span><span data-lang="en">2 Mineral Water/ 2 Red Bull ,Fruit Platter, Nut Platter</span></div></div>
+<div class="menu-item"><img alt="Woodford Reserve" class="item-image" decoding="async" loading="lazy" src="images/woodford-reserve.jpg"/><div class="item-header"><span class="item-name">Woodford Reserve</span><span class="item-price">Tek 759₺ / Duble 1133₺</span></div></div>
+<div class="menu-item"><img alt="Gentleman Jack" class="item-image" decoding="async" loading="lazy" src="images/gentleman-jack.jpg"/><div class="item-header"><span class="item-name">Gentleman Jack</span><span class="item-price">Tek 462₺ / Duble 687₺</span></div></div>
+<div class="menu-item"><img alt="Jack Daniel's" class="item-image" decoding="async" loading="lazy" src="images/jack-daniels.jpg"/><div class="item-header"><span class="item-name">Jack Daniel's</span><span class="item-price">Tek 352₺ / Duble 528₺</span></div></div>
+<div class="menu-item"><img alt="Double Black" class="item-image" decoding="async" loading="lazy" src="images/double-black.jpg"/><div class="item-header"><span class="item-name">Double Black</span><span class="item-price">Tek 572₺ / Duble 858₺</span></div></div>
+<div class="menu-item"><img alt="Black Label" class="item-image" decoding="async" loading="lazy" src="images/black-label.jpg"/><div class="item-header"><span class="item-name">Black Label</span><span class="item-price">Tek 374₺ / Duble 550₺</span></div></div>
+<div class="menu-item"><img alt="Red Label" class="item-image" decoding="async" loading="lazy" src="images/red-label.jpg"/><div class="item-header"><span class="item-name">Red Label</span><span class="item-price">Tek 264₺ / Duble 396₺</span></div></div>
+<div class="menu-item"><img alt="Jameson" class="item-image" decoding="async" loading="lazy" src="images/jameson.jpg"/><div class="item-header"><span class="item-name">Jameson</span><span class="item-price">Tek 462₺ / Duble 682₺</span></div></div>
+<div class="menu-item"><img alt="J&amp;B" class="item-image" decoding="async" loading="lazy" src="images/jb.jpg"/><div class="item-header"><span class="item-name">J&amp;B</span><span class="item-price">Tek 275₺ / Duble 418₺</span></div></div>
+<div class="menu-item"><img alt="Jim Beam" class="item-image" decoding="async" loading="lazy" src="images/jim-beam.jpg"/><div class="item-header"><span class="item-name">Jim Beam</span><span class="item-price">Tek 324₺ / Duble 484₺</span></div></div>
+<div class="menu-item"><img alt="Ballantine's" class="item-image" decoding="async" loading="lazy" src="images/ballantines.jpg"/><div class="item-header"><span class="item-name">Ballantine's</span><span class="item-price">Tek 440₺ / Duble 550₺</span></div></div>
+<div class="menu-item"><img alt="Dimple Golden Selection" class="item-image" decoding="async" loading="lazy" src="images/dimple.jpg"/><div class="item-header"><span class="item-name">Dimple Golden Selection</span><span class="item-price">Tek 264₺ / Duble 396₺</span></div></div>
+<div class="menu-item"><img alt="The Famous Grouse" class="item-image" decoding="async" loading="lazy" src="images/famous-grouse.jpg"/><div class="item-header"><span class="item-name">The Famous Grouse</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
+<div class="menu-item"><img alt="Sır Edwards" class="item-image" decoding="async" loading="lazy" src="images/sir-edwards.jpg"/><div class="item-header"><span class="item-name">Sır Edwards</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
+<div class="menu-item"><img alt="Hankey Bannıster" class="item-image" decoding="async" loading="lazy" src="images/hankey-bannister.jpg"/><div class="item-header"><span class="item-name">Hankey Bannıster</span><span class="item-price">Tek 264₺ / Duble 407₺</span></div></div>
+<div class="menu-item"><img alt="Jameson Black Barrel" class="item-image" decoding="async" loading="lazy" src="images/jameson-black.jpg"/><div class="item-header"><span class="item-name">Jameson Black Barrel</span><span class="item-price">Tek 340₺ / Duble 500₺</span></div></div>
+<div class="menu-item"><img alt="The Glenlıvet 12Y" class="item-image" decoding="async" loading="lazy" src="images/glenlivet-12.jpg"/><div class="item-header"><span class="item-name">The Glenlıvet 12Y</span><span class="item-price">Tek 550₺ / Duble 880₺</span></div></div>
+<div class="menu-item"><img alt="Chivas Regal 12y 35'lik" class="item-image" decoding="async" loading="lazy" src="images/chivas-12-35.jpg"/><div class="item-header"><span class="item-name">Chivas Regal 12y 35'lik</span><span class="item-price">3500 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="imza-kokteyl">
+<h2 class="section-title"><span data-lang="tr">İmza Kokteyller</span><span data-lang="en">Signatures</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Submarine" class="item-image" decoding="async" loading="lazy" src="images/submarine.jpg"/><div class="item-header"><span class="item-name">Submarine</span><span class="item-price">500 ₺</span></div><div class="item-description">Votka, Limoncello, S&amp;S, Yeşil elma püre</div></div>
+<div class="menu-item"><img alt="Tiramisu Espresso Martini" class="item-image" decoding="async" loading="lazy" src="images/tiramisu-espresso.jpg"/><div class="item-header"><span class="item-name">Tiramisu Espresso Martini</span><span class="item-price">500 ₺</span></div><div class="item-description">Votka, baileys, kremşanti, tiramisu şurubu, kakao tozu.</div></div>
+<div class="menu-item"><img alt="Pablo Emilio Escobar Gaviria" class="item-image" decoding="async" loading="lazy" src="images/pablo-escobar.jpg"/><div class="item-header"><span class="item-name">Pablo Emilio Escobar Gaviria</span><span class="item-price">500 ₺</span></div><div class="item-description">Jalapeno infused tekila, greyfurt suyu, passion fruit püre, s&amp;s, tuz rim.</div></div>
+<div class="menu-item"><img alt="Shandy Special" class="item-image" decoding="async" loading="lazy" src="images/shandy-special.jpg"/><div class="item-header"><span class="item-name">Shandy Special</span><span class="item-price">500 ₺</span></div><div class="item-description">Cin, absolut citron, wens özel sos, yeşil erik, kuzu kulağı, s&amp;s.</div></div>
+</div>
+</section>
+<section class="menu-section" id="klasik-kokteyl">
+<h2 class="section-title"><span data-lang="tr">Klasik Kokteyller</span><span data-lang="en">Classics</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Margarita" class="item-image" decoding="async" loading="lazy" src="images/margarita-cocktail.jpg"/><div class="item-header"><span class="item-name">Margarita</span><span class="item-price">550 ₺</span></div><div class="item-description">Tekila, countreau, s&amp;s, tuz rim.</div></div>
+<div class="menu-item"><img alt="Cin Fizz" class="item-image" decoding="async" loading="lazy" src="images/cin-fizz.jpg"/><div class="item-header"><span class="item-name">Cin Fizz</span><span class="item-price">550 ₺</span></div><div class="item-description">Cin, limon suyu, pudra şekeri, soda.</div></div>
+<div class="menu-item"><img alt="Whisky Sour" class="item-image" decoding="async" loading="lazy" src="images/whisky-sour.jpg"/><div class="item-header"><span class="item-name">Whisky Sour</span><span class="item-price">550 ₺</span></div><div class="item-description">Bourbon viski, s&amp;s, esmer şeker.</div></div>
+<div class="menu-item"><img alt="Espresso Martini" class="item-image" decoding="async" loading="lazy" src="images/espresso-martini.jpg"/><div class="item-header"><span class="item-name">Espresso Martini</span><span class="item-price">550 ₺</span></div><div class="item-description">Absoult vanilla, kahlua, espresso.</div></div>
+<div class="menu-item"><img alt="Sex On The Beach" class="item-image" decoding="async" loading="lazy" src="images/sex-on-the-beach.jpg"/><div class="item-header"><span class="item-name">Sex On The Beach</span><span class="item-price">550 ₺</span></div><div class="item-description">Votka, tekila, archers, portakal suyu, nar şurubu.</div></div>
+<div class="menu-item"><img alt="Mojito" class="item-image" decoding="async" loading="lazy" src="images/mojito-classic.jpg"/><div class="item-header"><span class="item-name">Mojito</span><span class="item-price">550 ₺</span></div><div class="item-description">Rom, esmer şeker, taze nane, lime limon, soda.</div></div>
+<div class="menu-item"><img alt="Irish Coffee" class="item-image" decoding="async" loading="lazy" src="images/irish-coffee.jpg"/><div class="item-header"><span class="item-name">Irish Coffee</span><span class="item-price">550 ₺</span></div><div class="item-description">Jameson, espresso, kremşanti.</div></div>
+<div class="menu-item"><img alt="Baileys Coffee" class="item-image" decoding="async" loading="lazy" src="images/baileys-coffee.jpg"/><div class="item-header"><span class="item-name">Baileys Coffee</span><span class="item-price">550 ₺</span></div><div class="item-description">Baileys, espresso, kremşanti.</div></div>
+<div class="menu-item"><img alt="Negroni" class="item-image" decoding="async" loading="lazy" src="images/negroni.jpg"/><div class="item-header"><span class="item-name">Negroni</span><span class="item-price">550 ₺</span></div><div class="item-description">Cin,campari,martini rosso.</div></div>
+<div class="menu-item"><img alt="Aperol Spritz" class="item-image" decoding="async" loading="lazy" src="images/aperol-spritz.jpg"/><div class="item-header"><span class="item-name">Aperol Spritz</span><span class="item-price">450 ₺</span></div><div class="item-description">Aperol, şampanya, soda.</div></div>
+<div class="menu-item"><img alt="Long Island Ice Tea" class="item-image" decoding="async" loading="lazy" src="images/long-island.jpg"/><div class="item-header"><span class="item-name">Long Island Ice Tea</span><span class="item-price">550 ₺</span></div><div class="item-description">Votka, rom, cin, tekila, portakal likörü, limon suyu, kola.</div></div>
+<div class="menu-item"><img alt="Kuzu Kulağı" class="item-image" decoding="async" loading="lazy" src="images/kuzu-kulagi.jpg"/><div class="item-header"><span class="item-name">Kuzu Kulağı</span><span class="item-price">550 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="shotlar">
+<h2 class="section-title"><span data-lang="tr">Shotlar</span><span data-lang="en">Shots</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Tekila Shot" class="item-image" decoding="async" loading="lazy" src="images/tekila-6li.jpg"/><div class="item-header"><span class="item-name">Tekila Shot (Tek 6'lı Shovel)</span><span class="item-price">1250 ₺</span></div></div>
+<div class="menu-item"><img alt="Jagermaister" class="item-image" decoding="async" loading="lazy" src="images/jager-6li.jpg"/><div class="item-header"><span class="item-name">Jagermaister (Tek 6'lı Shovel)</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Jagermaister Shot" class="item-image" decoding="async" loading="lazy" src="images/jager-shot.jpg"/><div class="item-header"><span class="item-name">Jagermaister Shot</span><span class="item-price">220 ₺</span></div></div>
+<div class="menu-item"><img alt="Tekila Shot" class="item-image" decoding="async" loading="lazy" src="images/tekila-shot.jpg"/><div class="item-header"><span class="item-name">Tekila Shot</span><span class="item-price">250 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="rakilar">
+<h2 class="section-title"><span data-lang="tr">Rakılar</span><span data-lang="en">Rakı</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Anadolu Rakı Tek" class="item-image" decoding="async" loading="lazy" src="images/anadolu-tek.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı Tek</span><span class="item-price">275 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Rakı Double" class="item-image" decoding="async" loading="lazy" src="images/anadolu-duble.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı Double</span><span class="item-price">385 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Rakı 20cl" class="item-image" decoding="async" loading="lazy" src="images/anadolu-20.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı 20cl</span><span class="item-price">770 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Rakı 35'lik" class="item-image" decoding="async" loading="lazy" src="images/anadolu-35.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı 35'lik</span><span class="item-price">1430 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Rakı 70'lik" class="item-image" decoding="async" loading="lazy" src="images/anadolu-70.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı 70'lik</span><span class="item-price">2420 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Rakı 100'lük" class="item-image" decoding="async" loading="lazy" src="images/anadolu-100.jpg"/><div class="item-header"><span class="item-name">Anadolu Rakı 100'lük</span><span class="item-price">2860 ₺</span></div></div>
+<div class="menu-item"><img alt="Beylerbeyi Rakı 20'lik" class="item-image" decoding="async" loading="lazy" src="images/beylerbeyi-20.jpg"/><div class="item-header"><span class="item-name">Beylerbeyi Rakı 20'lik</span><span class="item-price">880 ₺</span></div></div>
+<div class="menu-item"><img alt="Beylerbeyi Rakı 35'lik" class="item-image" decoding="async" loading="lazy" src="images/beylerbeyi-35.jpg"/><div class="item-header"><span class="item-name">Beylerbeyi Rakı 35'lik</span><span class="item-price">1540 ₺</span></div></div>
+<div class="menu-item"><img alt="Beylerbeyi Rakı 50'lik" class="item-image" decoding="async" loading="lazy" src="images/beylerbeyi-50.jpg"/><div class="item-header"><span class="item-name">Beylerbeyi Rakı 50'lik</span><span class="item-price">1870 ₺</span></div></div>
+<div class="menu-item"><img alt="Beylerbeyi Rakı 70'lik" class="item-image" decoding="async" loading="lazy" src="images/beylerbeyi-70.jpg"/><div class="item-header"><span class="item-name">Beylerbeyi Rakı 70'lik</span><span class="item-price">2585 ₺</span></div></div>
+<div class="menu-item"><img alt="Beylerbeyi Rakı 100'lük" class="item-image" decoding="async" loading="lazy" src="images/beylerbeyi-100.jpg"/><div class="item-header"><span class="item-name">Beylerbeyi Rakı 100'lük</span><span class="item-price">3080 ₺</span></div></div>
+<div class="menu-item"><img alt="Anadolu Ahenk Rakı 70cl" class="item-image" decoding="async" loading="lazy" src="images/anadolu-ahenk-70.jpg"/><div class="item-header"><span class="item-name">Anadolu Ahenk Rakı 70cl</span><span class="item-price">3850 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="biralar">
+<h2 class="section-title"><span data-lang="tr">Biralar</span><span data-lang="en">Beers</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Efes +1 50cl" class="item-image" decoding="async" loading="lazy" src="images/efes-50.jpg"/><div class="item-header"><span class="item-name">Efes +1 50cl</span><span class="item-price">280 ₺</span></div></div>
+<div class="menu-item"><img alt="Efes +1 Kova" class="item-image" decoding="async" loading="lazy" src="images/efes-kova.jpg"/><div class="item-header"><span class="item-name">Efes +1 Kova (5+1)</span><span class="item-price">1400 ₺</span></div></div>
+<div class="menu-item"><img alt="Efes Malt 50cl" class="item-image" decoding="async" loading="lazy" src="images/efes-malt-50.jpg"/><div class="item-header"><span class="item-name">Efes Malt 50cl</span><span class="item-price">250 ₺</span></div></div>
+<div class="menu-item"><img alt="Miller 50cl" class="item-image" decoding="async" loading="lazy" src="images/miller-50.jpg"/><div class="item-header"><span class="item-name">Miller 50cl</span><span class="item-price">270 ₺</span></div></div>
+<div class="menu-item"><img alt="Heineken 33cl" class="item-image" decoding="async" loading="lazy" src="images/heineken-33.jpg"/><div class="item-header"><span class="item-name">Heineken 33cl</span><span class="item-price">325 ₺</span></div></div>
+<div class="menu-item"><img alt="Bomonti Filtresiz" class="item-image" decoding="async" loading="lazy" src="images/bomonti-filtresiz.jpg"/><div class="item-header"><span class="item-name">Bomonti Filtresiz</span><span class="item-price">280 ₺</span></div></div>
+<div class="menu-item"><img alt="Guinness 50cl" class="item-image" decoding="async" loading="lazy" src="images/guinness-50.jpg"/><div class="item-header"><span class="item-name">Guinness 50cl</span><span class="item-price">325 ₺</span></div></div>
+<div class="menu-item"><img alt="Weihenstephan 33cl" class="item-image" decoding="async" loading="lazy" src="images/weihenstephan-33.jpg"/><div class="item-header"><span class="item-name">Weihenstephan 33cl</span><span class="item-price">290 ₺</span></div></div>
+<div class="menu-item"><img alt="Blanc 33cl" class="item-image" decoding="async" loading="lazy" src="images/blanc-33.jpg"/><div class="item-header"><span class="item-name">Blanc 33cl</span><span class="item-price">260 ₺</span></div></div>
+<div class="menu-item"><img alt="Desperados 33cl" class="item-image" decoding="async" loading="lazy" src="images/desperados-33.jpg"/><div class="item-header"><span class="item-name">Desperados 33cl</span><span class="item-price">295 ₺</span></div></div>
+<div class="menu-item"><img alt="Bud 50cl" class="item-image" decoding="async" loading="lazy" src="images/bud-50.jpg"/><div class="item-header"><span class="item-name">Bud 50cl</span><span class="item-price">280 ₺</span></div></div>
+<div class="menu-item"><img alt="Belfast" class="item-image" decoding="async" loading="lazy" src="images/belfast.jpg"/><div class="item-header"><span class="item-name">Belfast</span><span class="item-price">220 ₺</span></div></div>
+<div class="menu-item"><img alt="Beck's" class="item-image" decoding="async" loading="lazy" src="images/becks.jpg"/><div class="item-header"><span class="item-name">Beck's</span><span class="item-price">270 ₺</span></div></div>
+<div class="menu-item"><img alt="Corono" class="item-image" decoding="async" loading="lazy" src="images/corona.jpg"/><div class="item-header"><span class="item-name">Corono</span><span class="item-price">280 ₺</span></div></div>
+<div class="menu-item"><img alt="Amsterdam" class="item-image" decoding="async" loading="lazy" src="images/amsterdam.jpg"/><div class="item-header"><span class="item-name">Amsterdam</span><span class="item-price">325 ₺</span></div></div>
+<div class="menu-item"><img alt="Miller Lime" class="item-image" decoding="async" loading="lazy" src="images/miller-lime.jpg"/><div class="item-header"><span class="item-name">Miller Lime</span><span class="item-price">270 ₺</span></div></div>
+<div class="menu-item"><img alt="Efes Malt Kova" class="item-image" decoding="async" loading="lazy" src="images/efes-malt-kova.jpg"/><div class="item-header"><span class="item-name">Efes Malt Kova (5+1)</span><span class="item-price">1250 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="cinler">
+<h2 class="section-title"><span data-lang="tr">Cin</span><span data-lang="en">Gin</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="İstanbul Cin" class="item-image" decoding="async" loading="lazy" src="images/istanbul-cin.jpg"/><div class="item-header"><span class="item-name">İstanbul Cin</span><span class="item-price">Tek: 260₺ / Duble: 425₺</span></div></div>
+<div class="menu-item"><img alt="Gordon's Dry Cin" class="item-image" decoding="async" loading="lazy" src="images/gordons-dry.jpg"/><div class="item-header"><span class="item-name">Gordon's Dry Cin</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Gordon's Pink" class="item-image" decoding="async" loading="lazy" src="images/gordons-pink.jpg"/><div class="item-header"><span class="item-name">Gordon's Pink</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Beefeater Gin" class="item-image" decoding="async" loading="lazy" src="images/beefeater.jpg"/><div class="item-header"><span class="item-name">Beefeater Gin</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Ashmont Premıum Cin" class="item-image" decoding="async" loading="lazy" src="images/ashmont.jpg"/><div class="item-header"><span class="item-name">Ashmont Premıum Cin</span><span class="item-price">Tek: 585₺ / Duble: 910₺</span></div></div>
+<div class="menu-item"><img alt="CAORUNN" class="item-image" decoding="async" loading="lazy" src="images/caorunn.jpg"/><div class="item-header"><span class="item-name">CAORUNN</span><span class="item-price">Tek: 585₺ / Duble: 910₺</span></div></div>
+<div class="menu-item"><img alt="GORDON'S SICILINA LEMON" class="item-image" decoding="async" loading="lazy" src="images/gordons-lemon.jpg"/><div class="item-header"><span class="item-name">GORDON'S SICILINA LEMON</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Gordon's Dry Cin 70'lik &amp; Tonik" class="item-image" decoding="async" loading="lazy" src="images/gordons-dry-70.jpg"/><div class="item-header"><span class="item-name">Gordon's Dry Cin 70'lik &amp; Tonik</span><span class="item-price">4500 ₺</span></div><div class="item-description">Çerez Tabağı , Meyve Tabağı</div></div>
+</div>
+</section>
+<section class="menu-section" id="votka">
+<h2 class="section-title"><span data-lang="tr">Votka</span><span data-lang="en">Vodka</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Absolut Vodka" class="item-image" decoding="async" loading="lazy" src="images/absolut-vodka.jpg"/><div class="item-header"><span class="item-name">Absolut Vodka</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
+<div class="menu-item"><img alt="Absolut Vodka 70'lik" class="item-image" decoding="async" loading="lazy" src="images/absolut-70.jpg"/><div class="item-header"><span class="item-name">Absolut Vodka 70'lik</span><span class="item-price">4500 ₺</span></div><div class="item-description">2 Soda / 2 Red Bull, Meyve Tabağı, Çerez Tabağı</div></div>
+<div class="menu-item"><img alt="Absolut Citron" class="item-image" decoding="async" loading="lazy" src="images/absolut-citron.jpg"/><div class="item-header"><span class="item-name">Absolut Citron</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
+<div class="menu-item"><img alt="Absolut Vanılıa" class="item-image" decoding="async" loading="lazy" src="images/absolut-vanilia.jpg"/><div class="item-header"><span class="item-name">Absolut Vanılıa</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
+<div class="menu-item"><img alt="Votka 1967" class="item-image" decoding="async" loading="lazy" src="images/votka-1967.jpg"/><div class="item-header"><span class="item-name">Votka 1967</span><span class="item-price">Tek: 260₺ / Duble: 425₺</span></div></div>
+<div class="menu-item"><img alt="Smirnoff" class="item-image" decoding="async" loading="lazy" src="images/smirnoff.jpg"/><div class="item-header"><span class="item-name">Smirnoff</span><span class="item-price">Tek: 390₺ / Duble: 624₺</span></div></div>
+<div class="menu-item"><img alt="Russian Standart" class="item-image" decoding="async" loading="lazy" src="images/russian-standart.jpg"/><div class="item-header"><span class="item-name">Russian Standart</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
+<div class="menu-item"><img alt="Pervak" class="item-image" decoding="async" loading="lazy" src="images/pervak.jpg"/><div class="item-header"><span class="item-name">Pervak</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
+<div class="menu-item"><img alt="Khortytsa" class="item-image" decoding="async" loading="lazy" src="images/khortytsa.jpg"/><div class="item-header"><span class="item-name">Khortytsa</span><span class="item-price">Tek: 325₺ / Duble: 520₺</span></div></div>
+<div class="menu-item"><img alt="Absolut Vodka 35'lik" class="item-image" decoding="async" loading="lazy" src="images/absolut-35.jpg"/><div class="item-header"><span class="item-name">Absolut Vodka 35'lik</span><span class="item-price">3000 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="konyak">
+<h2 class="section-title"><span data-lang="tr">Konyak</span><span data-lang="en">Cognac</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="HENNESSY VS" class="item-image" decoding="async" loading="lazy" src="images/hennessy-vs.jpg"/><div class="item-header"><span class="item-name">HENNESSY VS</span><span class="item-price">Tek 485₺ / Duble 950₺</span></div></div>
+<div class="menu-item"><img alt="COURVOISIER VSOP" class="item-image" decoding="async" loading="lazy" src="images/courvoisier-vsop.jpg"/><div class="item-header"><span class="item-name">COURVOISIER VSOP</span><span class="item-price">Tek 520₺ / Duble 1010₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="rom">
+<h2 class="section-title"><span data-lang="tr">Rom</span><span data-lang="en">Rum</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Kraken" class="item-image" decoding="async" loading="lazy" src="images/kraken.jpg"/><div class="item-header"><span class="item-name">Kraken</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Caption Morgan Spice Gold" class="item-image" decoding="async" loading="lazy" src="images/captain-spice.jpg"/><div class="item-header"><span class="item-name">Caption Morgan Spice Gold</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Caption Morgan White" class="item-image" decoding="async" loading="lazy" src="images/captain-white.jpg"/><div class="item-header"><span class="item-name">Caption Morgan White</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Carıbıca" class="item-image" decoding="async" loading="lazy" src="images/caribica.jpg"/><div class="item-header"><span class="item-name">Carıbıca</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="tekila">
+<h2 class="section-title"><span data-lang="tr">Tekila</span><span data-lang="en">Tequila</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Don Julio Reposado" class="item-image" decoding="async" loading="lazy" src="images/don-julio.jpg"/><div class="item-header"><span class="item-name">Don Julio Reposado</span><span class="item-price">455 ₺</span></div></div>
+<div class="menu-item"><img alt="Volcan Gold" class="item-image" decoding="async" loading="lazy" src="images/volcan-gold.jpg"/><div class="item-header"><span class="item-name">Volcan Gold</span><span class="item-price">390 ₺</span></div></div>
+<div class="menu-item"><img alt="Volcan Silver" class="item-image" decoding="async" loading="lazy" src="images/volcan-silver.jpg"/><div class="item-header"><span class="item-name">Volcan Silver</span><span class="item-price">295 ₺</span></div></div>
+<div class="menu-item"><img alt="Pueblo" class="item-image" decoding="async" loading="lazy" src="images/pueblo.jpg"/><div class="item-header"><span class="item-name">Pueblo</span><span class="item-price">195 ₺</span></div></div>
+<div class="menu-item"><img alt="Casamigos Mezcal" class="item-image" decoding="async" loading="lazy" src="images/casamigos.jpg"/><div class="item-header"><span class="item-name">Casamigos Mezcal</span><span class="item-price">455 ₺</span></div></div>
+<div class="menu-item"><img alt="Olmeca Tekila 35'LİK" class="item-image" decoding="async" loading="lazy" src="images/olmeca-35.jpg"/><div class="item-header"><span class="item-name">Olmeca Tekila 35'LİK</span><span class="item-price">3000 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="bitter">
+<h2 class="section-title"><span data-lang="tr">Bitter Alkoller</span><span data-lang="en">Bitters</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Martini Bianco" class="item-image" decoding="async" loading="lazy" src="images/martini-bianco.jpg"/><div class="item-header"><span class="item-name">Martini Bianco</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Martini Rosso" class="item-image" decoding="async" loading="lazy" src="images/martini-rosso.jpg"/><div class="item-header"><span class="item-name">Martini Rosso</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Martini Extra Dry" class="item-image" decoding="async" loading="lazy" src="images/martini-extra-dry.jpg"/><div class="item-header"><span class="item-name">Martini Extra Dry</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Aperol" class="item-image" decoding="async" loading="lazy" src="images/aperol-bitter.jpg"/><div class="item-header"><span class="item-name">Aperol</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Campari" class="item-image" decoding="async" loading="lazy" src="images/campari.jpg"/><div class="item-header"><span class="item-name">Campari</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="likor">
+<h2 class="section-title"><span data-lang="tr">Likörler</span><span data-lang="en">Liqueurs</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Villa Massa Limoncello" class="item-image" decoding="async" loading="lazy" src="images/limoncello.jpg"/><div class="item-header"><span class="item-name">Villa Massa Limoncello</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Countreau" class="item-image" decoding="async" loading="lazy" src="images/countreau.jpg"/><div class="item-header"><span class="item-name">Countreau</span><span class="item-price">Tek: 390₺ / Double: 611₺</span></div></div>
+<div class="menu-item"><img alt="Kahlua" class="item-image" decoding="async" loading="lazy" src="images/kahlua.jpg"/><div class="item-header"><span class="item-name">Kahlua</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Baileys" class="item-image" decoding="async" loading="lazy" src="images/baileys-likor.jpg"/><div class="item-header"><span class="item-name">Baileys</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Malibu" class="item-image" decoding="async" loading="lazy" src="images/malibu.jpg"/><div class="item-header"><span class="item-name">Malibu</span><span class="item-price">Tek: 325₺ / Double: 520₺</span></div></div>
+<div class="menu-item"><img alt="Passoa" class="item-image" decoding="async" loading="lazy" src="images/passoa.jpg"/><div class="item-header"><span class="item-name">Passoa</span><span class="item-price">Tek: 260₺ / Double: 425₺</span></div></div>
+<div class="menu-item"><img alt="Joı De France Acıbadem" class="item-image" decoding="async" loading="lazy" src="images/joi-de-france.jpg"/><div class="item-header"><span class="item-name">Joı De France Acıbadem</span><span class="item-price">Tek: 195₺ / Double: 325₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="sampanya">
+<h2 class="section-title"><span data-lang="tr">Şampanya</span><span data-lang="en">Champagne</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Moet&amp;Chandon Beyaz Hero İmperial" class="item-image" decoding="async" loading="lazy" src="images/moet.jpg"/><div class="item-header"><span class="item-name">Moet&amp;Chandon Beyaz Hero İmperial</span><span class="item-price">7000 ₺</span></div></div>
+<div class="menu-item"><img alt="Dom Perignon Blanc" class="item-image" decoding="async" loading="lazy" src="images/dom-perignon.jpg"/><div class="item-header"><span class="item-name">Dom Perignon Blanc</span><span class="item-price">25000 ₺</span></div></div>
+<div class="menu-item"><img alt="Doluca Bianca" class="item-image" decoding="async" loading="lazy" src="images/doluca-bianca.jpg"/><div class="item-header"><span class="item-name">Doluca Bianca</span><span class="item-price">1650 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="kirmizi-sarap">
+<h2 class="section-title"><span data-lang="tr">Kırmızı Şaraplar</span><span data-lang="en">Red Wines</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Odris Merlot 2017 Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/odris-merlot.jpg"/><div class="item-header"><span class="item-name">Odris Merlot 2017 Şişe 75cl</span><span class="item-price">1900 ₺</span></div></div>
+<div class="menu-item"><img alt="Tulip Cabernet Sauvignon Merlot 2018 75cl" class="item-image" decoding="async" loading="lazy" src="images/tulip-cabernet-merlot.jpg"/><div class="item-header"><span class="item-name">Tulip Cabernet Sauvignon Merlot 2018 75cl</span><span class="item-price">1800 ₺</span></div></div>
+<div class="menu-item"><img alt="Tulip Cabernet Sauvignon 2018 Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/tulip-cabernet.jpg"/><div class="item-header"><span class="item-name">Tulip Cabernet Sauvignon 2018 Şişe 75cl</span><span class="item-price">1800 ₺</span></div></div>
+<div class="menu-item"><img alt="Vineyards Shiraz şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/vineyards-shiraz.jpg"/><div class="item-header"><span class="item-name">Vineyards Shiraz şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Vineyards Cabernet Sauvignon Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/vineyards-cabernet.jpg"/><div class="item-header"><span class="item-name">Vineyards Cabernet Sauvignon Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Vineyards Merlot Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/vineyards-merlot.jpg"/><div class="item-header"><span class="item-name">Vineyards Merlot Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Vineyards Papazkarası Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/vineyards-papaz.jpg"/><div class="item-header"><span class="item-name">Vineyards Papazkarası Şişe 75cl</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Rauge Andrinople Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/rauge-andrinople.jpg"/><div class="item-header"><span class="item-name">Rauge Andrinople Şişe 75cl</span><span class="item-price">900 ₺</span></div></div>
+<div class="menu-item"><img alt="Edrine Kırmızı Kadeh Şarap 25cl" class="item-image" decoding="async" loading="lazy" src="images/edrine-kirmizi.jpg"/><div class="item-header"><span class="item-name">Edrine Kırmızı Kadeh Şarap 25cl</span><span class="item-price">350 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="beyaz-sarap">
+<h2 class="section-title"><span data-lang="tr">Beyaz Şaraplar</span><span data-lang="en">White Wines</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="ODRIS CHARDONNAY 2020 FRENCH OAK ŞİŞE 75CL" class="item-image" decoding="async" loading="lazy" src="images/odris-chardonnay.jpg"/><div class="item-header"><span class="item-name">ODRIS CHARDONNAY 2020 FRENCH OAK ŞİŞE 75CL</span><span class="item-price">1900 ₺</span></div></div>
+<div class="menu-item"><img alt="ODRIS SAUVIGNON BLANC FÜME BLANC 2020 ŞİŞE 75CL" class="item-image" decoding="async" loading="lazy" src="images/odris-sauvignon.jpg"/><div class="item-header"><span class="item-name">ODRIS SAUVIGNON BLANC FÜME BLANC 2020 ŞİŞE 75CL</span><span class="item-price">1900 ₺</span></div></div>
+<div class="menu-item"><img alt="Vineyards Sauvignon Blanc 2020 Şişe 75cl" class="item-image" decoding="async" loading="lazy" src="images/vineyards-sauvignon.jpg"/><div class="item-header"><span class="item-name">Vineyards Sauvignon Blanc 2020 Şişe 75cl</span><span class="item-price">1400 ₺</span></div></div>
+<div class="menu-item"><img alt="Edrine Beyaz Kadeh Şarap 25cl" class="item-image" decoding="async" loading="lazy" src="images/edrine-beyaz.jpg"/><div class="item-header"><span class="item-name">Edrine Beyaz Kadeh Şarap 25cl</span><span class="item-price">300 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="pembe-sarap">
+<h2 class="section-title"><span data-lang="tr">Pembe Şaraplar</span><span data-lang="en">Rose Wines</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="KARNAVAL BLUSH ŞİŞE 75CL" class="item-image" decoding="async" loading="lazy" src="images/karnaval-blush.jpg"/><div class="item-header"><span class="item-name">KARNAVAL BLUSH ŞİŞE 75CL</span><span class="item-price">1200 ₺</span></div></div>
+<div class="menu-item"><img alt="Edrine Pembe Kadeh Şarap 25cl" class="item-image" decoding="async" loading="lazy" src="images/edrine-pembe.jpg"/><div class="item-header"><span class="item-name">Edrine Pembe Kadeh Şarap 25cl</span><span class="item-price">350 ₺</span></div></div>
+</div>
+</section>
+<section class="menu-section" id="dondurma">
+<h2 class="section-title"><span data-lang="tr">Dondurmalar</span><span data-lang="en">Ice Creams</span></h2>
+<div class="menu-grid">
+<div class="menu-item"><img alt="Cornetto" class="item-image" decoding="async" loading="lazy" src="images/cornetto.jpg"/><div class="item-header"><span class="item-name">Cornetto</span><span class="item-price">135 ₺</span></div></div>
+<div class="menu-item"><img alt="Nogger" class="item-image" decoding="async" loading="lazy" src="images/nogger.jpg"/><div class="item-header"><span class="item-name">Nogger</span><span class="item-price">135 ₺</span></div></div>
+<div class="menu-item"><img alt="Magnum" class="item-image" decoding="async" loading="lazy" src="images/magnum.jpg"/><div class="item-header"><span class="item-name">Magnum</span><span class="item-price">150 ₺</span></div></div>
+</div>
+</section>
+</div>
 <script>
 function switchLanguage(lang) {
     const translations = document.querySelectorAll('[data-lang]');
@@ -1132,13 +1097,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
-<script src="js/nutrition.js" defer></script>
-<script src="js/allergens.js" defer></script>
-<script src="js/search.js" defer></script>
-<script src="js/modal.js" defer></script>
-<script src="js/favorites.js" defer></script>
-<script src="js/animations.js" defer></script>
-<script src="js/dark-mode.js" defer></script>
-<script src="js/optimization.js" defer></script>
+<script defer="" src="js/nutrition.js"></script>
+<script defer="" src="js/allergens.js"></script>
+<script defer="" src="js/search.js"></script>
+<script defer="" src="js/modal.js"></script>
+<script defer="" src="js/favorites.js"></script>
+<script defer="" src="js/animations.js"></script>
+<script defer="" src="js/dark-mode.js"></script>
 </body>
 </html>
