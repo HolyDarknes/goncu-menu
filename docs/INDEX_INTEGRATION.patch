@@ -1,4 +1,24 @@
-<!-- index.html içinde </body> kapanışından hemen önce script sırası şöyle olmalı: -->
-<script src="js/nutrition.js" defer></script>
-<script src="js/allergens.js" defer></script>
-<script src="js/modal.js" defer></script>
+*** GÖNCÜ MENU PRO - Sprint 4 index.html entegrasyonu ***
+
+1) <head> içinde CSS bağlantılarına şunu ekle:
+
++ <link rel="stylesheet" href="css/search.css">
+
+Önerilen sıra:
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/modal.css">
++ <link rel="stylesheet" href="css/search.css">
+
+
+2) </body> kapanışından hemen önceki scriptleri şu sıraya getir:
+
+  <script src="js/nutrition.js" defer></script>
+  <script src="js/allergens.js" defer></script>
++ <script src="js/search.js" defer></script>
+  <script src="js/modal.js" defer></script>
+
+Not:
+- search.js mevcut HTML'ye otomatik arama paneli ekler.
+- Manuel arama HTML'i yazmana gerek yok.
+- Mevcut ürün yapısını değiştirme.
