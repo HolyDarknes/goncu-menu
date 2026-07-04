@@ -1,5 +1,5 @@
 /* ============================================================
-   GÖNCÜ MENU PRO - Sprint 1 Premium Modal Styles
+   GÖNCÜ MENU PRO - Sprint 3 Premium Modal & Allergen Styles
    ------------------------------------------------------------
    Mevcut menü tasarımını bozmadan .menu-item kartlarına premium
    glassmorphism popup deneyimi ekler.
@@ -32,6 +32,46 @@ body.gmp-modal-open {
   cursor: pointer;
   position: relative;
   isolation: isolate;
+}
+
+.menu-item.gmp-has-allergens .gmp-card-allergens {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: calc(100% - 32px);
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(7, 8, 12, 0.64);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.gmp-card-allergen {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.gmp-card-allergen--more {
+  width: auto;
+  min-width: 25px;
+  padding: 0 7px;
+  color: var(--gmp-gold-strong);
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .menu-item.gmp-ready::after {
@@ -309,10 +349,77 @@ body.gmp-modal-open {
   white-space: nowrap;
 }
 
+.gmp-allergen-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gmp-allergen-summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border: 1px solid rgba(195, 161, 72, 0.22);
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.11);
+  color: var(--gmp-gold-strong);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
 .gmp-allergen-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.gmp-allergen-pill {
+  min-height: 42px;
+  padding: 9px 13px 9px 10px;
+  border-color: rgba(195, 161, 72, 0.2);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    rgba(195, 161, 72, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.gmp-allergen-pill__icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.24);
+  font-size: 15px;
+}
+
+.gmp-allergen-pill__label {
+  color: rgba(246, 241, 231, 0.88);
+}
+
+.gmp-allergen-empty {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--gmp-radius-sm);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(246, 241, 231, 0.76);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gmp-allergen-note {
+  margin: 12px 0 0;
+  color: rgba(246, 241, 231, 0.55);
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .gmp-modal__close,
@@ -442,6 +549,15 @@ body.gmp-modal-open {
     display: none;
   }
 
+  .gmp-allergen-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gmp-allergen-summary {
+    white-space: normal;
+  }
+
   .gmp-nutrition-grid {
     grid-template-columns: 1fr;
   }
@@ -450,6 +566,13 @@ body.gmp-modal-open {
 @media (max-width: 480px) {
   .menu-item.gmp-ready::after {
     display: none;
+  }
+
+  .menu-item.gmp-has-allergens .gmp-card-allergens {
+    left: 12px;
+    bottom: 12px;
+    transform: scale(0.94);
+    transform-origin: left bottom;
   }
 
   .gmp-modal__close {
@@ -478,4 +601,31 @@ body.gmp-modal-open {
     transition: none !important;
     animation: none !important;
   }
+}
+
+
+/* Sprint 3 Hotfix: veri yüklenemediğinde görünür durum mesajları */
+.gmp-data-message {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--gmp-radius-sm);
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(246, 241, 231, 0.76);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.gmp-data-message--info {
+  border-color: rgba(195, 161, 72, 0.18);
+  background: rgba(195, 161, 72, 0.08);
+  color: rgba(246, 241, 231, 0.82);
+}
+
+.gmp-data-message--warning {
+  border-color: rgba(255, 193, 7, 0.28);
+  background: rgba(255, 193, 7, 0.08);
+  color: rgba(255, 236, 179, 0.92);
 }

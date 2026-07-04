@@ -1,5 +1,5 @@
 /**
- * GÖNCÜ MENU PRO - Sprint 2 Modal System
+ * GÖNCÜ MENU PRO - Sprint 3 Modal System
  * ------------------------------------------------------------
  * Vanilla JavaScript ile çalışan premium ürün popup sistemi.
  * Mevcut index.html içindeki .menu-item yapısını bozmadan okur,
@@ -174,8 +174,12 @@
           </div>
 
           <div class="gmp-modal__allergens" data-gmp-allergens hidden>
-            <h3>Alerjenler</h3>
+            <div class="gmp-allergen-head">
+              <h3>Alerjen Bilgilendirmesi</h3>
+              <span class="gmp-allergen-summary" data-gmp-allergen-summary></span>
+            </div>
             <div class="gmp-allergen-list" data-gmp-allergen-list></div>
+            <p class="gmp-allergen-note" data-gmp-allergen-note></p>
           </div>
         </section>
 
@@ -208,6 +212,8 @@
     elements.nutritionGrid = elements.modal.querySelector('[data-gmp-nutrition-grid]');
     elements.allergens = elements.modal.querySelector('[data-gmp-allergens]');
     elements.allergenList = elements.modal.querySelector('[data-gmp-allergen-list]');
+    elements.allergenSummary = elements.modal.querySelector('[data-gmp-allergen-summary]');
+    elements.allergenNote = elements.modal.querySelector('[data-gmp-allergen-note]');
   };
 
   /**
@@ -237,18 +243,76 @@
   };
 
   /**
+   * Besin alanını tamamen gizlemek yerine yükleme / uyarı mesajı gösterir.
+   * Böylece entegrasyon hatalarında popup boş kalmaz.
+   * @param {string} message
+   * @param {'info'|'warning'} type
+   */
+  const showNutritionMessage = (message, type = 'info') => {
+    if (!elements.nutrition || !elements.nutritionGrid) return;
+
+    elements.nutritionGrid.innerHTML = `
+      <div class="gmp-data-message gmp-data-message--${type}">${message}</div>
+    `;
+    elements.nutrition.hidden = false;
+  };
+
+  /**
+   * Alerjen alanını tamamen gizlemek yerine yükleme / uyarı mesajı gösterir.
+   * Böylece nutrition.json veya script sırası problemi olduğunda hata görünür olur.
+   * @param {string} message
+   * @param {'info'|'warning'} type
+   */
+  const showAllergenMessage = (message, type = 'info') => {
+    if (!elements.allergens || !elements.allergenList) return;
+
+    if (elements.allergenSummary) {
+      elements.allergenSummary.textContent = type === 'warning' ? 'Kontrol gerekli' : 'Yükleniyor';
+    }
+
+    elements.allergenList.innerHTML = `
+      <span class="gmp-allergen-empty gmp-data-message--${type}">${message}</span>
+    `;
+
+    if (elements.allergenNote) {
+      elements.allergenNote.textContent = 'Besin ve alerjen verileri data/nutrition.json dosyasından otomatik okunur.';
+    }
+
+    elements.allergens.hidden = false;
+  };
+
+  /**
    * Sprint 2 için hazır bağlantı noktasıdır. window.GoncuNutrition varsa
    * besin değerlerini modal içinde gösterir; yoksa alanı gizler.
    * @param {object} product
    */
   const renderNutrition = (product) => {
     const api = window.GoncuNutrition;
-    const nutrition = typeof api?.getByProductData === 'function'
-      ? api.getByProductData(product)
-      : (typeof api?.getByProductName === 'function' ? api.getByProductName(product.name, product.category) : null);
 
-    if (!nutrition || !elements.nutritionGrid) {
-      elements.nutrition.hidden = true;
+    if (!elements.nutritionGrid) return;
+
+    if (!api || typeof api.getByProductData !== 'function') {
+      showNutritionMessage('Besin sistemi bağlantısı bulunamadı. index.html içinde nutrition.js dosyasının modal.js dosyasından önce eklendiğini kontrol edin.', 'warning');
+      return;
+    }
+
+    if (typeof api.isReady === 'function' && !api.isReady()) {
+      showNutritionMessage('Besin değerleri yükleniyor...', 'info');
+      const readyPromise = typeof api.ready === 'function' ? api.ready() : null;
+      if (typeof readyPromise?.then === 'function') {
+        readyPromise.then(() => {
+          if (elements.modal?.classList.contains(CSS.open) && state.currentIndex >= 0) {
+            renderProduct(state.currentIndex);
+          }
+        });
+      }
+      return;
+    }
+
+    const nutrition = api.getByProductData(product);
+
+    if (!nutrition) {
+      showNutritionMessage('Bu ürün için nutrition.json içinde eşleşen besin kaydı bulunamadı.', 'warning');
       return;
     }
 
@@ -275,25 +339,71 @@
   };
 
   /**
-   * Sprint 3 için hazır bağlantı noktasıdır. window.GoncuNutrition varsa
-   * alerjen listesini modal içinde ikonlu gösterir; yoksa alanı gizler.
+   * Sprint 3 alerjen katmanını modal içine premium ikonlu kartlar olarak basar.
+   * window.GoncuAllergens varsa onu kullanır; yoksa Sprint 2 nutrition verisine düşer.
    * @param {object} product
    */
   const renderAllergens = (product) => {
-    const api = window.GoncuNutrition;
-    const nutrition = typeof api?.getByProductData === 'function'
-      ? api.getByProductData(product)
-      : (typeof api?.getByProductName === 'function' ? api.getByProductName(product.name, product.category) : null);
+    const allergenApi = window.GoncuAllergens;
+    const nutritionApi = window.GoncuNutrition;
 
-    if (!nutrition?.allergens?.length || !elements.allergenList) {
-      elements.allergens.hidden = true;
+    if (!elements.allergenList) return;
+
+    if (!nutritionApi || typeof nutritionApi.getByProductData !== 'function') {
+      showAllergenMessage('Alerjen sistemi için nutrition.js bağlantısı gerekli. Script sırasını kontrol edin.', 'warning');
       return;
     }
 
-    elements.allergenList.innerHTML = nutrition.allergens.map((allergen) => `
-      <span class="gmp-allergen-pill">${allergen.icon || '•'} ${allergen.name || allergen}</span>
-    `).join('');
+    if (typeof nutritionApi.isReady === 'function' && !nutritionApi.isReady()) {
+      showAllergenMessage('Alerjen bilgileri yükleniyor...', 'info');
+      const readyPromise = typeof nutritionApi.ready === 'function' ? nutritionApi.ready() : null;
+      if (typeof readyPromise?.then === 'function') {
+        readyPromise.then(() => {
+          if (elements.modal?.classList.contains(CSS.open) && state.currentIndex >= 0) {
+            renderProduct(state.currentIndex);
+          }
+        });
+      }
+      return;
+    }
 
+    const allergenData = typeof allergenApi?.getForProductData === 'function'
+      ? allergenApi.getForProductData(product)
+      : null;
+    const nutrition = allergenData?.nutrition || nutritionApi.getByProductData(product);
+
+    if (!nutrition) {
+      showAllergenMessage('Bu ürün için nutrition.json içinde eşleşen alerjen kaydı bulunamadı.', 'warning');
+      return;
+    }
+
+    const allergens = allergenData?.allergens || nutrition.allergens || [];
+    const language = getActiveLanguage();
+    const hasAllergens = allergens.length > 0;
+    const emptyText = language === 'en'
+      ? 'No main allergen is marked for this item.'
+      : 'Bu ürün için kayıtlı ana alerjen işaretlenmedi.';
+    const noteText = language === 'en'
+      ? 'Allergen information is indicative. Please contact the service team for cross-contact and ingredient changes.'
+      : 'Alerjen bilgileri bilgilendirme amaçlıdır. Çapraz temas ve içerik değişiklikleri için lütfen servis ekibine danışın.';
+
+    elements.allergenSummary.textContent = hasAllergens
+      ? `${allergens.length} ${language === 'en' ? 'allergen notice' : 'alerjen bildirimi'}`
+      : (language === 'en' ? 'No marked main allergen' : 'Kayıtlı ana alerjen yok');
+
+    elements.allergenList.innerHTML = hasAllergens
+      ? allergens.map((allergen) => {
+        const label = allergen.label || allergen.name || allergen.key || 'Alerjen';
+        return `
+          <span class="gmp-allergen-pill" data-allergen-key="${allergen.key || ''}" title="${label}">
+            <span class="gmp-allergen-pill__icon" aria-hidden="true">${allergen.icon || '•'}</span>
+            <span class="gmp-allergen-pill__label">${label}</span>
+          </span>
+        `;
+      }).join('')
+      : `<span class="gmp-allergen-empty">✓ ${emptyText}</span>`;
+
+    elements.allergenNote.textContent = noteText;
     elements.allergens.hidden = false;
   };
 
@@ -470,8 +580,22 @@
     elements.card.addEventListener('touchend', handlePointerEnd, { passive: true });
 
     window.addEventListener('goncu:nutrition-ready', () => {
+      window.GoncuAllergens?.refreshCards?.();
       if (elements.modal.classList.contains(CSS.open) && state.currentIndex >= 0) {
         renderProduct(state.currentIndex);
+      }
+    });
+
+    window.addEventListener('goncu:allergens-ready', () => {
+      if (elements.modal.classList.contains(CSS.open) && state.currentIndex >= 0) {
+        renderProduct(state.currentIndex);
+      }
+    });
+
+    window.addEventListener('goncu:nutrition-error', () => {
+      if (elements.modal.classList.contains(CSS.open) && state.currentIndex >= 0) {
+        showNutritionMessage('nutrition.json yüklenemedi. Live Server kullandığını ve data/nutrition.json dosya yolunun doğru olduğunu kontrol edin.', 'warning');
+        showAllergenMessage('Alerjen verisi yüklenemedi. data/nutrition.json dosyası okunamıyor.', 'warning');
       }
     });
 

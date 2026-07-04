@@ -1,5 +1,5 @@
 /**
- * GÖNCÜ MENU PRO - Sprint 2 Nutrition Data Layer
+ * GÖNCÜ MENU PRO - Sprint 3 Nutrition Data Layer
  * ------------------------------------------------------------
  * data/nutrition.json dosyasını yükler, ürün adlarını Türkçe karakter
  * uyumlu slug ile eşleştirir ve modal sistemine senkron API sunar.
