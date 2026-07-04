@@ -387,3 +387,59 @@
     animation: none !important;
   }
 }
+
+/* ============================================================
+   GÖNCÜ MENU PRO - SPRINT 4 COMPACT SEARCH FIX
+   ------------------------------------------------------------
+   Üst kısımda zaten kategori navigasyonu olduğu için arama panelindeki
+   ikinci kategori chip satırı kaldırıldı ve panel yüksekliği azaltıldı.
+   ============================================================ */
+.gmp-search {
+  margin: clamp(12px, 2.2vw, 24px) auto clamp(14px, 2.4vw, 28px);
+  padding: clamp(10px, 1.5vw, 14px);
+  border-radius: 24px;
+}
+
+.gmp-search__top {
+  gap: 10px;
+}
+
+.gmp-search__field,
+.gmp-search__reset {
+  min-height: 50px;
+}
+
+.gmp-search__meta {
+  margin-top: 9px;
+  justify-content: flex-start;
+}
+
+.gmp-search__hint {
+  display: none;
+}
+
+.gmp-search__categories {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 780px) {
+  .gmp-search {
+    width: min(100% - 22px, 1180px);
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .gmp-search__field,
+  .gmp-search__reset {
+    min-height: 48px;
+  }
+
+  .gmp-search__meta {
+    margin-top: 8px;
+  }
+}

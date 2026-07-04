@@ -255,11 +255,10 @@
     const hint = createElement('div', 'gmp-search__hint', labels.hint);
     meta.append(count, hint);
 
-    const categories = createElement('div', 'gmp-search__categories');
-    categories.setAttribute('role', 'tablist');
-    categories.setAttribute('aria-label', labels.categoryLabel);
-
-    root.append(top, meta, categories);
+    // Sprint 4 compact fix:
+    // Kategori chipleri kaldırıldı. Üstte zaten mevcut kategori navigasyonu olduğu için
+    // arama paneli yalnızca metin arama + sonuç sayacı olarak çalışır.
+    root.append(top, meta);
     firstSection.parentNode.insertBefore(root, firstSection);
 
     const empty = createElement('section', 'gmp-search-empty');
@@ -277,39 +276,18 @@
     elements.resetButton = resetButton;
     elements.count = count;
     elements.hint = hint;
-    elements.categories = categories;
+    elements.categories = null;
     elements.empty = empty;
     elements.emptyTitle = emptyTitle;
     elements.emptyText = emptyText;
   };
 
-  /** Kategori butonlarını aktif dile göre yeniden üretir. */
+  /**
+   * Kategori chipleri Sprint 4 compact fix ile kaldırıldı.
+   * Üst kategoriler mevcut HTML'de bulunduğu için burada ek filtre üretmiyoruz.
+   */
   const renderCategoryButtons = () => {
-    if (!elements.categories) return;
-
-    const labels = TEXT[state.language];
-    elements.categories.innerHTML = '';
-
-    const allButton = createElement('button', `gmp-search__category ${state.activeCategory === 'all' ? CSS.active : ''}`, labels.all);
-    allButton.type = 'button';
-    allButton.dataset.categoryKey = 'all';
-    allButton.setAttribute('role', 'tab');
-    allButton.setAttribute('aria-selected', String(state.activeCategory === 'all'));
-    elements.categories.appendChild(allButton);
-
-    state.categories.forEach((category) => {
-      const label = category.label[state.language] || category.label.tr || category.key;
-      const button = createElement(
-        'button',
-        `gmp-search__category ${state.activeCategory === category.key ? CSS.active : ''}`,
-        `${label} (${category.count})`,
-      );
-      button.type = 'button';
-      button.dataset.categoryKey = category.key;
-      button.setAttribute('role', 'tab');
-      button.setAttribute('aria-selected', String(state.activeCategory === category.key));
-      elements.categories.appendChild(button);
-    });
+    state.activeCategory = 'all';
   };
 
   /** UI metinlerini dil değişimine göre günceller. */
@@ -326,7 +304,6 @@
     elements.hint.textContent = labels.hint;
     elements.emptyTitle.textContent = labels.emptyTitle;
     elements.emptyText.textContent = labels.emptyText;
-    elements.categories.setAttribute('aria-label', labels.categoryLabel);
 
     renderCategoryButtons();
   };
@@ -405,14 +382,6 @@
       elements.input.focus();
     });
 
-    elements.categories.addEventListener('click', (event) => {
-      const button = event.target.closest('.gmp-search__category');
-      if (!button) return;
-      state.activeCategory = button.dataset.categoryKey || 'all';
-      renderCategoryButtons();
-      applyFilters();
-    });
-
     document.querySelectorAll(SELECTORS.langButton).forEach((button) => {
       button.addEventListener('click', () => {
         window.setTimeout(() => {
@@ -441,13 +410,12 @@
 
     const stored = readStoredState();
     state.query = typeof stored.query === 'string' ? stored.query : '';
-    state.activeCategory = typeof stored.activeCategory === 'string' ? stored.activeCategory : 'all';
+    // Kategori chip filtresi kaldırıldığı için eski localStorage kayıtları dikkate alınmaz.
+    state.activeCategory = 'all';
 
     collectProducts();
 
-    if (state.activeCategory !== 'all' && !state.categories.some((category) => category.key === state.activeCategory)) {
-      state.activeCategory = 'all';
-    }
+    state.activeCategory = 'all';
 
     createSearchUI();
     renderCategoryButtons();
