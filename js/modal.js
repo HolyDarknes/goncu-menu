@@ -1,5 +1,5 @@
 /**
- * GÖNCÜ MENU PRO - Sprint 3 Modal System
+ * GÖNCÜ MENU PRO - Modal System / TR-EN Nutrition UI Fix
  * ------------------------------------------------------------
  * Vanilla JavaScript ile çalışan premium ürün popup sistemi.
  * Mevcut index.html içindeki .menu-item yapısını bozmadan okur,
@@ -37,6 +37,89 @@
 
   const SWIPE_THRESHOLD = 48;
   const EMPTY_TEXT = 'Detay bilgisi yakında eklenecek.';
+
+  const I18N = Object.freeze({
+    tr: {
+      close: 'Popup kapat',
+      prev: 'Önceki ürün',
+      next: 'Sonraki ürün',
+      imageHint: 'Görsele dokunarak yakınlaştır',
+      premiumMenu: 'Premium Menü',
+      menuFallback: 'Menü',
+      emptyDescription: 'Detay bilgisi yakında eklenecek.',
+      openDetailsSuffix: 'detayını aç',
+      nutritionTitle: 'Besin Değerleri',
+      allergenTitle: 'Alerjen Bilgilendirmesi',
+      loading: 'Yükleniyor',
+      checkRequired: 'Kontrol gerekli',
+      nutritionDataSource: 'Besin ve alerjen verileri data/nutrition.json dosyasından otomatik okunur.',
+      nutritionLoadError: 'Besin verileri yüklenemedi. data/nutrition.json dosyasının proje klasöründe olduğundan ve sayfanın Live Server / GitHub Pages üzerinden açıldığından emin olun.',
+      allergenLoadError: 'Alerjen verileri yüklenemedi. nutrition.json okunamadığı için alerjenler gösterilemiyor.',
+      nutritionSystemMissing: 'Besin sistemi bağlantısı bulunamadı. index.html içinde nutrition.js dosyasının modal.js dosyasından önce eklendiğini kontrol edin.',
+      nutritionLoading: 'Besin değerleri yükleniyor...',
+      nutritionNotFound: 'Bu ürün için nutrition.json içinde eşleşen besin kaydı bulunamadı.',
+      allergenSystemMissing: 'Alerjen sistemi için nutrition.js bağlantısı gerekli. Script sırasını kontrol edin.',
+      allergenLoading: 'Alerjen bilgileri yükleniyor...',
+      allergenNotFound: 'Bu ürün için nutrition.json içinde eşleşen alerjen kaydı bulunamadı.',
+      noMainAllergen: 'Bu ürün için kayıtlı ana alerjen işaretlenmedi.',
+      noMarkedMainAllergen: 'Kayıtlı ana alerjen yok',
+      allergenNotice: 'alerjen bildirimi',
+      allergenNote: 'Alerjen bilgileri bilgilendirme amaçlıdır. Çapraz temas ve içerik değişiklikleri için lütfen servis ekibine danışın.',
+      nutritionJsonError: 'nutrition.json yüklenemedi. Live Server kullandığını ve data/nutrition.json dosya yolunun doğru olduğunu kontrol edin.',
+      allergenJsonError: 'Alerjen verisi yüklenemedi. data/nutrition.json dosyası okunamıyor.',
+      nutritionLabels: {
+        calories: 'Kalori',
+        protein: 'Protein',
+        carbohydrate: 'Karbonhidrat',
+        fat: 'Yağ',
+        saturatedFat: 'Doymuş Yağ',
+        sugar: 'Şeker',
+        fiber: 'Lif',
+        salt: 'Tuz',
+        portion: 'Porsiyon',
+      },
+    },
+    en: {
+      close: 'Close popup',
+      prev: 'Previous item',
+      next: 'Next item',
+      imageHint: 'Tap image to zoom',
+      premiumMenu: 'Premium Menu',
+      menuFallback: 'Menu',
+      emptyDescription: 'Details will be added soon.',
+      openDetailsSuffix: 'details',
+      nutritionTitle: 'Nutrition Facts',
+      allergenTitle: 'Allergen Information',
+      loading: 'Loading',
+      checkRequired: 'Check required',
+      nutritionDataSource: 'Nutrition and allergen data is read automatically from data/nutrition.json.',
+      nutritionLoadError: 'Nutrition data could not be loaded. Make sure data/nutrition.json exists in the project folder and the page is opened with Live Server / GitHub Pages.',
+      allergenLoadError: 'Allergen data could not be loaded because nutrition.json could not be read.',
+      nutritionSystemMissing: 'Nutrition system is not connected. Make sure nutrition.js is included before modal.js in index.html.',
+      nutritionLoading: 'Nutrition facts are loading...',
+      nutritionNotFound: 'No matching nutrition record was found for this item in nutrition.json.',
+      allergenSystemMissing: 'nutrition.js is required for allergen information. Check the script order.',
+      allergenLoading: 'Allergen information is loading...',
+      allergenNotFound: 'No matching allergen record was found for this item in nutrition.json.',
+      noMainAllergen: 'No main allergen is marked for this item.',
+      noMarkedMainAllergen: 'No marked main allergen',
+      allergenNotice: 'allergen notice',
+      allergenNote: 'Allergen information is indicative. Please contact the service team for cross-contact and ingredient changes.',
+      nutritionJsonError: 'nutrition.json could not be loaded. Make sure you are using Live Server and data/nutrition.json path is correct.',
+      allergenJsonError: 'Allergen data could not be loaded. data/nutrition.json cannot be read.',
+      nutritionLabels: {
+        calories: 'Calories',
+        protein: 'Protein',
+        carbohydrate: 'Carbohydrates',
+        fat: 'Fat',
+        saturatedFat: 'Saturated Fat',
+        sugar: 'Sugar',
+        fiber: 'Fiber',
+        salt: 'Salt',
+        portion: 'Serving',
+      },
+    },
+  });
 
   let state = {
     items: [],
@@ -80,9 +163,51 @@
    * @returns {'tr' | 'en' | string}
    */
   const getActiveLanguage = () => {
-    const activeButton = document.querySelector(SELECTORS.activeLangButton);
-    return activeButton?.dataset?.langTrigger || document.documentElement.lang || 'tr';
+    const activeButton = document.querySelector([
+      SELECTORS.activeLangButton,
+      '.language-btn.active',
+      '.language-switch .active',
+      '[data-lang-trigger].active',
+      '[data-language].active',
+      '[data-set-lang].active',
+      '[data-lang].active',
+    ].join(','));
+
+    const explicitLanguage = activeButton?.dataset?.langTrigger
+      || activeButton?.dataset?.language
+      || activeButton?.dataset?.setLang
+      || activeButton?.dataset?.lang;
+
+    if (explicitLanguage) {
+      const normalized = String(explicitLanguage).toLowerCase();
+      if (normalized.startsWith('en')) return 'en';
+      if (normalized.startsWith('tr')) return 'tr';
+    }
+
+    const activeText = normalizeText(activeButton?.textContent || '').toLowerCase();
+    if (activeText === 'en' || activeText.includes('english')) return 'en';
+    if (activeText === 'tr' || activeText.includes('türkçe') || activeText.includes('turkish')) return 'tr';
+
+    const storedLanguage = ['gmp-language', 'selectedLanguage', 'selectedLang', 'currentLanguage', 'currentLang', 'language', 'lang']
+      .map((key) => window.localStorage?.getItem?.(key))
+      .find(Boolean);
+
+    if (storedLanguage) {
+      const normalized = String(storedLanguage).toLowerCase();
+      if (normalized.startsWith('en')) return 'en';
+      if (normalized.startsWith('tr')) return 'tr';
+    }
+
+    const htmlLanguage = String(document.documentElement.lang || '').toLowerCase();
+    if (htmlLanguage.startsWith('en')) return 'en';
+    if (htmlLanguage.startsWith('tr')) return 'tr';
+
+    return 'tr';
   };
+
+  const getCopy = () => I18N[getActiveLanguage()] || I18N.tr;
+  const t = (key) => getCopy()[key] || I18N.tr[key] || key;
+  const nutritionLabel = (key) => getCopy().nutritionLabels?.[key] || I18N.tr.nutritionLabels[key] || key;
 
   /**
    * İçinde data-lang bulunan alanlarda aktif dildeki metni alır.
@@ -112,8 +237,8 @@
     const categoryNode = section?.querySelector(SELECTORS.sectionTitle);
 
     const name = getLocalizedText(nameNode) || normalizeText(image?.alt || 'Ürün');
-    const description = getLocalizedText(descriptionNode) || EMPTY_TEXT;
-    const category = getLocalizedText(categoryNode) || 'Menü';
+    const description = getLocalizedText(descriptionNode) || t('emptyDescription');
+    const category = getLocalizedText(categoryNode) || t('menuFallback');
 
     return {
       id: item.dataset.productId || slugify(name),
@@ -142,21 +267,21 @@
     modal.innerHTML = `
       <div class="gmp-modal__overlay modal-overlay" data-gmp-close></div>
       <article class="gmp-modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" tabindex="-1">
-        <button class="gmp-modal__close modal-close" type="button" aria-label="Popup kapat" data-gmp-close>
+        <button class="gmp-modal__close modal-close" type="button" aria-label="${t('close')}" data-gmp-close>
           <span aria-hidden="true">×</span>
         </button>
 
-        <button class="gmp-modal__nav gmp-modal__nav--prev" type="button" aria-label="Önceki ürün" data-gmp-prev>
+        <button class="gmp-modal__nav gmp-modal__nav--prev" type="button" aria-label="${t('prev')}" data-gmp-prev>
           <span aria-hidden="true">‹</span>
         </button>
 
         <figure class="gmp-modal__media">
           <img id="modalImage" class="gmp-modal__image" src="" alt="" decoding="async">
-          <figcaption class="gmp-modal__image-hint">Görsele dokunarak yakınlaştır</figcaption>
+          <figcaption class="gmp-modal__image-hint" data-gmp-image-hint>${t('imageHint')}</figcaption>
         </figure>
 
         <section class="gmp-modal__content">
-          <div class="gmp-modal__eyebrow" id="modalCategory">Menü</div>
+          <div class="gmp-modal__eyebrow" id="modalCategory">${t('menuFallback')}</div>
           <div class="gmp-modal__heading-row">
             <h2 id="modalTitle" class="gmp-modal__title"></h2>
             <div id="modalPrice" class="gmp-modal__price"></div>
@@ -165,17 +290,17 @@
 
           <div class="gmp-modal__meta" aria-label="Ürün bilgileri">
             <span class="gmp-chip" data-gmp-product-order></span>
-            <span class="gmp-chip">Premium Menü</span>
+            <span class="gmp-chip" data-gmp-premium-chip>${t('premiumMenu')}</span>
           </div>
 
           <div class="gmp-modal__nutrition" data-gmp-nutrition hidden>
-            <h3>Besin Değerleri</h3>
+            <h3 data-gmp-nutrition-title>${t('nutritionTitle')}</h3>
             <div class="gmp-nutrition-grid" data-gmp-nutrition-grid></div>
           </div>
 
           <div class="gmp-modal__allergens" data-gmp-allergens hidden>
             <div class="gmp-allergen-head">
-              <h3>Alerjen Bilgilendirmesi</h3>
+              <h3 data-gmp-allergen-title>${t('allergenTitle')}</h3>
               <span class="gmp-allergen-summary" data-gmp-allergen-summary></span>
             </div>
             <div class="gmp-allergen-list" data-gmp-allergen-list></div>
@@ -183,7 +308,7 @@
           </div>
         </section>
 
-        <button class="gmp-modal__nav gmp-modal__nav--next" type="button" aria-label="Sonraki ürün" data-gmp-next>
+        <button class="gmp-modal__nav gmp-modal__nav--next" type="button" aria-label="${t('next')}" data-gmp-next>
           <span aria-hidden="true">›</span>
         </button>
       </article>
@@ -214,6 +339,50 @@
     elements.allergenList = elements.modal.querySelector('[data-gmp-allergen-list]');
     elements.allergenSummary = elements.modal.querySelector('[data-gmp-allergen-summary]');
     elements.allergenNote = elements.modal.querySelector('[data-gmp-allergen-note]');
+    elements.imageHint = elements.modal.querySelector('[data-gmp-image-hint]');
+    elements.premiumChip = elements.modal.querySelector('[data-gmp-premium-chip]');
+    elements.nutritionTitle = elements.modal.querySelector('[data-gmp-nutrition-title]');
+    elements.allergenTitle = elements.modal.querySelector('[data-gmp-allergen-title]');
+  };
+
+  /**
+   * Modal içinde JSON'dan gelmeyen sabit metinleri aktif dile göre yeniler.
+   */
+  const updateStaticTexts = () => {
+    elements.closeButtons?.forEach((button) => button.setAttribute('aria-label', t('close')));
+    elements.prevButton?.setAttribute('aria-label', t('prev'));
+    elements.nextButton?.setAttribute('aria-label', t('next'));
+
+    if (elements.imageHint) elements.imageHint.textContent = t('imageHint');
+    if (elements.premiumChip) elements.premiumChip.textContent = t('premiumMenu');
+    if (elements.nutritionTitle) elements.nutritionTitle.textContent = t('nutritionTitle');
+    if (elements.allergenTitle) elements.allergenTitle.textContent = t('allergenTitle');
+  };
+
+  /**
+   * JSON porsiyon metni Türkçe kaldığında İngilizce arayüz için okunabilir hale getirir.
+   * @param {string} value
+   * @returns {string}
+   */
+  const localizePortionText = (value = '') => {
+    if (getActiveLanguage() !== 'en') return value;
+
+    return String(value)
+      .replace(/yaklaşık/gi, 'approx.')
+      .replace(/1 kişi/gi, '1 person')
+      .replace(/1 tabak/gi, '1 plate')
+      .replace(/1 porsiyon/gi, '1 portion')
+      .replace(/porsiyon/gi, 'portion')
+      .replace(/yumurta/gi, 'eggs')
+      .replace(/adet/gi, 'pcs')
+      .replace(/dilim/gi, 'slices')
+      .replace(/şişe/gi, 'bottle')
+      .replace(/bardak/gi, 'glass')
+      .replace(/tek/gi, 'single')
+      .replace(/duble/gi, 'double')
+      .replace(/kadeh/gi, 'glass')
+      .replace(/kişilik/gi, 'for people')
+      .replace(/gr/gi, 'g');
   };
 
   /**
@@ -238,7 +407,8 @@
       item.classList.add(CSS.ready);
       item.setAttribute('role', 'button');
       item.setAttribute('tabindex', '0');
-      item.setAttribute('aria-label', `${getLocalizedText(item.querySelector(SELECTORS.itemName)) || 'Ürün'} detayını aç`);
+      const itemName = getLocalizedText(item.querySelector(SELECTORS.itemName)) || 'Ürün';
+      item.setAttribute('aria-label', `${itemName} ${t('openDetailsSuffix')}`);
     });
   };
 
@@ -267,7 +437,7 @@
     if (!elements.allergens || !elements.allergenList) return;
 
     if (elements.allergenSummary) {
-      elements.allergenSummary.textContent = type === 'warning' ? 'Kontrol gerekli' : 'Yükleniyor';
+      elements.allergenSummary.textContent = type === 'warning' ? t('checkRequired') : t('loading');
     }
 
     elements.allergenList.innerHTML = `
@@ -275,7 +445,7 @@
     `;
 
     if (elements.allergenNote) {
-      elements.allergenNote.textContent = 'Besin ve alerjen verileri data/nutrition.json dosyasından otomatik okunur.';
+      elements.allergenNote.textContent = t('nutritionDataSource');
     }
 
     elements.allergens.hidden = false;
@@ -320,8 +490,8 @@
 
     if (!hasError) return false;
 
-    showNutritionMessage('Besin verileri yüklenemedi. data/nutrition.json dosyasının proje klasöründe olduğundan ve sayfanın Live Server / GitHub Pages üzerinden açıldığından emin olun.', 'warning');
-    showAllergenMessage('Alerjen verileri yüklenemedi. nutrition.json okunamadığı için alerjenler gösterilemiyor.', 'warning');
+    showNutritionMessage(t('nutritionLoadError'), 'warning');
+    showAllergenMessage(t('allergenLoadError'), 'warning');
     return true;
   };
 
@@ -336,14 +506,14 @@
     if (!elements.nutritionGrid) return;
 
     if (!api || typeof api.getByProductData !== 'function') {
-      showNutritionMessage('Besin sistemi bağlantısı bulunamadı. index.html içinde nutrition.js dosyasının modal.js dosyasından önce eklendiğini kontrol edin.', 'warning');
+      showNutritionMessage(t('nutritionSystemMissing'), 'warning');
       return;
     }
 
     if (typeof api.isReady === 'function' && !api.isReady()) {
       if (showNutritionLoadErrorIfNeeded(api)) return;
 
-      showNutritionMessage('Besin değerleri yükleniyor...', 'info');
+      showNutritionMessage(t('nutritionLoading'), 'info');
       const readyPromise = typeof api.ready === 'function' ? api.ready() : null;
       scheduleDataRefresh(readyPromise);
       return;
@@ -352,28 +522,31 @@
     const nutrition = api.getByProductData(product);
 
     if (!nutrition) {
-      showNutritionMessage('Bu ürün için nutrition.json içinde eşleşen besin kaydı bulunamadı.', 'warning');
+      showNutritionMessage(t('nutritionNotFound'), 'warning');
       return;
     }
 
     const nutritionRows = [
-      ['Kalori', nutrition.calories, 'kcal'],
-      ['Protein', nutrition.protein, 'g'],
-      ['Karbonhidrat', nutrition.carbohydrate, 'g'],
-      ['Yağ', nutrition.fat, 'g'],
-      ['Doymuş Yağ', nutrition.saturatedFat, 'g'],
-      ['Şeker', nutrition.sugar, 'g'],
-      ['Lif', nutrition.fiber, 'g'],
-      ['Tuz', nutrition.salt, 'g'],
-      ['Porsiyon', nutrition.portion, ''],
+      ['calories', nutrition.calories, 'kcal'],
+      ['protein', nutrition.protein, 'g'],
+      ['carbohydrate', nutrition.carbohydrate, 'g'],
+      ['fat', nutrition.fat, 'g'],
+      ['saturatedFat', nutrition.saturatedFat, 'g'],
+      ['sugar', nutrition.sugar, 'g'],
+      ['fiber', nutrition.fiber, 'g'],
+      ['salt', nutrition.salt, 'g'],
+      ['portion', nutrition.portionEn || nutrition.portion, ''],
     ].filter(([, value]) => value !== undefined && value !== null && value !== '');
 
-    elements.nutritionGrid.innerHTML = nutritionRows.map(([label, value, unit]) => `
-      <div class="gmp-nutrition-item">
-        <span>${label}</span>
-        <strong>${value}${unit ? ` ${unit}` : ''}</strong>
-      </div>
-    `).join('');
+    elements.nutritionGrid.innerHTML = nutritionRows.map(([key, value, unit]) => {
+      const displayValue = key === 'portion' ? localizePortionText(value) : value;
+      return `
+        <div class="gmp-nutrition-item">
+          <span>${nutritionLabel(key)}</span>
+          <strong>${displayValue}${unit ? ` ${unit}` : ''}</strong>
+        </div>
+      `;
+    }).join('');
 
     elements.nutrition.hidden = nutritionRows.length === 0;
   };
@@ -390,14 +563,14 @@
     if (!elements.allergenList) return;
 
     if (!nutritionApi || typeof nutritionApi.getByProductData !== 'function') {
-      showAllergenMessage('Alerjen sistemi için nutrition.js bağlantısı gerekli. Script sırasını kontrol edin.', 'warning');
+      showAllergenMessage(t('allergenSystemMissing'), 'warning');
       return;
     }
 
     if (typeof nutritionApi.isReady === 'function' && !nutritionApi.isReady()) {
       if (showNutritionLoadErrorIfNeeded(nutritionApi)) return;
 
-      showAllergenMessage('Alerjen bilgileri yükleniyor...', 'info');
+      showAllergenMessage(t('allergenLoading'), 'info');
       const readyPromise = typeof nutritionApi.ready === 'function' ? nutritionApi.ready() : null;
       scheduleDataRefresh(readyPromise);
       return;
@@ -409,23 +582,19 @@
     const nutrition = allergenData?.nutrition || nutritionApi.getByProductData(product);
 
     if (!nutrition) {
-      showAllergenMessage('Bu ürün için nutrition.json içinde eşleşen alerjen kaydı bulunamadı.', 'warning');
+      showAllergenMessage(t('allergenNotFound'), 'warning');
       return;
     }
 
     const allergens = allergenData?.allergens || nutrition.allergens || [];
     const language = getActiveLanguage();
     const hasAllergens = allergens.length > 0;
-    const emptyText = language === 'en'
-      ? 'No main allergen is marked for this item.'
-      : 'Bu ürün için kayıtlı ana alerjen işaretlenmedi.';
-    const noteText = language === 'en'
-      ? 'Allergen information is indicative. Please contact the service team for cross-contact and ingredient changes.'
-      : 'Alerjen bilgileri bilgilendirme amaçlıdır. Çapraz temas ve içerik değişiklikleri için lütfen servis ekibine danışın.';
+    const emptyText = t('noMainAllergen');
+    const noteText = t('allergenNote');
 
     elements.allergenSummary.textContent = hasAllergens
-      ? `${allergens.length} ${language === 'en' ? 'allergen notice' : 'alerjen bildirimi'}`
-      : (language === 'en' ? 'No marked main allergen' : 'Kayıtlı ana alerjen yok');
+      ? `${allergens.length} ${t('allergenNotice')}`
+      : t('noMarkedMainAllergen');
 
     elements.allergenList.innerHTML = hasAllergens
       ? allergens.map((allergen) => {
@@ -454,6 +623,7 @@
     const product = extractProductData(item);
     state.currentIndex = index;
 
+    updateStaticTexts();
     elements.card.classList.remove(CSS.imageZoomed);
     elements.image.src = product.imageSrc;
     elements.image.alt = product.imageAlt || product.name;
@@ -584,11 +754,45 @@
     navigateProduct(diffX < 0 ? 1 : -1);
   };
 
+  const isLanguageControl = (target) => {
+    const control = target.closest?.([
+      '.lang-btn',
+      '.language-btn',
+      '.language-switch button',
+      '[data-lang-trigger]',
+      '[data-language]',
+      '[data-set-lang]',
+      '[data-lang]',
+    ].join(','));
+
+    if (control) return true;
+
+    const text = normalizeText(target.textContent || '').toUpperCase();
+    return text === 'TR' || text === 'EN';
+  };
+
+  const refreshLanguageSensitiveContent = () => {
+    window.setTimeout(() => {
+      collectItems();
+      updateStaticTexts();
+      window.GoncuAllergens?.refreshCards?.();
+
+      if (elements.modal.classList.contains(CSS.open) && state.currentIndex >= 0) {
+        renderProduct(state.currentIndex);
+      }
+    }, 120);
+  };
+
   /**
    * Kullanıcı etkileşimlerini tek merkezden bağlar.
    */
   const bindEvents = () => {
     document.addEventListener('click', (event) => {
+      if (isLanguageControl(event.target)) {
+        refreshLanguageSensitiveContent();
+        return;
+      }
+
       const item = event.target.closest(SELECTORS.menuItem);
       if (!item || elements.modal.contains(event.target)) return;
       openModal(Number(item.dataset.gmpIndex));
@@ -630,8 +834,8 @@
 
     window.addEventListener('goncu:nutrition-error', () => {
       if (elements.modal.classList.contains(CSS.open) && state.currentIndex >= 0) {
-        showNutritionMessage('nutrition.json yüklenemedi. Live Server kullandığını ve data/nutrition.json dosya yolunun doğru olduğunu kontrol edin.', 'warning');
-        showAllergenMessage('Alerjen verisi yüklenemedi. data/nutrition.json dosyası okunamıyor.', 'warning');
+        showNutritionMessage(t('nutritionJsonError'), 'warning');
+        showAllergenMessage(t('allergenJsonError'), 'warning');
       }
     });
 
@@ -666,6 +870,7 @@
    */
   const init = () => {
     cacheElements();
+    updateStaticTexts();
     prepareImages();
     collectItems();
     bindEvents();

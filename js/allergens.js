@@ -1,5 +1,5 @@
 /**
- * GÖNCÜ MENU PRO - Sprint 3 Allergen System
+ * GÖNCÜ MENU PRO - Allergen System / TR-EN UI Fix
  * ------------------------------------------------------------
  * Alerjen verisini nutrition.json üzerinden okur, ürün kartlarına mini ikonlar
  * ekler ve modal sistemine premium alerjen objeleri sunar.
@@ -40,8 +40,46 @@
   const normalizeText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
 
   const getActiveLanguage = () => {
-    const activeButton = document.querySelector(SELECTORS.activeLangButton);
-    return activeButton?.dataset?.langTrigger || document.documentElement.lang || 'tr';
+    const activeButton = document.querySelector([
+      SELECTORS.activeLangButton,
+      '.language-btn.active',
+      '.language-switch .active',
+      '[data-lang-trigger].active',
+      '[data-language].active',
+      '[data-set-lang].active',
+      '[data-lang].active',
+    ].join(','));
+
+    const explicitLanguage = activeButton?.dataset?.langTrigger
+      || activeButton?.dataset?.language
+      || activeButton?.dataset?.setLang
+      || activeButton?.dataset?.lang;
+
+    if (explicitLanguage) {
+      const normalized = String(explicitLanguage).toLowerCase();
+      if (normalized.startsWith('en')) return 'en';
+      if (normalized.startsWith('tr')) return 'tr';
+    }
+
+    const activeText = normalizeText(activeButton?.textContent || '').toLowerCase();
+    if (activeText === 'en' || activeText.includes('english')) return 'en';
+    if (activeText === 'tr' || activeText.includes('türkçe') || activeText.includes('turkish')) return 'tr';
+
+    const storedLanguage = ['gmp-language', 'selectedLanguage', 'selectedLang', 'currentLanguage', 'currentLang', 'language', 'lang']
+      .map((key) => window.localStorage?.getItem?.(key))
+      .find(Boolean);
+
+    if (storedLanguage) {
+      const normalized = String(storedLanguage).toLowerCase();
+      if (normalized.startsWith('en')) return 'en';
+      if (normalized.startsWith('tr')) return 'tr';
+    }
+
+    const htmlLanguage = String(document.documentElement.lang || '').toLowerCase();
+    if (htmlLanguage.startsWith('en')) return 'en';
+    if (htmlLanguage.startsWith('tr')) return 'tr';
+
+    return 'tr';
   };
 
   const getLocalizedText = (node) => {
@@ -126,10 +164,12 @@
     const visible = data.allergens.slice(0, maxVisible);
     const hiddenCount = data.allergens.length - visible.length;
     const label = data.allergens.map((allergen) => allergen.label).join(', ');
+    const language = getActiveLanguage();
+    const ariaPrefix = language === 'en' ? 'Allergens' : 'Alerjenler';
 
     const wrapper = document.createElement('div');
     wrapper.className = 'gmp-card-allergens';
-    wrapper.setAttribute('aria-label', `Alerjenler: ${label}`);
+    wrapper.setAttribute('aria-label', `${ariaPrefix}: ${label}`);
     wrapper.innerHTML = visible.map((allergen) => `
       <span class="gmp-card-allergen" title="${allergen.label}" aria-hidden="true">${allergen.icon || '•'}</span>
     `).join('') + (hiddenCount > 0 ? `<span class="gmp-card-allergen gmp-card-allergen--more" aria-hidden="true">+${hiddenCount}</span>` : '');
@@ -152,8 +192,19 @@
     window.addEventListener('goncu:nutrition-ready', refreshCards);
 
     document.addEventListener('click', (event) => {
-      if (!event.target.closest(SELECTORS.langButton)) return;
-      window.setTimeout(refreshCards, 80);
+      const control = event.target.closest?.([
+        SELECTORS.langButton,
+        '.language-btn',
+        '.language-switch button',
+        '[data-lang-trigger]',
+        '[data-language]',
+        '[data-set-lang]',
+      ].join(','));
+
+      const text = normalizeText((control || event.target).textContent || '').toUpperCase();
+      if (!control && text !== 'TR' && text !== 'EN') return;
+
+      window.setTimeout(refreshCards, 120);
     });
   };
 
