@@ -1,12 +1,34 @@
-/*
- * GÖNCÜ MENU PRO - Safe Image Utilities CSS
- * Layout'a müdahale etmez; sadece eksik görseller için hafif arka plan verir.
+/**
+ * GÖNCÜ MENU PRO - Image Utilities Emergency Restore CSS
+ * ------------------------------------------------------
+ * Bu dosya layout gizlemez. Sadece kırık görsel durumunu yumuşatır.
  */
 
-img.gm-image-resolved {
+.menu-section,
+.menu-grid,
+.menu-item,
+.item-card,
+.product-card {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-img.gm-image-missing {
-  background: #ffffff;
+.menu-item img,
+img.item-image,
+.item-image img,
+.product-image img,
+#modalImage,
+.modal img,
+.gm-modal img,
+.gm-modal__image img {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.gm-image-missing {
+  background:
+    linear-gradient(135deg, rgba(197, 164, 91, 0.12), rgba(255, 255, 255, 0.04));
+  object-fit: cover;
 }

@@ -1,173 +1,171 @@
-/*
- * GÖNCÜ MENU PRO - Safe Image Format Resolver
- * Amaç: HTML'de .jpg yazsa bile aynı isimli .webp/.png/.jpeg vb. görselleri güvenli şekilde denemek.
- * Bu sürüm sadece ürün ve modal görsellerine dokunur; menü layout'una, tıklamalara ve filtrelere müdahale etmez.
+/**
+ * GÖNCÜ MENU PRO - Image Utilities Emergency Restore
+ * --------------------------------------------------
+ * Amaç:
+ * - Görsel uzantı desteğini güvenli şekilde sağlamak.
+ * - Eski image-utils sürümlerinden kalabilecek gizleme / donma / tıklama engelleme
+ *   durumlarını temizlemek.
+ * - Menü kartlarının görünürlüğüne ve search/favorites sistemine müdahale etmemek.
+ *
+ * Desteklenen uzantılar: webp, jpg, jpeg, png, avif, gif, svg
  */
 (function () {
   'use strict';
 
-  const CONFIG = {
-    selector: '.menu-item .item-image, .menu-item img, .gm-modal img, .product-modal img, .modal-content img',
-    extensions: ['webp', 'jpg', 'jpeg', 'png', 'avif', 'gif', 'svg'],
-    resolvedClass: 'gm-image-resolved',
-    missingClass: 'gm-image-missing',
-    maxAttempts: 12
-  };
+  const SUPPORTED_EXTENSIONS = ['webp', 'jpg', 'jpeg', 'png', 'avif', 'gif', 'svg'];
 
-  const imageStates = new WeakMap();
+  const IMAGE_SELECTOR = [
+    '.menu-item img',
+    'img.item-image',
+    '.item-image img',
+    '.product-image img',
+    '#modalImage',
+    '.modal img',
+    '.gm-modal img',
+    '.gm-modal__image img'
+  ].join(',');
 
-  const normalizePath = (value) => String(value || '').split('#')[0].split('?')[0];
+  const RESTORE_SELECTOR = [
+    '.menu-section',
+    '.menu-grid',
+    '.menu-item',
+    '.item-card',
+    '.product-card'
+  ].join(',');
 
-  const parsePath = (src) => {
-    const clean = normalizePath(src);
-    const slashIndex = clean.lastIndexOf('/');
-    const folder = slashIndex >= 0 ? clean.slice(0, slashIndex + 1) : '';
-    const filename = slashIndex >= 0 ? clean.slice(slashIndex + 1) : clean;
-    const dotIndex = filename.lastIndexOf('.');
+  const IMAGE_UTILITY_CLASSES = [
+    'gm-image-hidden',
+    'gm-image-loading',
+    'gm-img-hidden',
+    'gm-img-loading',
+    'image-utils-hidden',
+    'image-utils-loading',
+    'is-image-hidden',
+    'is-image-loading'
+  ];
 
-    return {
-      clean,
-      folder,
-      base: dotIndex > 0 ? filename.slice(0, dotIndex) : filename,
-      extension: dotIndex > 0 ? filename.slice(dotIndex + 1).toLowerCase() : ''
-    };
-  };
+  /**
+   * Önceki hatalı image-utils sürümlerinden kalabilecek görünmezlik etkilerini temizler.
+   * Bu işlem sadece sayfa açılışında ve yeni ürün node'u geldiğinde yapılır.
+   */
+  function restoreMenuVisibility() {
+    document.querySelectorAll(RESTORE_SELECTOR).forEach((element) => {
+      IMAGE_UTILITY_CLASSES.forEach((className) => element.classList.remove(className));
 
-  const slugify = (value) => {
-    const map = {
-      ç: 'c', Ç: 'c', ğ: 'g', Ğ: 'g', ı: 'i', I: 'i', İ: 'i',
-      ö: 'o', Ö: 'o', ş: 's', Ş: 's', ü: 'u', Ü: 'u'
-    };
+      if (!element.style) return;
 
-    return String(value || '')
-      .replace(/[çÇğĞıIİöÖşŞüÜ]/g, (char) => map[char] || char)
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-  };
+      if (element.style.opacity === '0') element.style.opacity = '';
+      if (element.style.visibility === 'hidden') element.style.visibility = '';
+      if (element.style.pointerEvents === 'none') element.style.pointerEvents = '';
 
-  const unique = (items) => {
-    const seen = new Set();
-    return items.filter((item) => {
-      if (!item || seen.has(item)) return false;
-      seen.add(item);
-      return true;
+      // Eski image-utils inline display:none bıraktıysa temizle.
+      // Search/favorites daha sonra kendi filtrelerini tekrar uygulayabilir.
+      if (element.style.display === 'none') element.style.display = '';
     });
-  };
+  }
 
-  const getTitle = (img) => {
-    const card = img.closest?.('.menu-item, .gm-modal, .product-modal, .modal-content');
-    const titleNode = card?.querySelector?.('.item-name, .gm-modal-title, .modal-title, h2, h3');
-    return (img.getAttribute('alt') || titleNode?.textContent || '').trim();
-  };
+  /**
+   * Bir src yolundan farklı uzantı alternatifleri üretir.
+   * Örnek: images/urun.jpg -> images/urun.webp, images/urun.jpeg, images/urun.png...
+   */
+  function buildImageAlternatives(source) {
+    if (!source || source.startsWith('data:') || source.startsWith('blob:')) return [];
 
-  const buildCandidates = (img) => {
-    const src = img.getAttribute('src') || img.dataset.src || '';
-    if (!src || src.startsWith('data:') || src.startsWith('blob:')) return [];
+    const cleanSource = String(source).trim();
+    const match = cleanSource.match(/^(.*?)(\.[a-zA-Z0-9]+)([?#].*)?$/);
 
-    const parsed = parsePath(src);
-    const titleSlug = slugify(getTitle(img));
-    const baseSlug = slugify(parsed.base);
-    const bases = unique([parsed.base, baseSlug, titleSlug]);
-    const extensions = unique([parsed.extension, ...CONFIG.extensions]);
-    const candidates = [];
+    if (!match) return [];
 
-    bases.forEach((base) => {
-      extensions.forEach((extension) => {
-        if (!base || !extension) return;
-        candidates.push(`${parsed.folder}${base}.${extension}`);
-      });
+    const basePath = match[1];
+    const currentExtension = match[2].replace('.', '').toLowerCase();
+    const suffix = match[3] || '';
+
+    const orderedExtensions = [
+      currentExtension,
+      ...SUPPORTED_EXTENSIONS.filter((extension) => extension !== currentExtension)
+    ];
+
+    return orderedExtensions.map((extension) => `${basePath}.${extension}${suffix}`);
+  }
+
+  /**
+   * Görsel hata verirse aynı dosya adında farklı uzantıları sırayla dener.
+   * Kartı gizlemez, layout'a müdahale etmez.
+   */
+  function attachFallbackToImage(image) {
+    if (!(image instanceof HTMLImageElement)) return;
+    if (image.dataset.gmImageSafeReady === '1') return;
+
+    const originalSource = image.getAttribute('src') || image.currentSrc || '';
+    const alternatives = buildImageAlternatives(originalSource);
+
+    image.dataset.gmImageSafeReady = '1';
+    image.dataset.gmOriginalSource = originalSource;
+    image.dataset.gmAlternativeIndex = '0';
+
+    if (!image.hasAttribute('loading')) image.setAttribute('loading', 'lazy');
+    image.setAttribute('decoding', 'async');
+
+    if (alternatives.length <= 1) return;
+
+    image.addEventListener('error', function handleImageError() {
+      const list = buildImageAlternatives(image.dataset.gmOriginalSource || originalSource);
+      let index = Number.parseInt(image.dataset.gmAlternativeIndex || '0', 10);
+
+      while (index < list.length) {
+        const nextSource = list[index];
+        index += 1;
+        image.dataset.gmAlternativeIndex = String(index);
+
+        if (!nextSource) continue;
+        if (nextSource === image.getAttribute('src')) continue;
+
+        image.src = nextSource;
+        return;
+      }
+
+      image.classList.add('gm-image-missing');
+      image.removeEventListener('error', handleImageError);
     });
+  }
 
-    return unique(candidates)
-      .filter((candidate) => normalizePath(candidate) !== parsed.clean)
-      .slice(0, CONFIG.maxAttempts);
-  };
+  function scanImages(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    scope.querySelectorAll(IMAGE_SELECTOR).forEach(attachFallbackToImage);
+  }
 
-  const getState = (img) => {
-    let state = imageStates.get(img);
-    if (!state) {
-      state = {
-        candidates: buildCandidates(img),
-        index: 0,
-        busy: false
-      };
-      imageStates.set(img, state);
-    }
-    return state;
-  };
+  function initImageUtilities() {
+    restoreMenuVisibility();
+    scanImages(document);
 
-  const tryNext = (img) => {
-    const state = getState(img);
-    if (state.busy) return;
-
-    const nextSrc = state.candidates[state.index++];
-    if (!nextSrc) {
-      img.classList.add(CONFIG.missingClass);
-      return;
-    }
-
-    state.busy = true;
-    img.src = nextSrc;
-    window.requestAnimationFrame(() => {
-      state.busy = false;
-    });
-  };
-
-  const prepareImage = (img) => {
-    if (!img || img.dataset.gmSafeImageReady === '1') return;
-
-    img.dataset.gmSafeImageReady = '1';
-
-    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
-    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-
-    img.addEventListener('load', () => {
-      img.classList.remove(CONFIG.missingClass);
-      img.classList.add(CONFIG.resolvedClass);
-    });
-
-    img.addEventListener('error', () => {
-      tryNext(img);
-    });
-
-    if (img.complete && img.naturalWidth === 0) {
-      tryNext(img);
-    }
-  };
-
-  const scan = (root = document) => {
-    root.querySelectorAll?.(CONFIG.selector).forEach(prepareImage);
-  };
-
-  const init = () => {
-    scan(document);
-
+    // Modal veya dinamik ürün alanları sonradan oluşursa sadece yeni görsellere uygula.
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
-          if (node.nodeType !== 1) return;
-          if (node.matches?.(CONFIG.selector)) prepareImage(node);
-          scan(node);
+          if (!(node instanceof Element)) return;
+          restoreMenuVisibility();
+          if (node.matches && node.matches(IMAGE_SELECTOR)) attachFallbackToImage(node);
+          scanImages(node);
         });
       });
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
-  };
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
 
-  window.GoncuMenuImages = {
-    init,
-    scan,
-    prepareImage,
-    extensions: [...CONFIG.extensions]
-  };
+    window.GoncuImageUtils = {
+      refresh: function refresh() {
+        restoreMenuVisibility();
+        scanImages(document);
+      }
+    };
+  }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
+    document.addEventListener('DOMContentLoaded', initImageUtilities, { once: true });
   } else {
-    init();
+    initImageUtilities();
   }
 })();
