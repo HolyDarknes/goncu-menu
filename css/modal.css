@@ -1,20 +1,29 @@
 /* ============================================================
-   GÖNCÜ MENU PRO - Sprint 3 Premium Modal & Allergen Styles
+   GÖNCÜ MENU PRO - Sprint 3 Layout Hotfix
    ------------------------------------------------------------
-   Mevcut menü tasarımını bozmadan .menu-item kartlarına premium
-   glassmorphism popup deneyimi ekler.
+   Premium ürün popup sistemi için responsive, scroll güvenli
+   ve alerjen alanını görünür tutan modal stilleri.
+
+   Hedef:
+   - Mevcut .menu-item HTML yapısını bozmadan çalışır.
+   - Desktopta ortalanmış premium kart görünümü sağlar.
+   - Mobilde tam ekran deneyim sunar.
+   - Besin + alerjen alanlarının modal içinde kaybolmasını engeller.
    ============================================================ */
 
 :root {
   --gmp-gold: #c3a148;
   --gmp-gold-strong: #d9b86c;
   --gmp-bg: rgba(9, 10, 14, 0.72);
-  --gmp-card: rgba(20, 22, 29, 0.78);
-  --gmp-card-light: rgba(255, 255, 255, 0.08);
+  --gmp-card: rgba(20, 22, 29, 0.82);
+  --gmp-card-strong: rgba(27, 29, 37, 0.92);
+  --gmp-card-light: rgba(255, 255, 255, 0.075);
   --gmp-card-border: rgba(255, 255, 255, 0.14);
   --gmp-text: #f6f1e7;
   --gmp-muted: rgba(246, 241, 231, 0.68);
-  --gmp-soft: rgba(195, 161, 72, 0.12);
+  --gmp-soft: rgba(195, 161, 72, 0.13);
+  --gmp-warning-bg: rgba(195, 161, 72, 0.13);
+  --gmp-warning-border: rgba(217, 184, 108, 0.42);
   --gmp-danger: #ff6b6b;
   --gmp-radius-lg: 30px;
   --gmp-radius-md: 20px;
@@ -34,46 +43,6 @@ body.gmp-modal-open {
   isolation: isolate;
 }
 
-.menu-item.gmp-has-allergens .gmp-card-allergens {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  max-width: calc(100% - 32px);
-  padding: 6px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(7, 8, 12, 0.64);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  pointer-events: none;
-}
-
-.gmp-card-allergen {
-  display: grid;
-  place-items: center;
-  width: 25px;
-  height: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 13px;
-  line-height: 1;
-}
-
-.gmp-card-allergen--more {
-  width: auto;
-  min-width: 25px;
-  padding: 0 7px;
-  color: var(--gmp-gold-strong);
-  font-size: 11px;
-  font-weight: 800;
-}
-
 .menu-item.gmp-ready::after {
   content: 'Detay';
   position: absolute;
@@ -86,7 +55,7 @@ body.gmp-modal-open {
   background: rgba(11, 12, 16, 0.72);
   color: var(--gmp-gold-strong);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0;
@@ -108,13 +77,36 @@ body.gmp-modal-open {
   outline-offset: 3px;
 }
 
+/* Menü kartları üzerinde küçük alerjen ön izlemesi */
+.gmp-card-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.gmp-card-allergen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(195, 161, 72, 0.24);
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.09);
+  color: var(--gmp-text);
+  font-size: 12px;
+  line-height: 1;
+}
+
 .gmp-modal {
   position: fixed;
   inset: 0;
   z-index: 99999;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 10px;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--gmp-transition);
@@ -141,9 +133,11 @@ body.gmp-modal-open {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(320px, 0.95fr) minmax(340px, 1fr);
-  width: min(1080px, 94vw);
-  max-height: min(760px, 92vh);
+  grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1fr);
+  width: min(1350px, calc(100vw - 20px));
+  height: min(830px, calc(100dvh - 20px));
+  max-height: calc(100dvh - 20px);
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--gmp-card-border);
   border-radius: var(--gmp-radius-lg);
@@ -169,7 +163,8 @@ body.gmp-modal-open {
 
 .gmp-modal__media {
   position: relative;
-  min-height: 520px;
+  min-height: 0;
+  height: 100%;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
 }
@@ -186,7 +181,6 @@ body.gmp-modal-open {
 .gmp-modal__image {
   width: 100%;
   height: 100%;
-  min-height: 520px;
   display: block;
   object-fit: cover;
   transform: scale(1);
@@ -212,25 +206,35 @@ body.gmp-modal-open {
   background: rgba(0, 0, 0, 0.34);
   color: rgba(255, 255, 255, 0.78);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Kritik düzeltme: sağ içerik kendi içinde güvenli şekilde scroll olur. */
 .gmp-modal__content {
-  overflow: auto;
-  padding: clamp(26px, 4vw, 46px);
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: clamp(24px, 3.4vw, 42px);
+  padding-bottom: max(56px, calc(env(safe-area-inset-bottom) + 36px));
   scrollbar-width: thin;
-  scrollbar-color: rgba(195, 161, 72, 0.45) transparent;
+  scrollbar-color: rgba(195, 161, 72, 0.56) transparent;
 }
 
 .gmp-modal__content::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
+}
+
+.gmp-modal__content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .gmp-modal__content::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(195, 161, 72, 0.45);
+  background: rgba(195, 161, 72, 0.56);
 }
 
 .gmp-modal__eyebrow {
@@ -242,7 +246,7 @@ body.gmp-modal-open {
   background: var(--gmp-soft);
   color: var(--gmp-gold-strong);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -259,35 +263,35 @@ body.gmp-modal-open {
   margin: 0;
   color: var(--gmp-text);
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(34px, 4.2vw, 58px);
+  font-size: clamp(36px, 4.3vw, 66px);
   font-weight: 600;
   line-height: 0.96;
   letter-spacing: -0.02em;
 }
 
 .gmp-modal__price {
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 999px;
   background: rgba(195, 161, 72, 0.16);
   color: var(--gmp-gold-strong);
-  font-size: clamp(18px, 2vw, 24px);
-  font-weight: 800;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 900;
   white-space: nowrap;
   box-shadow: inset 0 0 0 1px rgba(195, 161, 72, 0.2);
 }
 
 .gmp-modal__description {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
   color: var(--gmp-muted);
   font-size: 15px;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .gmp-modal__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 0 0 24px;
+  margin: 0 0 22px;
 }
 
 .gmp-chip,
@@ -300,76 +304,97 @@ body.gmp-modal-open {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  color: rgba(246, 241, 231, 0.82);
+  color: rgba(246, 241, 231, 0.84);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .gmp-modal__nutrition,
 .gmp-modal__allergens {
-  margin-top: 22px;
-  padding-top: 22px;
+  margin-top: 18px;
+  padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .gmp-modal__nutrition h3,
-.gmp-modal__allergens h3 {
+.gmp-modal__allergens h3,
+.gmp-section-title {
   margin: 0 0 14px;
   color: var(--gmp-text);
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.gmp-nutrition-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.gmp-nutrition-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--gmp-radius-sm);
-  background: rgba(255, 255, 255, 0.055);
-}
-
-.gmp-nutrition-item span {
-  color: var(--gmp-muted);
-  font-size: 13px;
-}
-
-.gmp-nutrition-item strong {
-  color: var(--gmp-text);
-  font-size: 13px;
-  white-space: nowrap;
-}
-
+.gmp-section-head,
 .gmp-allergen-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  margin-bottom: 14px;
+  margin: 0 0 14px;
 }
 
+.gmp-section-head h3,
+.gmp-allergen-head h3 {
+  margin: 0;
+}
+
+.gmp-allergen-status,
 .gmp-allergen-summary {
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
-  padding: 6px 10px;
-  border: 1px solid rgba(195, 161, 72, 0.22);
+  gap: 7px;
+  min-height: 32px;
+  padding: 7px 11px;
+  border: 1px solid rgba(195, 161, 72, 0.28);
   border-radius: 999px;
-  background: rgba(195, 161, 72, 0.11);
+  background: rgba(195, 161, 72, 0.12);
   color: var(--gmp-gold-strong);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  font-weight: 900;
   white-space: nowrap;
+}
+
+.gmp-nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.gmp-nutrition-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--gmp-radius-sm);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.gmp-nutrition-item span,
+.gmp-nutrition-label {
+  color: var(--gmp-muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.gmp-nutrition-item strong,
+.gmp-nutrition-value {
+  color: var(--gmp-text);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.gmp-nutrition-item:last-child:nth-child(3n + 1),
+.gmp-nutrition-item:last-child:nth-child(3n + 2) {
+  grid-column: span 2;
 }
 
 .gmp-allergen-list {
@@ -378,48 +403,50 @@ body.gmp-modal-open {
   gap: 10px;
 }
 
-.gmp-allergen-pill {
-  min-height: 42px;
-  padding: 9px 13px 9px 10px;
-  border-color: rgba(195, 161, 72, 0.2);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
-    rgba(195, 161, 72, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
-}
-
-.gmp-allergen-pill__icon {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.24);
-  font-size: 15px;
-}
-
-.gmp-allergen-pill__label {
-  color: rgba(246, 241, 231, 0.88);
-}
-
-.gmp-allergen-empty {
+.gmp-allergen-pill,
+.gmp-allergen-item {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--gmp-radius-sm);
-  background: rgba(255, 255, 255, 0.055);
-  color: rgba(246, 241, 231, 0.76);
+  min-height: 38px;
+  padding: 9px 13px;
+  border: 1px solid rgba(195, 161, 72, 0.22);
+  border-radius: 999px;
+  background: rgba(195, 161, 72, 0.1);
+  color: rgba(246, 241, 231, 0.9);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 850;
 }
 
-.gmp-allergen-note {
+.gmp-allergen-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.gmp-allergen-note,
+.gmp-nutrition-note,
+.gmp-data-note {
   margin: 12px 0 0;
-  color: rgba(246, 241, 231, 0.55);
+  color: var(--gmp-muted);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.gmp-data-warning,
+.gmp-nutrition-warning,
+.gmp-allergen-warning {
+  padding: 14px 16px;
+  border: 1px solid var(--gmp-warning-border);
+  border-radius: var(--gmp-radius-sm);
+  background: var(--gmp-warning-bg);
+  color: #f0d995;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
 }
 
 .gmp-modal__close,
@@ -492,6 +519,22 @@ body.gmp-modal-open {
   cursor: not-allowed;
 }
 
+@media (max-width: 1180px) {
+  .gmp-modal__card {
+    grid-template-columns: minmax(300px, 0.9fr) minmax(360px, 1fr);
+    width: min(1120px, calc(100vw - 18px));
+  }
+
+  .gmp-nutrition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gmp-nutrition-item:last-child:nth-child(3n + 1),
+  .gmp-nutrition-item:last-child:nth-child(3n + 2) {
+    grid-column: auto;
+  }
+}
+
 @media (max-width: 920px) {
   .gmp-modal {
     padding: 0;
@@ -503,22 +546,24 @@ body.gmp-modal-open {
     height: 100dvh;
     max-height: none;
     grid-template-columns: 1fr;
-    grid-template-rows: 45dvh 1fr;
+    grid-template-rows: 38dvh minmax(0, 1fr);
     border-radius: 0;
     border-left: 0;
     border-right: 0;
   }
 
   .gmp-modal__media {
-    min-height: 0;
+    height: 38dvh;
   }
 
   .gmp-modal__image {
-    min-height: 45dvh;
+    height: 38dvh;
   }
 
   .gmp-modal__content {
-    padding: 24px 18px 34px;
+    height: auto;
+    min-height: 0;
+    padding: 22px 18px max(42px, calc(env(safe-area-inset-bottom) + 30px));
   }
 
   .gmp-modal__heading-row {
@@ -531,7 +576,7 @@ body.gmp-modal-open {
   }
 
   .gmp-modal__nav {
-    top: 22.5dvh;
+    top: 19dvh;
     width: 42px;
     height: 42px;
     font-size: 32px;
@@ -549,30 +594,23 @@ body.gmp-modal-open {
     display: none;
   }
 
-  .gmp-allergen-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .gmp-allergen-summary {
-    white-space: normal;
-  }
-
   .gmp-nutrition-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
   .menu-item.gmp-ready::after {
     display: none;
   }
 
-  .menu-item.gmp-has-allergens .gmp-card-allergens {
-    left: 12px;
-    bottom: 12px;
-    transform: scale(0.94);
-    transform-origin: left bottom;
+  .gmp-modal__card {
+    grid-template-rows: 34dvh minmax(0, 1fr);
+  }
+
+  .gmp-modal__media,
+  .gmp-modal__image {
+    height: 34dvh;
   }
 
   .gmp-modal__close {
@@ -583,11 +621,26 @@ body.gmp-modal-open {
   }
 
   .gmp-modal__title {
-    font-size: 34px;
+    font-size: 38px;
   }
 
   .gmp-modal__description {
     font-size: 14px;
+  }
+
+  .gmp-nutrition-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gmp-nutrition-item {
+    min-height: 46px;
+  }
+
+  .gmp-section-head,
+  .gmp-allergen-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
   }
 }
 
@@ -601,31 +654,4 @@ body.gmp-modal-open {
     transition: none !important;
     animation: none !important;
   }
-}
-
-
-/* Sprint 3 Hotfix: veri yüklenemediğinde görünür durum mesajları */
-.gmp-data-message {
-  grid-column: 1 / -1;
-  width: 100%;
-  padding: 13px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: var(--gmp-radius-sm);
-  background: rgba(255, 255, 255, 0.055);
-  color: rgba(246, 241, 231, 0.76);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.gmp-data-message--info {
-  border-color: rgba(195, 161, 72, 0.18);
-  background: rgba(195, 161, 72, 0.08);
-  color: rgba(246, 241, 231, 0.82);
-}
-
-.gmp-data-message--warning {
-  border-color: rgba(255, 193, 7, 0.28);
-  background: rgba(255, 193, 7, 0.08);
-  color: rgba(255, 236, 179, 0.92);
 }
