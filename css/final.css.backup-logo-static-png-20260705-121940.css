@@ -102,33 +102,3 @@ html[data-theme='dark'] .logo-img {
   background: transparent !important;
   background-color: transparent !important;
 }
-
-/* Logo Static PNG Fix - white box prevention */
-.logo-container,
-.logo-wrapper,
-.logo-section,
-.logo-area,
-.hero-logo,
-.brand-logo,
-.header-logo {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.logo-img {
-  display: block !important;
-  width: min(420px, 72vw) !important;
-  max-width: 420px !important;
-  height: auto !important;
-  object-fit: contain !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-@media (max-width: 768px) {
-  .logo-img {
-    width: min(300px, 78vw) !important;
-    max-width: 300px !important;
-  }
-}

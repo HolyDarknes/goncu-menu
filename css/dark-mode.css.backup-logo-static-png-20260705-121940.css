@@ -600,26 +600,3 @@ html[data-theme='light'] .nav-scroll-progress,
 html[data-theme='light'] .nav-progress {
   background: var(--gmp-theme-gold) !important;
 }
-
-/* Logo dark mode hard override */
-[data-theme="dark"] .logo-container,
-[data-theme="dark"] .logo-wrapper,
-[data-theme="dark"] .logo-section,
-[data-theme="dark"] .logo-area,
-[data-theme="dark"] .hero-logo,
-[data-theme="dark"] .brand-logo,
-body.dark-mode .logo-container,
-body.dark-mode .logo-wrapper,
-body.dark-mode .logo-section,
-body.dark-mode .logo-area,
-body.dark-mode .hero-logo,
-body.dark-mode .brand-logo {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-[data-theme="dark"] .logo-img,
-body.dark-mode .logo-img {
-  background: transparent !important;
-  box-shadow: none !important;
-}
